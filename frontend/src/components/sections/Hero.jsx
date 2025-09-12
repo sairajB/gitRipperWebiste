@@ -1,0 +1,202 @@
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  PlayIcon,
+  DocumentTextIcon,
+  CommandLineIcon,
+  ArrowDownIcon,
+  ClockIcon,
+  CheckCircleIcon,
+  ExclamationTriangleIcon,
+} from "@heroicons/react/24/outline";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import toast from "react-hot-toast";
+
+const Hero = () => {
+  const [copiedCommand, setCopiedCommand] = useState("");
+
+  const handleCopy = (command) => {
+    setCopiedCommand(command);
+    toast.success("Copied to clipboard!");
+    setTimeout(() => setCopiedCommand(""), 2000);
+  };
+
+  const stats = [
+    { label: "Total Downloads", value: "2.8K", icon: ArrowDownIcon },
+    { label: "GitHub Stars", value: "4", icon: CheckCircleIcon },
+    { label: "Weekly Downloads", value: "167", icon: ClockIcon },
+  ];
+
+  return (
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-hero-pattern opacity-40"></div>
+
+      {/* Floating Elements */}
+      <div className="absolute top-20 left-10 w-20 h-20 bg-primary-200 rounded-full animate-float opacity-60"></div>
+      <div
+        className="absolute top-40 right-20 w-16 h-16 bg-accent-200 rounded-full animate-float opacity-60"
+        style={{ animationDelay: "2s" }}></div>
+      <div
+        className="absolute bottom-40 left-20 w-12 h-12 bg-secondary-200 rounded-full animate-float opacity-60"
+        style={{ animationDelay: "4s" }}></div>
+
+      <div className="container-custom section-padding relative z-10">
+        <div className="text-center max-w-4xl mx-auto">
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center space-x-2 bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-8">
+            <CommandLineIcon className="w-4 h-4" />
+            <span>CLI Tool for Selective Downloads</span>
+          </motion.div>
+
+          {/* Main Heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-5xl md:text-7xl font-bold text-secondary-900 mb-6 text-shadow">
+            Download GitHub
+            <span className="block gradient-text">Folders Instantly</span>
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-xl md:text-2xl text-secondary-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+            Skip the entire repository clone. Get exactly what you need with
+            <span className="font-semibold text-primary-600">
+              {" "}
+              Git-ripper
+            </span>{" "}
+            – the smart way to download specific folders from any GitHub
+            repository.
+          </motion.p>
+
+          {/* Installation Command */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mb-8">
+            <div className="bg-secondary-900 rounded-lg p-6 max-w-2xl mx-auto">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-primary-400 text-sm font-medium">
+                  INSTALLATION
+                </span>
+                <CopyToClipboard
+                  text="npm install -g git-ripper"
+                  onCopy={() => handleCopy("install")}>
+                  <button className="text-secondary-400 hover:text-white transition-colors text-sm">
+                    {copiedCommand === "install" ? "Copied!" : "Copy"}
+                  </button>
+                </CopyToClipboard>
+              </div>
+              <div className="font-mono text-left">
+                <span className="text-primary-400">$</span>
+                <span className="text-green-400 ml-2">
+                  npm install -g git-ripper
+                </span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Usage Example */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="mb-12">
+            <div className="bg-secondary-900 rounded-lg p-6 max-w-4xl mx-auto">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-primary-400 text-sm font-medium">
+                  USAGE
+                </span>
+                <CopyToClipboard
+                  text="git-ripper https://github.com/facebook/react/tree/main/packages/react-dom"
+                  onCopy={() => handleCopy("usage")}>
+                  <button className="text-secondary-400 hover:text-white transition-colors text-sm">
+                    {copiedCommand === "usage" ? "Copied!" : "Copy"}
+                  </button>
+                </CopyToClipboard>
+              </div>
+              <div className="font-mono text-left text-sm md:text-base">
+                <div className="mb-2">
+                  <span className="text-primary-400">$</span>
+                  <span className="text-green-400 ml-2">git-ripper</span>
+                  <span className="text-accent-400 ml-2">
+                    https://github.com/facebook/react/tree/main/packages/react-dom
+                  </span>
+                </div>
+                <div className="text-secondary-400 text-xs">
+                  ✓ Downloading react-dom package... (45 files, 2.3MB)
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.0 }}
+            className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-16">
+            <a
+              href="#features"
+              className="btn-primary flex items-center space-x-2">
+              <PlayIcon className="w-5 h-5" />
+              <span>Get Started</span>
+            </a>
+
+            <a
+              href="/docs"
+              className="btn-secondary flex items-center space-x-2">
+              <DocumentTextIcon className="w-5 h-5" />
+              <span>Documentation</span>
+            </a>
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto">
+            {stats.map((stat, index) => {
+              const Icon = stat.icon;
+              return (
+                <div key={stat.label} className="text-center">
+                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-100 text-primary-600 rounded-lg mb-2">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <div className="text-2xl font-bold text-secondary-900">
+                    {stat.value}
+                  </div>
+                  <div className="text-secondary-600">{stat.label}</div>
+                </div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.5 }}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div className="animate-bounce">
+          <ArrowDownIcon className="w-6 h-6 text-secondary-400" />
+        </div>
+      </motion.div>
+    </section>
+  );
+};
+
+export default Hero;
