@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   PlayIcon,
@@ -11,21 +11,56 @@ import {
 } from "@heroicons/react/24/outline";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import toast from "react-hot-toast";
+import StatsService from "../../services/statsService";
 
 const Hero = () => {
   const [copiedCommand, setCopiedCommand] = useState("");
+  const [stats, setStats] = useState([
+    { label: "Total Downloads", value: "Loading...", icon: ArrowDownIcon },
+    { label: "GitHub Stars", value: "Loading...", icon: CheckCircleIcon },
+    { label: "Weekly Downloads", value: "Loading...", icon: ClockIcon },
+  ]);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const data = await StatsService.getCombinedStats();
+        setStats([
+          {
+            label: "Total Downloads",
+            value: data.formatted.totalDownloads,
+            icon: ArrowDownIcon,
+          },
+          {
+            label: "GitHub Stars",
+            value: data.formatted.githubStars,
+            icon: CheckCircleIcon,
+          },
+          {
+            label: "Weekly Downloads",
+            value: data.formatted.weeklyDownloads,
+            icon: ClockIcon,
+          },
+        ]);
+      } catch (error) {
+        console.error("Error loading stats:", error);
+        // Keep fallback values if API fails
+        setStats([
+          { label: "Total Downloads", value: "2.8K", icon: ArrowDownIcon },
+          { label: "GitHub Stars", value: "4", icon: CheckCircleIcon },
+          { label: "Weekly Downloads", value: "167", icon: ClockIcon },
+        ]);
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   const handleCopy = (command) => {
     setCopiedCommand(command);
     toast.success("Copied to clipboard!");
     setTimeout(() => setCopiedCommand(""), 2000);
   };
-
-  const stats = [
-    { label: "Total Downloads", value: "2.8K", icon: ArrowDownIcon },
-    { label: "GitHub Stars", value: "4", icon: CheckCircleIcon },
-    { label: "Weekly Downloads", value: "167", icon: ClockIcon },
-  ];
 
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 overflow-hidden">

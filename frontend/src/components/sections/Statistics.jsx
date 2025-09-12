@@ -20,6 +20,7 @@ import {
   UsersIcon,
   CalendarIcon,
 } from "@heroicons/react/24/outline";
+import StatsService from "../../services/statsService";
 
 ChartJS.register(
   CategoryScale,
@@ -34,23 +35,108 @@ ChartJS.register(
 
 const Statistics = () => {
   const [stats, setStats] = useState({
-    totalDownloads: "2.8K",
-    weeklyDownloads: "167",
-    githubStars: "4",
-    weeklyUsers: "120+",
+    totalDownloads: "Loading...",
+    weeklyDownloads: "Loading...",
+    githubStars: "Loading...",
+    weeklyUsers: "Loading...",
   });
+  const [chartData, setChartData] = useState(null);
+  const [lastUpdated, setLastUpdated] = useState(new Date());
 
-  // Mock chart data - in a real app, this would come from your API
-  const chartData = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const data = await StatsService.getCombinedStats();
+        setStats({
+          totalDownloads: data.formatted.totalDownloads,
+          weeklyDownloads: data.formatted.weeklyDownloads,
+          githubStars: data.formatted.githubStars,
+          weeklyUsers: data.formatted.weeklyUsers,
+        });
+        setLastUpdated(new Date());
+
+        // Create chart data from real download history - aggregate to weekly
+        const downloadHistory = data.downloadHistory.slice(-30); // Last 30 days
+        if (downloadHistory.length > 0) {
+          // Group daily data into weekly aggregates
+          const weeklyData = [];
+          const weeklyLabels = [];
+
+          for (let i = 0; i < downloadHistory.length; i += 7) {
+            const weekData = downloadHistory.slice(i, i + 7);
+            const weekTotal = weekData.reduce(
+              (sum, day) => sum + (day.downloads || 0),
+              0
+            );
+            const startDate = new Date(weekData[0]?.day || Date.now());
+
+            weeklyData.push(weekTotal);
+            weeklyLabels.push(
+              startDate.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+              })
+            );
+          }
+
+          setChartData({
+            labels: weeklyLabels,
+            datasets: [
+              {
+                label: "Weekly Downloads",
+                data: weeklyData,
+                borderColor: "rgb(14, 165, 233)",
+                backgroundColor: "rgba(14, 165, 233, 0.1)",
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: "rgb(14, 165, 233)",
+                pointBorderColor: "#fff",
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+              },
+            ],
+          });
+        } else if (data.weeklyTrendData) {
+          // Use the generated weekly trend data if no download history
+          setChartData(data.weeklyTrendData);
+        }
+      } catch (error) {
+        console.error("Error loading stats:", error);
+        setLastUpdated(new Date());
+        // Keep fallback values
+        setStats({
+          totalDownloads: "2.8K",
+          weeklyDownloads: "167",
+          githubStars: "4",
+          weeklyUsers: "120+",
+        });
+      }
+    };
+
+    fetchStats();
+
+    // Refresh stats every 5 minutes
+    const interval = setInterval(fetchStats, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Fallback chart data if no real data is available
+  const defaultChartData = {
+    labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"],
     datasets: [
       {
         label: "Weekly Downloads",
-        data: [1200, 1800, 2400, 3200, 4100, 5000],
+        data: [120, 180, 240, 320, 410, 500],
         borderColor: "rgb(14, 165, 233)",
         backgroundColor: "rgba(14, 165, 233, 0.1)",
         fill: true,
         tension: 0.4,
+        pointBackgroundColor: "rgb(14, 165, 233)",
+        pointBorderColor: "#fff",
+        pointBorderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6,
       },
     ],
   };
@@ -148,6 +234,12 @@ const Statistics = () => {
             Git-ripper is growing fast! Join the community of developers who
             have discovered a better way to download GitHub content.
           </p>
+
+          <div className="flex items-center justify-center space-x-4 mt-6 text-sm text-secondary-500">
+            <span>Stats updated: {lastUpdated.toLocaleTimeString()}</span>
+            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+            <span>Live data</span>
+          </div>
         </motion.div>
 
         {/* Stats Grid */}
@@ -227,7 +319,10 @@ const Statistics = () => {
               </div>
 
               <div className="h-64">
-                <Line data={chartData} options={chartOptions} />
+                <Line
+                  data={chartData || defaultChartData}
+                  options={chartOptions}
+                />
               </div>
             </div>
           </div>
