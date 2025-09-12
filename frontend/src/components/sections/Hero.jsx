@@ -10,6 +10,7 @@ import {
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import StatsService from "../../services/statsService";
 
@@ -196,12 +197,12 @@ const Hero = () => {
               <span>Get Started</span>
             </a>
 
-            <a
-              href="/docs"
+            <Link
+              to="/docs"
               className="btn-secondary flex items-center space-x-2">
               <DocumentTextIcon className="w-5 h-5" />
               <span>Documentation</span>
-            </a>
+            </Link>
           </motion.div>
 
           {/* Stats */}

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   BoltIcon,
@@ -181,11 +182,11 @@ const Features = () => {
                 className="bg-white dark:bg-secondary-900 text-primary-600 dark:text-primary-300 hover:bg-primary-50 dark:hover:bg-secondary-800 font-medium py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-primary-900/30">
                 Install Git-ripper
               </a>
-              <a
-                href="/docs"
+              <Link
+                to="/docs"
                 className="border-2 border-white/80 dark:border-primary-300 text-white dark:text-primary-200 hover:bg-white hover:text-primary-600 dark:hover:bg-primary-400/20 dark:hover:text-primary-200 font-medium py-3 px-8 rounded-lg transition-all duration-200">
                 View Documentation
-              </a>
+              </Link>
             </div>
           </div>
         </motion.div>

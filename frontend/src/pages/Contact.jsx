@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import {
@@ -419,11 +420,11 @@ const Contact = () => {
                     for more answers.
                   </p>
                   <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-                    <a
-                      href="/docs"
+                    <Link
+                      to="/docs"
                       className="text-center bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                       View Documentation
-                    </a>
+                    </Link>
                     <a
                       href="https://github.com/sairajB/git-ripper/discussions"
                       target="_blank"

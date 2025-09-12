@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   RocketLaunchIcon,
@@ -96,12 +97,12 @@ const CTA = () => {
               <span>Install Git-ripper</span>
             </a>
 
-            <a
-              href="/docs"
+            <Link
+              to="/docs"
               className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-bold py-4 px-8 rounded-lg transition-all duration-200 flex items-center space-x-3 text-lg">
               <DocumentTextIcon className="w-6 h-6" />
               <span>View Documentation</span>
-            </a>
+            </Link>
           </motion.div>
 
           {/* Features Highlight */}

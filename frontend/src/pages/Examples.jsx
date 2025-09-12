@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -364,11 +365,11 @@ const Examples = () => {
                 </div>
 
                 <div className="text-center mt-8">
-                  <a
-                    href="/docs"
+                  <Link
+                    to="/docs"
                     className="bg-white text-primary-600 hover:bg-primary-50 dark:bg-secondary-900 dark:text-primary-300 dark:hover:bg-secondary-800 font-medium py-3 px-6 rounded-lg transition-all duration-200 inline-flex items-center space-x-2">
                     <span>View Full Documentation</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </motion.div>
