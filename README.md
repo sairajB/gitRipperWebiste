@@ -43,6 +43,7 @@ Have you ever needed just a single component from a massive repository? Or wante
 - **Simple Interface**: Clean, intuitive command-line experience
 - **Lightweight**: Minimal dependencies and fast execution
 - **No Authentication**: Works with public repositories without requiring credentials
+- **Light/Dark Theme (Website)**: Frontend supports a persistent light/dark mode toggle with system preference detection
 
 ## Installation
 
@@ -209,6 +210,19 @@ The resume functionality uses checkpoint files stored in `.git_ripper_checkpoint
 ## Configuration
 
 Git-ripper works out of the box without configuration. For rate-limited GitHub API usage, authentication support is under development.
+
+## Website Dark Mode Implementation
+
+The marketing / docs site in this repository now supports a light/dark theme toggle:
+
+- Uses Tailwind CSS `dark` class strategy (`darkMode: 'class'` in `tailwind.config.js`).
+- Initial theme decided from `localStorage.theme` or `prefers-color-scheme: dark`.
+- User preference persisted in `localStorage` (`theme = 'light' | 'dark'`).
+- `ThemeContext` (`frontend/src/context/ThemeContext.jsx`) exposes `theme` and `toggleTheme()`.
+- Toggle button (sun/moon icon) lives in the navbar (`Header.jsx`).
+- Global semantic colors adapt via utility `dark:` variants plus a few custom class overrides in `index.css` (cards, glass effect, code blocks, feature icons).
+
+If you embed additional components, prefer Tailwind color tokens (e.g. `text-secondary-800 dark:text-secondary-100`) instead of hard-coded hex values so they adapt automatically.
 
 ## Troubleshooting
 

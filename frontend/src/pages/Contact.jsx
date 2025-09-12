@@ -159,9 +159,9 @@ const Contact = () => {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-white pt-16">
+      <div className="min-h-screen pt-16">
         {/* Header */}
-        <section className="section-padding bg-gradient-to-br from-primary-50 to-secondary-50">
+        <section className="section-padding bg-gradient-to-br from-primary-50/70 to-secondary-50/60 dark:from-secondary-800/60 dark:to-secondary-900/60 backdrop-blur-sm rounded-b-3xl">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -173,11 +173,11 @@ const Contact = () => {
                 <span>Get in Touch</span>
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
+              <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
                 Contact <span className="gradient-text">Git-ripper</span>
               </h1>
 
-              <p className="text-xl text-secondary-600">
+              <p className="text-xl text-secondary-600 dark:text-secondary-300">
                 Have questions, feedback, or need help? We'd love to hear from
                 you. Reach out to our team and we'll get back to you as soon as
                 possible.

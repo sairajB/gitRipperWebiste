@@ -135,9 +135,9 @@ const Documentation = () => {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-white pt-16">
+      <div className="min-h-screen pt-16">
         {/* Header */}
-        <section className="section-padding bg-gradient-to-br from-primary-50 to-secondary-50">
+        <section className="section-padding bg-gradient-to-br from-primary-50/70 to-secondary-50/60 dark:from-secondary-800/60 dark:to-secondary-900/60 backdrop-blur-sm rounded-b-3xl">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -149,11 +149,11 @@ const Documentation = () => {
                 <span>Documentation</span>
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
+              <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
                 Git-ripper <span className="gradient-text">Documentation</span>
               </h1>
 
-              <p className="text-xl text-secondary-600">
+              <p className="text-xl text-secondary-600 dark:text-secondary-300">
                 Everything you need to know about using Git-ripper to download
                 specific folders from GitHub repositories efficiently.
               </p>
@@ -320,7 +320,7 @@ const Documentation = () => {
                   <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
                     <a
                       href="/examples"
-                      className="bg-white text-primary-600 hover:bg-primary-50 font-medium py-3 px-6 rounded-lg transition-all duration-200">
+                      className="bg-white text-primary-600 hover:bg-primary-50 dark:bg-secondary-900 dark:text-primary-300 dark:hover:bg-secondary-800 font-medium py-3 px-6 rounded-lg transition-all duration-200">
                       View Examples
                     </a>
                     <a

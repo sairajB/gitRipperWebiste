@@ -92,7 +92,7 @@ const Testimonials = () => {
   };
 
   return (
-    <section className="section-padding bg-white">
+    <section className="section-padding">
       <div className="container-custom">
         {/* Header */}
         <motion.div
@@ -106,11 +106,11 @@ const Testimonials = () => {
             <span>Developer Testimonials</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
             Loved by <span className="gradient-text">Developers</span>
           </h2>
 
-          <p className="text-xl text-secondary-600 max-w-3xl mx-auto">
+          <p className="text-xl text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
             Don't just take our word for it. Here's what developers are saying
             about how Git-ripper has improved their workflow and productivity.
           </p>
@@ -139,7 +139,7 @@ const Testimonials = () => {
               </div>
 
               {/* Content */}
-              <blockquote className="text-secondary-700 mb-6 leading-relaxed">
+              <blockquote className="text-secondary-700 dark:text-secondary-300 mb-6 leading-relaxed">
                 "{testimonial.content}"
               </blockquote>
 
@@ -149,10 +149,10 @@ const Testimonials = () => {
                   {testimonial.avatar}
                 </div>
                 <div>
-                  <div className="font-semibold text-secondary-900">
+                  <div className="font-semibold text-secondary-900 dark:text-secondary-100">
                     {testimonial.name}
                   </div>
-                  <div className="text-secondary-600 text-sm">
+                  <div className="text-secondary-600 dark:text-secondary-400 text-sm">
                     {testimonial.role} at {testimonial.company}
                   </div>
                 </div>
@@ -180,15 +180,15 @@ const Testimonials = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
               <div>
-                <div className="text-3xl font-bold mb-1">2.8K</div>
+                <div className="text-3xl font-bold mb-1">3.0K</div>
                 <div className="text-primary-200">Total Downloads</div>
               </div>
               <div>
-                <div className="text-3xl font-bold mb-1">167</div>
+                <div className="text-3xl font-bold mb-1">120</div>
                 <div className="text-primary-200">Weekly Downloads</div>
               </div>
               <div>
-                <div className="text-3xl font-bold mb-1">4</div>
+                <div className="text-3xl font-bold mb-1">6</div>
                 <div className="text-primary-200">GitHub Stars</div>
               </div>
             </div>
@@ -198,7 +198,7 @@ const Testimonials = () => {
                 href="https://github.com/sairajB/git-ripper"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-primary-600 hover:bg-primary-50 font-medium py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center space-x-2">
+                className="bg-white text-primary-600 hover:bg-primary-50 dark:bg-secondary-900 dark:text-primary-300 dark:hover:bg-secondary-800 font-medium py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-primary-900/30 flex items-center space-x-2">
                 <StarIcon className="w-5 h-5" />
                 <span>Star on GitHub</span>
               </a>

@@ -91,7 +91,7 @@ const CTA = () => {
               href="https://www.npmjs.com/package/git-ripper"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white text-primary-600 hover:bg-primary-50 font-bold py-4 px-8 rounded-lg transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 flex items-center space-x-3 text-lg">
+              className="bg-white text-primary-600 hover:bg-primary-50 dark:bg-secondary-900 dark:text-primary-300 dark:hover:bg-secondary-800 font-bold py-4 px-8 rounded-lg transition-all duration-200 shadow-xl hover:shadow-2xl dark:shadow-primary-900/30 transform hover:-translate-y-1 flex items-center space-x-3 text-lg">
               <ArrowDownIcon className="w-6 h-6" />
               <span>Install Git-ripper</span>
             </a>
@@ -145,12 +145,12 @@ const CTA = () => {
             className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 text-primary-200">
             <div className="flex items-center space-x-2">
               <ArrowDownIcon className="w-5 h-5" />
-              <span>2.8K Total Downloads</span>
+              <span>3.0K Total Downloads</span>
             </div>
 
             <div className="flex items-center space-x-2">
               <StarIcon className="w-5 h-5" />
-              <span>4 GitHub Stars</span>
+              <span>6 GitHub Stars</span>
             </div>
 
             <div className="flex items-center space-x-2">

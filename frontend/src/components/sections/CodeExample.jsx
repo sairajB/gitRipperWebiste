@@ -83,7 +83,7 @@ const CodeExample = () => {
   ];
 
   return (
-    <section className="section-padding bg-white">
+    <section className="section-padding">
       <div className="container-custom">
         {/* Header */}
         <motion.div
@@ -97,11 +97,11 @@ const CodeExample = () => {
             <span>Live Examples</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
             See <span className="gradient-text">Git-ripper</span> in Action
           </h2>
 
-          <p className="text-xl text-secondary-600 max-w-3xl mx-auto">
+          <p className="text-xl text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
             Learn how to use Git-ripper with real-world examples. From basic
             folder downloads to advanced features like resume capabilities and
             ZIP archives.
@@ -144,10 +144,10 @@ const CodeExample = () => {
             {/* Command */}
             <div>
               <div className="mb-4">
-                <h3 className="text-2xl font-bold text-secondary-900 mb-2">
+                <h3 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100 mb-2">
                   {examples[activeTab].title}
                 </h3>
-                <p className="text-secondary-600">
+                <p className="text-secondary-600 dark:text-secondary-400">
                   {examples[activeTab].description}
                 </p>
               </div>
@@ -192,10 +192,10 @@ const CodeExample = () => {
             {/* Output */}
             <div>
               <div className="mb-4">
-                <h3 className="text-xl font-semibold text-secondary-900 mb-2">
+                <h3 className="text-xl font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
                   Output
                 </h3>
-                <p className="text-secondary-600 text-sm">
+                <p className="text-secondary-600 dark:text-secondary-400 text-sm">
                   What you'll see when running this command
                 </p>
               </div>
@@ -223,7 +223,7 @@ const CodeExample = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
             className="mt-16">
-            <h3 className="text-2xl font-bold text-secondary-900 mb-8 text-center">
+            <h3 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100 mb-8 text-center">
               More Command Examples
             </h3>
 
@@ -254,10 +254,10 @@ const CodeExample = () => {
                 },
               ].map((example, index) => (
                 <div key={index} className="card">
-                  <h4 className="font-semibold text-secondary-900 mb-2">
+                  <h4 className="font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
                     {example.title}
                   </h4>
-                  <p className="text-secondary-600 text-sm mb-3">
+                  <p className="text-secondary-600 dark:text-secondary-400 text-sm mb-3">
                     {example.description}
                   </p>
                   <div className="bg-secondary-900 rounded p-3">

@@ -82,7 +82,7 @@ const HowItWorks = () => {
   };
 
   return (
-    <section className="section-padding bg-gradient-to-br from-secondary-50 to-primary-50">
+    <section className="section-padding bg-gradient-to-br from-secondary-50 to-primary-50 dark:from-secondary-900 dark:to-secondary-800 transition-colors duration-500">
       <div className="container-custom">
         {/* Header */}
         <motion.div
@@ -96,11 +96,11 @@ const HowItWorks = () => {
             <span>Simple Process</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
             How <span className="gradient-text">Git-ripper</span> Works
           </h2>
 
-          <p className="text-xl text-secondary-600 max-w-3xl mx-auto">
+          <p className="text-xl text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
             Behind the scenes, Git-ripper uses an intelligent four-step process
             to efficiently download only the content you need from GitHub
             repositories.
@@ -138,12 +138,12 @@ const HowItWorks = () => {
                         <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center shadow-lg">
                           <Icon className="w-8 h-8 text-white" />
                         </div>
-                        <h3 className="text-2xl md:text-3xl font-bold text-secondary-900">
+                        <h3 className="text-2xl md:text-3xl font-bold text-secondary-900 dark:text-secondary-100">
                           {step.title}
                         </h3>
                       </div>
 
-                      <p className="text-lg text-secondary-600 mb-6 leading-relaxed">
+                      <p className="text-lg text-secondary-600 dark:text-secondary-300 mb-6 leading-relaxed">
                         {step.description}
                       </p>
 
@@ -153,7 +153,9 @@ const HowItWorks = () => {
                             key={detailIndex}
                             className="flex items-center space-x-3">
                             <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
-                            <span className="text-secondary-700">{detail}</span>
+                            <span className="text-secondary-700 dark:text-secondary-400">
+                              {detail}
+                            </span>
                           </li>
                         ))}
                       </ul>
@@ -187,8 +189,8 @@ const HowItWorks = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           viewport={{ once: true }}
           className="mt-20">
-          <div className="bg-white rounded-2xl shadow-xl p-8 border border-secondary-100">
-            <h3 className="text-2xl font-bold text-secondary-900 mb-6 text-center">
+          <div className="bg-white dark:bg-secondary-800 rounded-2xl shadow-xl p-8 border border-secondary-100 dark:border-secondary-700 transition-colors">
+            <h3 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100 mb-6 text-center">
               Technical Implementation
             </h3>
 
@@ -197,10 +199,10 @@ const HowItWorks = () => {
                 <div className="w-16 h-16 bg-primary-100 text-primary-600 rounded-lg flex items-center justify-center mx-auto mb-4">
                   <MagnifyingGlassIcon className="w-8 h-8" />
                 </div>
-                <h4 className="font-semibold text-secondary-900 mb-2">
+                <h4 className="font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
                   GitHub API
                 </h4>
-                <p className="text-secondary-600 text-sm">
+                <p className="text-secondary-600 dark:text-secondary-400 text-sm">
                   Leverages GitHub's REST API for efficient tree traversal and
                   metadata collection
                 </p>

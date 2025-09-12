@@ -46,9 +46,9 @@ const Hero = () => {
         console.error("Error loading stats:", error);
         // Keep fallback values if API fails
         setStats([
-          { label: "Total Downloads", value: "2.8K", icon: ArrowDownIcon },
-          { label: "GitHub Stars", value: "4", icon: CheckCircleIcon },
-          { label: "Weekly Downloads", value: "167", icon: ClockIcon },
+          { label: "Total Downloads", value: "3.0K", icon: ArrowDownIcon },
+          { label: "GitHub Stars", value: "6", icon: CheckCircleIcon },
+          { label: "Weekly Downloads", value: "120", icon: ClockIcon },
         ]);
       }
     };
@@ -63,9 +63,17 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800 overflow-hidden transition-colors duration-500">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-hero-pattern opacity-40"></div>
+      <div className="absolute inset-0 bg-hero-pattern opacity-40 dark:opacity-10"></div>
+      {/* Dark mode radial overlays */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 hidden dark:block mix-blend-screen"
+        style={{
+          background:
+            "radial-gradient(circle at 25% 30%, rgba(59,130,246,0.25), transparent 60%), radial-gradient(circle at 80% 70%, rgba(14,165,233,0.18), transparent 65%)",
+        }}></div>
 
       {/* Floating Elements */}
       <div className="absolute top-20 left-10 w-20 h-20 bg-primary-200 rounded-full animate-float opacity-60"></div>
@@ -93,7 +101,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-bold text-secondary-900 mb-6 text-shadow">
+            className="text-5xl md:text-7xl font-bold text-secondary-900 dark:text-secondary-100 mb-6 text-shadow">
             Download GitHub
             <span className="block gradient-text">Folders Instantly</span>
           </motion.h1>
@@ -103,7 +111,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-secondary-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+            className="text-xl md:text-2xl text-secondary-600 dark:text-secondary-300 mb-8 max-w-3xl mx-auto leading-relaxed">
             Skip the entire repository clone. Get exactly what you need with
             <span className="font-semibold text-primary-600">
               {" "}
@@ -209,10 +217,12 @@ const Hero = () => {
                   <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-100 text-primary-600 rounded-lg mb-2">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <div className="text-2xl font-bold text-secondary-900">
+                  <div className="text-2xl font-bold text-secondary-900 dark:text-secondary-100">
                     {stat.value}
                   </div>
-                  <div className="text-secondary-600">{stat.label}</div>
+                  <div className="text-secondary-600 dark:text-secondary-400">
+                    {stat.label}
+                  </div>
                 </div>
               );
             })}

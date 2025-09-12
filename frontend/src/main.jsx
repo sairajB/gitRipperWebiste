@@ -6,6 +6,18 @@ import { Toaster } from "react-hot-toast";
 import App from "./App.jsx";
 import "./index.css";
 
+// Initialize theme before app renders to avoid FOUC
+const storedTheme = localStorage.getItem("theme");
+const prefersDark =
+  window.matchMedia &&
+  window.matchMedia("(prefers-color-scheme: dark)").matches;
+const initialTheme = storedTheme ? storedTheme : prefersDark ? "dark" : "light";
+if (initialTheme === "dark") {
+  document.documentElement.classList.add("dark");
+} else {
+  document.documentElement.classList.remove("dark");
+}
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <HelmetProvider>

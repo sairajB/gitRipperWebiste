@@ -93,7 +93,7 @@ const Features = () => {
   };
 
   return (
-    <section id="features" className="section-padding bg-white">
+    <section id="features" className="section-padding">
       <div className="container-custom">
         {/* Header */}
         <motion.div
@@ -107,11 +107,11 @@ const Features = () => {
             <span>Powerful Features</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
             Why Choose <span className="gradient-text">Git-ripper</span>?
           </h2>
 
-          <p className="text-xl text-secondary-600 max-w-3xl mx-auto">
+          <p className="text-xl text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
             Built for developers who value efficiency. Git-ripper combines
             speed, reliability, and ease of use to revolutionize how you
             download GitHub content.
@@ -145,11 +145,11 @@ const Features = () => {
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-xl font-semibold text-secondary-900 mb-3 group-hover:text-primary-600 transition-colors">
+                  <h3 className="text-xl font-semibold text-secondary-900 dark:text-secondary-100 mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-300 transition-colors">
                     {feature.title}
                   </h3>
 
-                  <p className="text-secondary-600 leading-relaxed">
+                  <p className="text-secondary-600 dark:text-secondary-300 leading-relaxed">
                     {feature.description}
                   </p>
                 </div>
@@ -178,12 +178,12 @@ const Features = () => {
                 href="https://www.npmjs.com/package/git-ripper"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-primary-600 hover:bg-primary-50 font-medium py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl">
+                className="bg-white dark:bg-secondary-900 text-primary-600 dark:text-primary-300 hover:bg-primary-50 dark:hover:bg-secondary-800 font-medium py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-primary-900/30">
                 Install Git-ripper
               </a>
               <a
                 href="/docs"
-                className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium py-3 px-8 rounded-lg transition-all duration-200">
+                className="border-2 border-white/80 dark:border-primary-300 text-white dark:text-primary-200 hover:bg-white hover:text-primary-600 dark:hover:bg-primary-400/20 dark:hover:text-primary-200 font-medium py-3 px-8 rounded-lg transition-all duration-200">
                 View Documentation
               </a>
             </div>

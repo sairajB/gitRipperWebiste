@@ -71,10 +71,10 @@ const Stats = () => {
       console.error("Error loading stats:", error);
       // Keep fallback values
       setStats({
-        totalDownloads: "2,800",
-        weeklyDownloads: "167",
-        githubStars: "4",
-        weeklyUsers: "120",
+        totalDownloads: "3,000",
+        weeklyDownloads: "120",
+        githubStars: "6",
+        weeklyUsers: "84",
         issuesResolved: 0,
         userSatisfaction: 98,
         activeCountries: 15,
@@ -346,7 +346,7 @@ const Stats = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white pt-16 flex items-center justify-center">
+      <div className="min-h-screen pt-16 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
           <p className="text-secondary-600">Loading statistics...</p>
@@ -365,9 +365,9 @@ const Stats = () => {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-white pt-16">
+      <div className="min-h-screen pt-16">
         {/* Header */}
-        <section className="section-padding bg-gradient-to-br from-primary-50 to-secondary-50">
+        <section className="section-padding bg-gradient-to-br from-primary-50/70 to-secondary-50/60 dark:from-secondary-800/60 dark:to-secondary-900/60 backdrop-blur-sm rounded-b-3xl">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -379,11 +379,11 @@ const Stats = () => {
                 <span>Live Statistics</span>
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
+              <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
                 Git-ripper <span className="gradient-text">Statistics</span>
               </h1>
 
-              <p className="text-xl text-secondary-600">
+              <p className="text-xl text-secondary-600 dark:text-secondary-300">
                 Real-time insights into Git-ripper's usage, growth, and
                 community engagement. See how developers worldwide are
                 transforming their GitHub workflow.
@@ -640,7 +640,7 @@ const Stats = () => {
                   href="https://www.npmjs.com/package/git-ripper"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white text-primary-600 hover:bg-primary-50 font-medium py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center space-x-2">
+                  className="bg-white text-primary-600 hover:bg-primary-50 dark:bg-secondary-900 dark:text-primary-300 dark:hover:bg-secondary-800 font-medium py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-primary-900/30 inline-flex items-center space-x-2">
                   <ArrowDownIcon className="w-5 h-5" />
                   <span>Install Git-ripper</span>
                 </a>

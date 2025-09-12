@@ -106,10 +106,10 @@ const Statistics = () => {
         setLastUpdated(new Date());
         // Keep fallback values
         setStats({
-          totalDownloads: "2.8K",
-          weeklyDownloads: "167",
-          githubStars: "4",
-          weeklyUsers: "120+",
+          totalDownloads: "3.0K",
+          weeklyDownloads: "120",
+          githubStars: "6",
+          weeklyUsers: "84+",
         });
       }
     };
@@ -212,7 +212,7 @@ const Statistics = () => {
   ];
 
   return (
-    <section className="section-padding bg-gradient-to-br from-secondary-50 to-primary-50">
+    <section className="section-padding bg-gradient-to-br from-secondary-50 to-primary-50 dark:from-secondary-900 dark:to-secondary-800 transition-colors duration-500">
       <div className="container-custom">
         {/* Header */}
         <motion.div
@@ -226,11 +226,11 @@ const Statistics = () => {
             <span>Usage Statistics</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
             Trusted by <span className="gradient-text">Thousands</span>
           </h2>
 
-          <p className="text-xl text-secondary-600 max-w-3xl mx-auto">
+          <p className="text-xl text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
             Git-ripper is growing fast! Join the community of developers who
             have discovered a better way to download GitHub content.
           </p>
@@ -264,11 +264,11 @@ const Statistics = () => {
                   <Icon className="w-8 h-8 text-white" />
                 </div>
 
-                <h3 className="text-3xl font-bold text-secondary-900 mb-1">
+                <h3 className="text-3xl font-bold text-secondary-900 dark:text-secondary-100 mb-1">
                   {stat.value}
                 </h3>
 
-                <p className="text-secondary-600 font-medium mb-2">
+                <p className="text-secondary-600 dark:text-secondary-400 font-medium mb-2">
                   {stat.label}
                 </p>
 
@@ -279,12 +279,12 @@ const Statistics = () => {
                     }`}>
                     {stat.change}
                   </span>
-                  <span className="text-secondary-500 text-sm">
+                  <span className="text-secondary-500 dark:text-secondary-500/70 text-sm">
                     vs last month
                   </span>
                 </div>
 
-                <p className="text-secondary-500 text-xs mt-2">
+                <p className="text-secondary-500 dark:text-secondary-400 text-xs mt-2">
                   {stat.description}
                 </p>
               </motion.div>
@@ -304,10 +304,10 @@ const Statistics = () => {
             <div className="card">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-xl font-bold text-secondary-900">
+                  <h3 className="text-xl font-bold text-secondary-900 dark:text-secondary-100">
                     Download Trend
                   </h3>
-                  <p className="text-secondary-600 text-sm">
+                  <p className="text-secondary-600 dark:text-secondary-400 text-sm">
                     Weekly download statistics over time
                   </p>
                 </div>
@@ -331,14 +331,14 @@ const Statistics = () => {
           <div className="space-y-6">
             {/* Community Growth */}
             <div className="card">
-              <h4 className="font-semibold text-secondary-900 mb-4">
+              <h4 className="font-semibold text-secondary-900 dark:text-secondary-100 mb-4">
                 Community Growth
               </h4>
 
               <div className="space-y-4">
                 <div>
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-secondary-600">
+                    <span className="text-secondary-600 dark:text-secondary-400">
                       GitHub Issues Resolved
                     </span>
                     <span className="font-medium">95%</span>
@@ -352,7 +352,7 @@ const Statistics = () => {
 
                 <div>
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-secondary-600">
+                    <span className="text-secondary-600 dark:text-secondary-400">
                       User Satisfaction
                     </span>
                     <span className="font-medium">98%</span>
@@ -366,7 +366,9 @@ const Statistics = () => {
 
                 <div>
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-secondary-600">Feature Requests</span>
+                    <span className="text-secondary-600 dark:text-secondary-400">
+                      Feature Requests
+                    </span>
                     <span className="font-medium">78%</span>
                   </div>
                   <div className="w-full bg-secondary-200 rounded-full h-2">
@@ -382,7 +384,7 @@ const Statistics = () => {
             <div className="card bg-gradient-to-br from-primary-600 to-primary-800 text-white">
               <h4 className="font-semibold mb-2">Latest Milestone</h4>
               <p className="text-primary-100 text-sm mb-4">
-                We just hit 2,800 total downloads! Thank you to our amazing
+                We just hit 3,000 total downloads! Thank you to our amazing
                 community.
               </p>
               <div className="flex items-center space-x-2 text-primary-200 text-sm">

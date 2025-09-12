@@ -88,7 +88,7 @@ const Testimonials = () => {
   };
 
   return (
-    <section className="section-padding bg-white">
+    <section className="section-padding">
       <div className="container-custom">
         {/* Header */}
         <motion.div
@@ -102,11 +102,11 @@ const Testimonials = () => {
             <span>User Testimonials</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
             Loved by <span className="gradient-text">Developers</span>
           </h2>
 
-          <p className="text-xl text-secondary-600 max-w-3xl mx-auto">
+          <p className="text-xl text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
             Don't just take our word for it. Here's what developers around the
             world are saying about Git-ripper and how it's improved their
             workflow.
@@ -133,7 +133,7 @@ const Testimonials = () => {
               </div>
 
               {/* Quote */}
-              <blockquote className="text-secondary-700 mb-6 leading-relaxed">
+              <blockquote className="text-secondary-700 dark:text-secondary-300 mb-6 leading-relaxed">
                 "{testimonial.content}"
               </blockquote>
 
@@ -145,10 +145,10 @@ const Testimonials = () => {
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div>
-                  <div className="font-semibold text-secondary-900">
+                  <div className="font-semibold text-secondary-900 dark:text-secondary-100">
                     {testimonial.author}
                   </div>
-                  <div className="text-secondary-600 text-sm">
+                  <div className="text-secondary-600 dark:text-secondary-400 text-sm">
                     {testimonial.role}
                   </div>
                   <div className="text-primary-600 text-sm font-medium">
@@ -187,7 +187,7 @@ const Testimonials = () => {
                 <div className="w-8 h-8 bg-primary-400 rounded-full flex items-center justify-center">
                   <UserIcon className="w-5 h-5 text-white" />
                 </div>
-                <span className="font-medium">2,800+ Total Downloads</span>
+                <span className="font-medium">3,000+ Total Downloads</span>
               </div>
             </div>
 
@@ -196,7 +196,7 @@ const Testimonials = () => {
                 href="https://github.com/sairajB/git-ripper"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-primary-600 hover:bg-primary-50 font-medium py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center space-x-2">
+                className="bg-white text-primary-600 hover:bg-primary-50 dark:bg-secondary-900 dark:text-primary-300 dark:hover:bg-secondary-800 font-medium py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-primary-900/30 inline-flex items-center space-x-2">
                 <StarIcon className="w-5 h-5" />
                 <span>Star on GitHub</span>
               </a>
