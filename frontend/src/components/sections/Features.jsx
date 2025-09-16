@@ -103,16 +103,16 @@ const Features = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
           className="text-center mb-16">
-          <div className="inline-flex items-center space-x-2 bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+          <div className="inline-flex items-center space-x-2 bg-primary-100 dark:bg-blue-500/20 text-primary-700 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-4 border border-primary-200 dark:border-blue-500/30">
             <BoltIcon className="w-4 h-4" />
             <span>Powerful Features</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-gray-100 mb-6">
             Why Choose <span className="gradient-text">Git-ripper</span>?
           </h2>
 
-          <p className="text-xl text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
+          <p className="text-xl text-secondary-600 dark:text-gray-300 max-w-3xl mx-auto">
             Built for developers who value efficiency. Git-ripper combines
             speed, reliability, and ease of use to revolutionize how you
             download GitHub content.
@@ -134,23 +134,23 @@ const Features = () => {
                 key={feature.title}
                 variants={itemVariants}
                 className="group relative">
-                <div className="card group-hover:shadow-2xl group-hover:-translate-y-1 h-full">
+                <div className="card group-hover:shadow-2xl dark:group-hover:shadow-black/40 group-hover:-translate-y-1 h-full relative overflow-hidden">
                   {/* Highlight Badge */}
-                  <div className="absolute -top-3 -right-3 bg-gradient-to-r from-accent-400 to-accent-500 text-white text-xs font-medium px-3 py-1 rounded-full">
+                  <div className="absolute -top-3 -right-3 bg-gradient-to-r from-accent-400 to-accent-500 dark:from-yellow-400 dark:to-yellow-500 text-white dark:text-gray-900 text-xs font-medium px-3 py-1 rounded-full shadow-lg">
                     {feature.highlight}
                   </div>
 
                   {/* Icon */}
-                  <div className="feature-icon group-hover:bg-primary-600 group-hover:text-white transition-all duration-300">
+                  <div className="feature-icon group-hover:bg-primary-600 dark:group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
                     <Icon className="w-6 h-6" />
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-xl font-semibold text-secondary-900 dark:text-secondary-100 mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-300 transition-colors">
+                  <h3 className="text-xl font-semibold text-secondary-900 dark:text-gray-100 mb-3 group-hover:text-primary-600 dark:group-hover:text-blue-300 transition-colors">
                     {feature.title}
                   </h3>
 
-                  <p className="text-secondary-600 dark:text-secondary-300 leading-relaxed">
+                  <p className="text-secondary-600 dark:text-gray-300 leading-relaxed">
                     {feature.description}
                   </p>
                 </div>
@@ -166,11 +166,11 @@ const Features = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           viewport={{ once: true }}
           className="text-center mt-16">
-          <div className="bg-gradient-to-r from-primary-600 to-primary-800 rounded-2xl p-8 text-white">
+          <div className="bg-gradient-to-r from-primary-600 to-primary-800 dark:from-blue-600 dark:to-blue-800 rounded-2xl p-8 text-white shadow-2xl dark:shadow-black/40 border border-primary-500/20 dark:border-blue-500/30">
             <h3 className="text-2xl font-bold mb-4">
               Ready to experience the difference?
             </h3>
-            <p className="text-primary-100 mb-6 max-w-2xl mx-auto">
+            <p className="text-primary-100 dark:text-blue-100 mb-6 max-w-2xl mx-auto">
               Join thousands of developers who have already made the switch to
               smarter GitHub downloads.
             </p>
@@ -179,12 +179,12 @@ const Features = () => {
                 href="https://www.npmjs.com/package/git-ripper"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white dark:bg-secondary-900 text-primary-600 dark:text-primary-300 hover:bg-primary-50 dark:hover:bg-secondary-800 font-medium py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-primary-900/30">
+                className="bg-white dark:bg-gray-900 text-primary-600 dark:text-blue-300 hover:bg-primary-50 dark:hover:bg-gray-800 font-medium py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-blue-900/30 hover:scale-105">
                 Install Git-ripper
               </a>
               <Link
                 to="/docs"
-                className="border-2 border-white/80 dark:border-primary-300 text-white dark:text-primary-200 hover:bg-white hover:text-primary-600 dark:hover:bg-primary-400/20 dark:hover:text-primary-200 font-medium py-3 px-8 rounded-lg transition-all duration-200">
+                className="border-2 border-white/80 dark:border-blue-300 text-white dark:text-blue-200 hover:bg-white hover:text-primary-600 dark:hover:bg-blue-400/20 dark:hover:text-blue-100 font-medium py-3 px-8 rounded-lg transition-all duration-200 hover:scale-105">
                 View Documentation
               </Link>
             </div>

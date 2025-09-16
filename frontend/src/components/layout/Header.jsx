@@ -43,8 +43,8 @@ const Header = () => {
       transition={{ duration: 0.5 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "glass shadow-lg backdrop-blur-xl dark:bg-secondary-900/80 dark:border-secondary-700 dark:shadow-black/30"
-          : "bg-transparent dark:bg-secondary-900/60"
+          ? "glass shadow-lg backdrop-blur-xl dark:bg-gray-900/90 dark:border-gray-700 dark:shadow-black/30"
+          : "bg-transparent dark:bg-gray-900/70"
       }`}>
       <nav className="container-custom">
         <div className="flex items-center justify-between h-16">
@@ -52,7 +52,7 @@ const Header = () => {
           <Link
             to="/"
             className="flex items-center space-x-2 text-xl font-bold text-secondary-800 dark:text-secondary-100 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 dark:from-blue-400 dark:to-blue-600 rounded-lg flex items-center justify-center shadow-lg dark:shadow-blue-500/30">
               <CommandLineIcon className="w-5 h-5 text-white" />
             </div>
             <span className="gradient-text">Git-ripper</span>
@@ -70,8 +70,8 @@ const Header = () => {
                   to={item.href}
                   className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? "bg-primary-100 text-primary-700 dark:bg-secondary-700 dark:text-primary-300"
-                      : "text-secondary-600 hover:text-primary-600 hover:bg-primary-50 dark:text-secondary-300 dark:hover:text-primary-300 dark:hover:bg-secondary-700/50"
+                      ? "bg-primary-100 text-primary-700 dark:bg-blue-500/20 dark:text-blue-300 dark:border dark:border-blue-500/30"
+                      : "text-secondary-600 hover:text-primary-600 hover:bg-primary-50 dark:text-gray-300 dark:hover:text-blue-300 dark:hover:bg-blue-500/10"
                   }`}>
                   <Icon className="w-4 h-4" />
                   <span>{item.name}</span>
@@ -85,7 +85,7 @@ const Header = () => {
             <button
               onClick={toggleTheme}
               aria-label="Toggle dark mode"
-              className="p-2 rounded-lg border border-secondary-200 dark:border-secondary-600 text-secondary-600 dark:text-secondary-300 hover:bg-primary-50 dark:hover:bg-secondary-700 transition-colors">
+              className="p-2 rounded-lg border border-secondary-200 dark:border-gray-600 text-secondary-600 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 dark:hover:border-blue-500/50 transition-all duration-200">
               {theme === "dark" ? (
                 <SunIcon className="w-5 h-5" />
               ) : (
@@ -96,7 +96,7 @@ const Header = () => {
               href="https://www.npmjs.com/package/git-ripper"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-outline text-sm dark:border-primary-400 dark:text-primary-300 dark:hover:bg-primary-600/20">
+              className="btn-outline text-sm dark:border-blue-400 dark:text-blue-300 dark:hover:bg-blue-500/20 dark:hover:border-blue-300 transition-all duration-200">
               Install Now
             </a>
           </div>
@@ -133,7 +133,7 @@ const Header = () => {
             height: isMenuOpen ? "auto" : 0,
           }}
           transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden bg-white dark:bg-secondary-800 border-t border-secondary-200 dark:border-secondary-700">
+          className="md:hidden overflow-hidden bg-white dark:bg-gray-900 border-t border-secondary-200 dark:border-gray-700 shadow-lg dark:shadow-black/20">
           <div className="py-4 space-y-2">
             {navigation.map((item) => {
               const Icon = item.icon;
@@ -146,8 +146,8 @@ const Header = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                     isActive
-                      ? "bg-primary-100 text-primary-700 dark:bg-secondary-700 dark:text-primary-300"
-                      : "text-secondary-600 hover:text-primary-600 hover:bg-primary-50 dark:text-secondary-300 dark:hover:text-primary-300 dark:hover:bg-secondary-700/60"
+                      ? "bg-primary-100 text-primary-700 dark:bg-blue-500/20 dark:text-blue-300 dark:border dark:border-blue-500/30"
+                      : "text-secondary-600 hover:text-primary-600 hover:bg-primary-50 dark:text-gray-300 dark:hover:text-blue-300 dark:hover:bg-blue-500/10"
                   }`}>
                   <Icon className="w-5 h-5" />
                   <span>{item.name}</span>
@@ -155,12 +155,12 @@ const Header = () => {
               );
             })}
 
-            <div className="pt-4 border-t border-secondary-200 dark:border-secondary-700">
+            <div className="pt-4 border-t border-secondary-200 dark:border-gray-700">
               <a
                 href="https://www.npmjs.com/package/git-ripper"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full btn-primary text-center text-sm dark:bg-primary-600 dark:hover:bg-primary-500">
+                className="block w-full btn-primary text-center text-sm dark:bg-blue-600 dark:hover:bg-blue-500 dark:shadow-lg dark:shadow-blue-500/20">
                 Install Now
               </a>
             </div>

@@ -64,25 +64,35 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 dark:from-secondary-900 dark:via-secondary-900 dark:to-secondary-800 overflow-hidden transition-colors duration-500">
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden transition-colors duration-500">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-hero-pattern opacity-40 dark:opacity-10"></div>
-      {/* Dark mode radial overlays */}
+      <div className="absolute inset-0 bg-hero-pattern opacity-40 dark:opacity-20"></div>
+
+      {/* Enhanced dark mode overlays */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 hidden dark:block mix-blend-screen"
+        className="pointer-events-none absolute inset-0 hidden dark:block"
         style={{
           background:
-            "radial-gradient(circle at 25% 30%, rgba(59,130,246,0.25), transparent 60%), radial-gradient(circle at 80% 70%, rgba(14,165,233,0.18), transparent 65%)",
+            "radial-gradient(circle at 25% 30%, rgba(96,165,250,0.4), transparent 50%), radial-gradient(circle at 80% 70%, rgba(59,130,246,0.3), transparent 55%), radial-gradient(circle at 60% 10%, rgba(251,191,36,0.15), transparent 40%)",
         }}></div>
 
-      {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-20 h-20 bg-primary-200 rounded-full animate-float opacity-60"></div>
+      {/* Animated gradient mesh */}
       <div
-        className="absolute top-40 right-20 w-16 h-16 bg-accent-200 rounded-full animate-float opacity-60"
+        aria-hidden
+        className="pointer-events-none absolute inset-0 hidden dark:block opacity-30"
+        style={{
+          background:
+            "conic-gradient(from 230.29deg at 51.63% 52.16%, rgba(96,165,250,0.2) 0deg, rgba(59,130,246,0.15) 67.5deg, rgba(251,191,36,0.1) 198.75deg, rgba(96,165,250,0.2) 251.25deg, rgba(96,165,250,0.2) 301.88deg, rgba(96,165,250,0.2) 360deg)",
+        }}></div>
+
+      {/* Enhanced floating Elements */}
+      <div className="absolute top-20 left-10 w-20 h-20 bg-primary-200 dark:bg-blue-500/30 rounded-full animate-float opacity-60 dark:opacity-80 dark:shadow-lg dark:shadow-blue-500/20"></div>
+      <div
+        className="absolute top-40 right-20 w-16 h-16 bg-accent-200 dark:bg-yellow-400/30 rounded-full animate-float opacity-60 dark:opacity-80 dark:shadow-lg dark:shadow-yellow-400/20"
         style={{ animationDelay: "2s" }}></div>
       <div
-        className="absolute bottom-40 left-20 w-12 h-12 bg-secondary-200 rounded-full animate-float opacity-60"
+        className="absolute bottom-40 left-20 w-12 h-12 bg-secondary-200 dark:bg-purple-500/30 rounded-full animate-float opacity-60 dark:opacity-80 dark:shadow-lg dark:shadow-purple-500/20"
         style={{ animationDelay: "4s" }}></div>
 
       <div className="container-custom section-padding relative z-10">
@@ -92,7 +102,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center space-x-2 bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-8">
+            className="inline-flex items-center space-x-2 bg-primary-100 dark:bg-blue-500/20 text-primary-700 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-8 border border-primary-200 dark:border-blue-500/30 dark:shadow-lg dark:shadow-blue-500/10">
             <CommandLineIcon className="w-4 h-4" />
             <span>CLI Tool for Selective Downloads</span>
           </motion.div>
@@ -128,21 +138,21 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             className="mb-8">
-            <div className="bg-secondary-900 rounded-lg p-6 max-w-2xl mx-auto">
+            <div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-6 max-w-2xl mx-auto border border-gray-700 dark:border-gray-800 shadow-2xl dark:shadow-black/50">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-primary-400 text-sm font-medium">
+                <span className="text-emerald-400 text-sm font-medium">
                   INSTALLATION
                 </span>
                 <CopyToClipboard
                   text="npm install -g git-ripper"
                   onCopy={() => handleCopy("install")}>
-                  <button className="text-secondary-400 hover:text-white transition-colors text-sm">
+                  <button className="text-gray-400 hover:text-white transition-colors text-sm">
                     {copiedCommand === "install" ? "Copied!" : "Copy"}
                   </button>
                 </CopyToClipboard>
               </div>
               <div className="font-mono text-left">
-                <span className="text-primary-400">$</span>
+                <span className="text-emerald-400">$</span>
                 <span className="text-green-400 ml-2">
                   npm install -g git-ripper
                 </span>
@@ -156,28 +166,28 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
             className="mb-12">
-            <div className="bg-secondary-900 rounded-lg p-6 max-w-4xl mx-auto">
+            <div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-6 max-w-4xl mx-auto border border-gray-700 dark:border-gray-800 shadow-2xl dark:shadow-black/50">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-primary-400 text-sm font-medium">
+                <span className="text-emerald-400 text-sm font-medium">
                   USAGE
                 </span>
                 <CopyToClipboard
                   text="git-ripper https://github.com/facebook/react/tree/main/packages/react-dom"
                   onCopy={() => handleCopy("usage")}>
-                  <button className="text-secondary-400 hover:text-white transition-colors text-sm">
+                  <button className="text-gray-400 hover:text-white transition-colors text-sm">
                     {copiedCommand === "usage" ? "Copied!" : "Copy"}
                   </button>
                 </CopyToClipboard>
               </div>
               <div className="font-mono text-left text-sm md:text-base">
                 <div className="mb-2">
-                  <span className="text-primary-400">$</span>
+                  <span className="text-emerald-400">$</span>
                   <span className="text-green-400 ml-2">git-ripper</span>
-                  <span className="text-accent-400 ml-2">
+                  <span className="text-yellow-400 ml-2">
                     https://github.com/facebook/react/tree/main/packages/react-dom
                   </span>
                 </div>
-                <div className="text-secondary-400 text-xs">
+                <div className="text-gray-400 text-xs">
                   ✓ Downloading react-dom package... (45 files, 2.3MB)
                 </div>
               </div>
@@ -215,13 +225,13 @@ const Hero = () => {
               const Icon = stat.icon;
               return (
                 <div key={stat.label} className="text-center">
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-100 text-primary-600 rounded-lg mb-2">
+                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-100 dark:bg-blue-500/20 text-primary-600 dark:text-blue-400 rounded-lg mb-2 border border-primary-200 dark:border-blue-500/30 dark:shadow-lg dark:shadow-blue-500/10">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <div className="text-2xl font-bold text-secondary-900 dark:text-secondary-100">
+                  <div className="text-2xl font-bold text-secondary-900 dark:text-gray-100">
                     {stat.value}
                   </div>
-                  <div className="text-secondary-600 dark:text-secondary-400">
+                  <div className="text-secondary-600 dark:text-gray-400">
                     {stat.label}
                   </div>
                 </div>
@@ -238,7 +248,7 @@ const Hero = () => {
         transition={{ duration: 1, delay: 1.5 }}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
         <div className="animate-bounce">
-          <ArrowDownIcon className="w-6 h-6 text-secondary-400" />
+          <ArrowDownIcon className="w-6 h-6 text-secondary-400 dark:text-gray-400" />
         </div>
       </motion.div>
     </section>

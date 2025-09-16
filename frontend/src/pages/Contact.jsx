@@ -174,11 +174,11 @@ const Contact = () => {
                 <span>Get in Touch</span>
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
+              <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-white mb-6">
                 Contact <span className="gradient-text">Git-ripper</span>
               </h1>
 
-              <p className="text-xl text-secondary-600 dark:text-secondary-300">
+              <p className="text-xl text-secondary-600 dark:text-gray-300">
                 Have questions, feedback, or need help? We'd love to hear from
                 you. Reach out to our team and we'll get back to you as soon as
                 possible.
@@ -216,15 +216,15 @@ const Contact = () => {
                       <Icon className="w-8 h-8 text-white" />
                     </div>
 
-                    <h3 className="text-xl font-semibold text-secondary-900 mb-2 group-hover:text-primary-600 transition-colors">
+                    <h3 className="text-xl font-semibold text-secondary-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-blue-300 transition-colors">
                       {method.title}
                     </h3>
 
-                    <p className="text-secondary-600 mb-3 text-sm">
+                    <p className="text-secondary-600 dark:text-gray-300 mb-3 text-sm">
                       {method.description}
                     </p>
 
-                    <span className="text-primary-600 font-medium text-sm">
+                    <span className="text-primary-600 dark:text-blue-400 font-medium text-sm">
                       {method.value}
                     </span>
                   </motion.a>
@@ -240,7 +240,7 @@ const Contact = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}>
                 <div className="card">
-                  <h2 className="text-2xl font-bold text-secondary-900 mb-6">
+                  <h2 className="text-2xl font-bold text-secondary-900 dark:text-white mb-6">
                     Send us a Message
                   </h2>
 
@@ -249,7 +249,7 @@ const Contact = () => {
                     <div>
                       <label
                         htmlFor="name"
-                        className="block text-sm font-medium text-secondary-700 mb-2">
+                        className="block text-sm font-medium text-secondary-700 dark:text-gray-300 mb-2">
                         Your Name *
                       </label>
                       <div className="relative">
@@ -259,14 +259,14 @@ const Contact = () => {
                           name="name"
                           value={formData.name}
                           onChange={handleChange}
-                          className={`w-full px-4 py-3 pl-12 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors ${
+                          className={`w-full px-4 py-3 pl-12 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors bg-white dark:bg-gray-700 text-secondary-900 dark:text-white ${
                             errors.name
                               ? "border-red-500"
-                              : "border-secondary-300"
+                              : "border-secondary-300 dark:border-gray-600"
                           }`}
                           placeholder="Enter your full name"
                         />
-                        <UserIcon className="w-5 h-5 text-secondary-400 absolute left-4 top-1/2 transform -translate-y-1/2" />
+                        <UserIcon className="w-5 h-5 text-secondary-400 dark:text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2" />
                       </div>
                       {errors.name && (
                         <p className="text-red-500 text-sm mt-1">
@@ -279,7 +279,7 @@ const Contact = () => {
                     <div>
                       <label
                         htmlFor="email"
-                        className="block text-sm font-medium text-secondary-700 mb-2">
+                        className="block text-sm font-medium text-secondary-700 dark:text-gray-300 mb-2">
                         Email Address *
                       </label>
                       <div className="relative">
@@ -289,14 +289,14 @@ const Contact = () => {
                           name="email"
                           value={formData.email}
                           onChange={handleChange}
-                          className={`w-full px-4 py-3 pl-12 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors ${
+                          className={`w-full px-4 py-3 pl-12 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors bg-white dark:bg-gray-700 text-secondary-900 dark:text-white ${
                             errors.email
                               ? "border-red-500"
-                              : "border-secondary-300"
+                              : "border-secondary-300 dark:border-gray-600"
                           }`}
                           placeholder="your.email@example.com"
                         />
-                        <EnvelopeIcon className="w-5 h-5 text-secondary-400 absolute left-4 top-1/2 transform -translate-y-1/2" />
+                        <EnvelopeIcon className="w-5 h-5 text-secondary-400 dark:text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2" />
                       </div>
                       {errors.email && (
                         <p className="text-red-500 text-sm mt-1">
@@ -309,7 +309,7 @@ const Contact = () => {
                     <div>
                       <label
                         htmlFor="subject"
-                        className="block text-sm font-medium text-secondary-700 mb-2">
+                        className="block text-sm font-medium text-secondary-700 dark:text-gray-300 mb-2">
                         Subject *
                       </label>
                       <input
@@ -318,10 +318,10 @@ const Contact = () => {
                         name="subject"
                         value={formData.subject}
                         onChange={handleChange}
-                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors ${
+                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors bg-white dark:bg-gray-700 text-secondary-900 dark:text-white ${
                           errors.subject
                             ? "border-red-500"
-                            : "border-secondary-300"
+                            : "border-secondary-300 dark:border-gray-600"
                         }`}
                         placeholder="What's this about?"
                       />
@@ -336,7 +336,7 @@ const Contact = () => {
                     <div>
                       <label
                         htmlFor="message"
-                        className="block text-sm font-medium text-secondary-700 mb-2">
+                        className="block text-sm font-medium text-secondary-700 dark:text-gray-300 mb-2">
                         Message *
                       </label>
                       <textarea
@@ -345,10 +345,10 @@ const Contact = () => {
                         value={formData.message}
                         onChange={handleChange}
                         rows={6}
-                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none ${
+                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none bg-white dark:bg-gray-700 text-secondary-900 dark:text-white ${
                           errors.message
                             ? "border-red-500"
-                            : "border-secondary-300"
+                            : "border-secondary-300 dark:border-gray-600"
                         }`}
                         placeholder="Tell us more about your question or feedback..."
                       />
@@ -385,7 +385,7 @@ const Contact = () => {
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}>
-                <h2 className="text-2xl font-bold text-secondary-900 mb-8">
+                <h2 className="text-2xl font-bold text-secondary-900 dark:text-white mb-8">
                   Frequently Asked Questions
                 </h2>
 
@@ -397,11 +397,11 @@ const Contact = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
                       className="card">
-                      <h3 className="font-semibold text-secondary-900 mb-3 flex items-start space-x-2">
-                        <CheckCircleIcon className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
+                      <h3 className="font-semibold text-secondary-900 dark:text-white mb-3 flex items-start space-x-2">
+                        <CheckCircleIcon className="w-5 h-5 text-primary-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
                         <span>{faq.question}</span>
                       </h3>
-                      <p className="text-secondary-600 leading-relaxed pl-7">
+                      <p className="text-secondary-600 dark:text-gray-300 leading-relaxed pl-7">
                         {faq.answer}
                       </p>
                     </motion.div>
@@ -413,9 +413,9 @@ const Contact = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 1.2 }}
-                  className="mt-8 p-6 bg-gradient-to-r from-primary-600 to-primary-800 rounded-xl text-white">
+                  className="mt-8 p-6 bg-gradient-to-r from-primary-600 to-primary-800 dark:from-blue-600 dark:to-blue-800 rounded-xl text-white shadow-xl">
                   <h3 className="font-semibold mb-2">Still need help?</h3>
-                  <p className="text-primary-100 text-sm mb-4">
+                  <p className="text-primary-100 dark:text-blue-100 text-sm mb-4">
                     Check out our documentation or browse community discussions
                     for more answers.
                   </p>

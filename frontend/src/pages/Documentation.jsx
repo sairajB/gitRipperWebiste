@@ -150,11 +150,11 @@ const Documentation = () => {
                 <span>Documentation</span>
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
+              <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-white mb-6">
                 Git-ripper <span className="gradient-text">Documentation</span>
               </h1>
 
-              <p className="text-xl text-secondary-600 dark:text-secondary-300">
+              <p className="text-xl text-secondary-600 dark:text-gray-300">
                 Everything you need to know about using Git-ripper to download
                 specific folders from GitHub repositories efficiently.
               </p>
@@ -170,8 +170,8 @@ const Documentation = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="bg-secondary-50 rounded-xl p-8 mb-16">
-                <h2 className="text-2xl font-bold text-secondary-900 mb-6">
+                className="bg-secondary-50 dark:bg-gray-800 rounded-xl p-8 mb-16">
+                <h2 className="text-2xl font-bold text-secondary-900 dark:text-white mb-6">
                   Table of Contents
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -181,11 +181,11 @@ const Documentation = () => {
                       <a
                         key={section.id}
                         href={`#${section.id}`}
-                        className="flex items-center space-x-3 p-4 bg-white rounded-lg hover:shadow-md transition-all duration-200 group">
-                        <div className="w-10 h-10 bg-primary-100 text-primary-600 rounded-lg flex items-center justify-center group-hover:bg-primary-600 group-hover:text-white transition-all duration-200">
+                        className="flex items-center space-x-3 p-4 bg-white dark:bg-gray-700 rounded-lg hover:shadow-md transition-all duration-200 group">
+                        <div className="w-10 h-10 bg-primary-100 dark:bg-blue-500/20 text-primary-600 dark:text-blue-400 rounded-lg flex items-center justify-center group-hover:bg-primary-600 dark:group-hover:bg-blue-500 group-hover:text-white transition-all duration-200">
                           <Icon className="w-5 h-5" />
                         </div>
-                        <span className="font-medium text-secondary-900 group-hover:text-primary-600 transition-colors">
+                        <span className="font-medium text-secondary-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-blue-300 transition-colors">
                           {section.title}
                         </span>
                       </a>
@@ -209,10 +209,10 @@ const Documentation = () => {
                       viewport={{ once: true }}
                       className="scroll-mt-24">
                       <div className="flex items-center space-x-3 mb-8">
-                        <div className="w-12 h-12 bg-primary-600 text-white rounded-xl flex items-center justify-center">
+                        <div className="w-12 h-12 bg-primary-600 dark:bg-blue-500 text-white rounded-xl flex items-center justify-center">
                           <Icon className="w-6 h-6" />
                         </div>
-                        <h2 className="text-3xl font-bold text-secondary-900">
+                        <h2 className="text-3xl font-bold text-secondary-900 dark:text-white">
                           {section.title}
                         </h2>
                       </div>
@@ -221,23 +221,23 @@ const Documentation = () => {
                         {section.content.map((item, itemIndex) => (
                           <div key={itemIndex} className="card">
                             {item.subtitle && (
-                              <h3 className="text-xl font-semibold text-secondary-900 mb-4">
+                              <h3 className="text-xl font-semibold text-secondary-900 dark:text-white mb-4">
                                 {item.subtitle}
                               </h3>
                             )}
 
                             {item.text && (
-                              <p className="text-secondary-700 mb-4 leading-relaxed">
+                              <p className="text-secondary-700 dark:text-gray-300 mb-4 leading-relaxed">
                                 {item.text}
                               </p>
                             )}
 
                             {item.code && (
-                              <div className="bg-secondary-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                              <div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-4 font-mono text-sm overflow-x-auto border border-gray-700 dark:border-gray-800">
                                 <div className="text-green-400">
                                   {item.code.includes("$") ? (
                                     <>
-                                      <span className="text-primary-400">
+                                      <span className="text-emerald-400">
                                         $
                                       </span>
                                       <span className="ml-2">
@@ -259,12 +259,12 @@ const Documentation = () => {
                               <div className="overflow-x-auto">
                                 <table className="w-full border-collapse">
                                   <thead>
-                                    <tr className="bg-secondary-50">
+                                    <tr className="bg-secondary-50 dark:bg-gray-700">
                                       {item.table[0].map(
                                         (header, headerIndex) => (
                                           <th
                                             key={headerIndex}
-                                            className="text-left p-4 font-semibold text-secondary-900 border-b border-secondary-200">
+                                            className="text-left p-4 font-semibold text-secondary-900 dark:text-white border-b border-secondary-200 dark:border-gray-600">
                                             {header}
                                           </th>
                                         )
@@ -277,13 +277,13 @@ const Documentation = () => {
                                       .map((row, rowIndex) => (
                                         <tr
                                           key={rowIndex}
-                                          className="border-b border-secondary-100">
+                                          className="border-b border-secondary-100 dark:border-gray-600">
                                           {row.map((cell, cellIndex) => (
                                             <td
                                               key={cellIndex}
-                                              className="p-4 text-secondary-700">
+                                              className="p-4 text-secondary-700 dark:text-gray-300">
                                               {cellIndex === 0 ? (
-                                                <code className="bg-secondary-100 px-2 py-1 rounded text-sm">
+                                                <code className="bg-secondary-100 dark:bg-gray-700 px-2 py-1 rounded text-sm text-secondary-900 dark:text-gray-200">
                                                   {cell}
                                                 </code>
                                               ) : (
@@ -312,23 +312,23 @@ const Documentation = () => {
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
                 className="mt-16 text-center">
-                <div className="bg-gradient-to-r from-primary-600 to-primary-800 rounded-2xl p-8 text-white">
+                <div className="bg-gradient-to-r from-primary-600 to-primary-800 dark:from-blue-600 dark:to-blue-800 rounded-2xl p-8 text-white shadow-xl">
                   <h3 className="text-2xl font-bold mb-4">Need More Help?</h3>
-                  <p className="text-primary-100 mb-6 max-w-2xl mx-auto">
+                  <p className="text-primary-100 dark:text-blue-100 mb-6 max-w-2xl mx-auto">
                     Can't find what you're looking for? Check out our examples
                     page or reach out to the community.
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
                     <Link
                       to="/examples"
-                      className="bg-white text-primary-600 hover:bg-primary-50 dark:bg-secondary-900 dark:text-primary-300 dark:hover:bg-secondary-800 font-medium py-3 px-6 rounded-lg transition-all duration-200">
+                      className="bg-white text-primary-600 hover:bg-primary-50 dark:bg-gray-900 dark:text-blue-300 dark:hover:bg-gray-800 font-medium py-3 px-6 rounded-lg transition-all duration-200 shadow-lg">
                       View Examples
                     </Link>
                     <a
                       href="https://github.com/sairajB/git-ripper/issues"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium py-3 px-6 rounded-lg transition-all duration-200">
+                      className="border-2 border-white text-white hover:bg-white hover:text-primary-600 dark:hover:bg-blue-400/20 dark:hover:text-blue-100 font-medium py-3 px-6 rounded-lg transition-all duration-200">
                       Report Issues
                     </a>
                   </div>
