@@ -52,11 +52,16 @@ const Stats = () => {
   });
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState(new Date());
+  const [dataSource, setDataSource] = useState({
+    npm: "loading",
+    github: "loading",
+  });
 
   const fetchStats = async () => {
     try {
       setLoading(true);
       const data = await StatsService.getCombinedStats();
+
       setStats({
         totalDownloads: data.totalDownloads.toLocaleString(),
         weeklyDownloads: data.weeklyDownloads.toString(),
@@ -66,6 +71,9 @@ const Stats = () => {
         userSatisfaction: data.userSatisfaction,
         activeCountries: data.activeCountries,
       });
+
+      // Update data source information
+      setDataSource(data.dataSource || { npm: "unknown", github: "unknown" });
       setLastUpdated(new Date());
     } catch (error) {
       console.error("Error loading stats:", error);
@@ -79,6 +87,7 @@ const Stats = () => {
         userSatisfaction: 98,
         activeCountries: 15,
       });
+      setDataSource({ npm: "fallback", github: "fallback" });
     } finally {
       setLoading(false);
     }
@@ -396,6 +405,14 @@ const Stats = () => {
                   className="text-primary-600 hover:text-primary-700 font-medium">
                   Refresh Data
                 </button>
+                {(dataSource.npm === "fallback" ||
+                  dataSource.github === "fallback") && (
+                  <span className="text-amber-600 text-xs">
+                    ({dataSource.npm === "fallback" ? "NPM " : ""}
+                    {dataSource.github === "fallback" ? "GitHub " : ""}fallback
+                    data)
+                  </span>
+                )}
               </div>
             </motion.div>
           </div>

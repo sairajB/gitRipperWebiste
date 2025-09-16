@@ -1,6 +1,6 @@
 const config = {
   apiUrl: import.meta.env.PROD
-    ? "https://your-vercel-domain.vercel.app/api"
+    ? "/api" // Use relative URLs in production
     : "http://localhost:5000/api",
   environment: import.meta.env.MODE,
 };

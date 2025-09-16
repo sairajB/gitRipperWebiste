@@ -1,15 +1,28 @@
 // API service for fetching real-time statistics
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE_URL = import.meta.env.PROD
+  ? "" // In production, use relative URLs (same domain)
+  : import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 class StatsService {
   static async getNpmStats(packageName = "git-ripper") {
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/npm/stats/${packageName}`
-      );
+      const url = `${API_BASE_URL}/api/npm/stats/${packageName}`;
+      console.log("Fetching NPM stats from:", url);
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(
+          `HTTP error! status: ${response.status} - ${response.statusText}`
+        );
       }
+
       const data = await response.json();
       console.log("NPM API Response:", {
         totalDownloads: data.totalDownloads,
@@ -33,12 +46,23 @@ class StatsService {
 
   static async getGithubStats(owner = "sairajB", repo = "git-ripper") {
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/github/repo/${owner}/${repo}`
-      );
+      const url = `${API_BASE_URL}/api/github/repo/${owner}/${repo}`;
+      console.log("Fetching GitHub stats from:", url);
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(
+          `HTTP error! status: ${response.status} - ${response.statusText}`
+        );
       }
+
       const data = await response.json();
       console.log("GitHub API Response:", {
         stars: data.stars,
