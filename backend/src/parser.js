@@ -1,3 +1,4 @@
+// Simplified parser module for web interface
 export function parseGitHubUrl(url) {
   // Validate the URL format
   if (!url || typeof url !== "string") {
@@ -18,7 +19,7 @@ export function parseGitHubUrl(url) {
   // Extract components from the matched pattern
   const owner = decodeURIComponent(match[1]);
   const repo = decodeURIComponent(match[2]);
-  const branch = match[3] ? decodeURIComponent(match[3]) : ""; // Branch is an empty string if not present
+  const branch = match[3] ? decodeURIComponent(match[3]) : "main"; // Default to main if not present
   const folderPath = match[4] ? decodeURIComponent(match[4]) : ""; // Empty string if no folder path
 
   // Additional validation

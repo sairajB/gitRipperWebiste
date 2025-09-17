@@ -13,6 +13,7 @@ import Documentation from "./pages/Documentation";
 import Examples from "./pages/Examples";
 import Stats from "./pages/Stats";
 import Contact from "./pages/Contact";
+import WebInterface from "./pages/WebInterface";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
             <Route path="/examples" element={<Examples />} />
             <Route path="/stats" element={<Stats />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/web-interface" element={<WebInterface />} />
           </Routes>
         </motion.main>
         <Footer />

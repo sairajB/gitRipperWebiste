@@ -13,6 +13,9 @@ import npmStatsRouter from "./routes/npmStats.js";
 import githubRouter from "./routes/github.js";
 import contactRouter from "./routes/contact.js";
 
+// Import git-ripper modules
+import gitRipperRouter from "./routes/gitRipper.js";
+
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -60,6 +63,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/npm", npmStatsRouter);
 app.use("/api/github", githubRouter);
 app.use("/api/contact", contactRouter);
+app.use("/api/git-ripper", gitRipperRouter);
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {

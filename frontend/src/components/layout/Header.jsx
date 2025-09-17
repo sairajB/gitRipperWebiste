@@ -11,6 +11,7 @@ import {
   EnvelopeIcon,
   SunIcon,
   MoonIcon,
+  ArrowDownTrayIcon,
 } from "@heroicons/react/24/outline";
 import { useTheme } from "../../context/ThemeContext";
 
@@ -32,6 +33,7 @@ const Header = () => {
     { name: "Home", href: "/", icon: CommandLineIcon },
     { name: "Documentation", href: "/docs", icon: DocumentTextIcon },
     { name: "Examples", href: "/examples", icon: CodeBracketIcon },
+    { name: "Web Interface", href: "/web-interface", icon: ArrowDownTrayIcon },
     { name: "Stats", href: "/stats", icon: ChartBarIcon },
     { name: "Contact", href: "/contact", icon: EnvelopeIcon },
   ];
