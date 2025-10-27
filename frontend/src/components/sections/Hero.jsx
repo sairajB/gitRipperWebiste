@@ -137,7 +137,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="mb-8">
+            className="mb-8 hidden md:block">
             <div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-6 max-w-2xl mx-auto border border-gray-700 dark:border-gray-800 shadow-2xl dark:shadow-black/50">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-emerald-400 text-sm font-medium">
@@ -165,7 +165,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="mb-12">
+            className="mb-12 hidden md:block">
             <div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-6 max-w-4xl mx-auto border border-gray-700 dark:border-gray-800 shadow-2xl dark:shadow-black/50">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-emerald-400 text-sm font-medium">

@@ -53,8 +53,8 @@ const Header = () => {
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center space-x-2 text-xl font-bold text-secondary-800 dark:text-secondary-100 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 dark:from-blue-400 dark:to-blue-600 rounded-lg flex items-center justify-center shadow-lg dark:shadow-blue-500/30">
+            className="flex items-center space-x-2 text-lg md:text-xl font-bold text-secondary-800 dark:text-secondary-100 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            <div className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-primary-500 to-primary-700 dark:from-blue-400 dark:to-blue-600 rounded-lg flex items-center justify-center shadow-lg dark:shadow-blue-500/30">
               <CommandLineIcon className="w-5 h-5 text-white" />
             </div>
             <span className="gradient-text">Git-ripper</span>

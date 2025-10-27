@@ -158,7 +158,7 @@ const WebInterface = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto">
+          className="max-w-4xl mx-auto px-4 sm:px-6">
           {/* Header */}
           <div className="text-center mb-12">
             <motion.div
@@ -173,7 +173,7 @@ const WebInterface = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-4xl lg:text-5xl font-bold mb-4 gradient-text">
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 gradient-text">
               Git-Ripper Web Interface
             </motion.h1>
 
@@ -181,7 +181,7 @@ const WebInterface = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="text-xl text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
+              className="text-base sm:text-lg text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
               Download specific folders from GitHub repositories without cloning
               the entire repo. Simple, fast, and user-friendly.
             </motion.p>
@@ -192,13 +192,13 @@ const WebInterface = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="card glass backdrop-blur-xl">
+            className="card glass backdrop-blur-xl p-4 sm:p-6">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* URL Input */}
               <div>
                 <label
                   htmlFor="githubUrl"
-                  className="block text-sm font-semibold text-secondary-900 dark:text-secondary-100 mb-3">
+                  className="block text-xs sm:text-sm font-semibold text-secondary-900 dark:text-secondary-100 mb-2 sm:mb-3">
                   <LinkIcon className="w-5 h-5 inline-block mr-2" />
                   GitHub Folder URL
                 </label>
@@ -208,8 +208,8 @@ const WebInterface = () => {
                   id="githubUrl"
                   value={url}
                   onChange={handleInputChange}
-                  placeholder="https://github.com/owner/repo/tree/branch/folder"
-                  className={`w-full px-4 py-3 border-2 rounded-xl bg-white dark:bg-secondary-800 text-secondary-900 dark:text-secondary-100 placeholder-secondary-500 dark:placeholder-secondary-400 transition-all duration-200 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 ${
+                  placeholder="github.com/owner/repo/tree/branch/folder"
+                  className={`w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base border-2 rounded-xl bg-white dark:bg-secondary-800 text-secondary-900 dark:text-secondary-100 placeholder-secondary-500 dark:placeholder-secondary-400 transition-all duration-200 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 ${
                     status.type === "error"
                       ? "border-red-300 dark:border-red-600"
                       : "border-secondary-200 dark:border-secondary-600"
@@ -218,8 +218,8 @@ const WebInterface = () => {
                 />
 
                 {/* Example URLs */}
-                <div className="mt-4 p-4 bg-secondary-50 dark:bg-secondary-800/50 rounded-xl border-l-4 border-primary-500">
-                  <h4 className="text-sm font-semibold text-secondary-900 dark:text-secondary-100 mb-3">
+                <div className="mt-4 p-3 sm:p-4 bg-secondary-50 dark:bg-secondary-800/50 rounded-xl border-l-4 border-primary-500">
+                  <h4 className="text-xs sm:text-sm font-semibold text-secondary-900 dark:text-secondary-100 mb-2 sm:mb-3">
                     Example URLs:
                   </h4>
                   <div className="space-y-2">
@@ -228,7 +228,7 @@ const WebInterface = () => {
                         key={index}
                         type="button"
                         onClick={() => handleExampleClick(exampleUrl)}
-                        className="block w-full text-left text-sm font-mono text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 break-all transition-colors duration-200">
+                        className="block w-full text-left text-xs sm:text-sm font-mono text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 break-all transition-colors duration-200 leading-relaxed">
                         {exampleUrl}
                       </button>
                     ))}
@@ -240,7 +240,7 @@ const WebInterface = () => {
               <button
                 type="submit"
                 disabled={isDownloading}
-                className="btn-primary w-full py-4 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
+                className="btn-primary w-full py-3 sm:py-4 text-base sm:text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
                 {isDownloading ? (
                   <div className="flex items-center justify-center space-x-3">
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -261,7 +261,7 @@ const WebInterface = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
-                className={`mt-6 p-4 rounded-xl border-l-4 ${
+                className={`mt-6 p-3 sm:p-4 rounded-xl border-l-4 break-words ${
                   status.type === "success"
                     ? "bg-green-50 dark:bg-green-900/20 border-green-500 text-green-800 dark:text-green-200"
                     : status.type === "error"
@@ -275,7 +275,9 @@ const WebInterface = () => {
                   {status.type === "error" && (
                     <ExclamationCircleIcon className="w-5 h-5 flex-shrink-0" />
                   )}
-                  <span className="font-medium">{status.message}</span>
+                  <span className="font-medium text-sm sm:text-base break-words">
+                    {status.message}
+                  </span>
                 </div>
               </motion.div>
             )}
@@ -304,7 +306,7 @@ const WebInterface = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 px-2 sm:px-0">
             <div className="text-center">
               <div className="feature-icon mx-auto">
                 <svg
@@ -320,10 +322,10 @@ const WebInterface = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
+              <h3 className="text-lg sm:text-xl font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
                 Lightning Fast
               </h3>
-              <p className="text-secondary-600 dark:text-secondary-400">
+              <p className="text-sm sm:text-base text-secondary-600 dark:text-secondary-400">
                 Download only what you need without cloning entire repositories
               </p>
             </div>
@@ -343,10 +345,10 @@ const WebInterface = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
+              <h3 className="text-lg sm:text-xl font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
                 Safe & Secure
               </h3>
-              <p className="text-secondary-600 dark:text-secondary-400">
+              <p className="text-sm sm:text-base text-secondary-600 dark:text-secondary-400">
                 Works with public repositories, your data stays private
               </p>
             </div>
@@ -366,10 +368,10 @@ const WebInterface = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
+              <h3 className="text-lg sm:text-xl font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
                 User Friendly
               </h3>
-              <p className="text-secondary-600 dark:text-secondary-400">
+              <p className="text-sm sm:text-base text-secondary-600 dark:text-secondary-400">
                 No command line needed, just paste the URL and download
               </p>
             </div>

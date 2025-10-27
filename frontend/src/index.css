@@ -58,6 +58,7 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   body {
@@ -71,6 +72,7 @@
     );
     background-attachment: fixed;
     transition: background-color 0.35s ease, color 0.35s ease;
+    overflow-x: hidden;
   }
 
   /* Custom scrollbar */
@@ -224,7 +226,7 @@
   }
 
   .section-padding {
-    @apply py-16 px-4 sm:px-6 lg:px-8;
+    @apply py-12 sm:py-16 px-4 sm:px-6 lg:px-8;
   }
 
   .container-custom {
