@@ -165,7 +165,7 @@ const WebInterface = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="inline-flex items-center justify-center w-16 h-16 mb-6 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl shadow-lg dark:shadow-primary-500/25">
+              className="inline-flex items-center justify-center w-16 h-16 mb-6 bg-gradient-to-br from-primary-500 to-primary-600 dark:from-blue-500 dark:to-blue-700 rounded-2xl shadow-lg dark:shadow-blue-500/25">
               <ArrowDownTrayIcon className="w-8 h-8 text-white" />
             </motion.div>
 
@@ -181,7 +181,7 @@ const WebInterface = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="text-base sm:text-lg text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
+              className="text-base sm:text-lg text-secondary-600 dark:text-gray-300 max-w-3xl mx-auto">
               Download specific folders from GitHub repositories without cloning
               the entire repo. Simple, fast, and user-friendly.
             </motion.p>
@@ -192,13 +192,13 @@ const WebInterface = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="card glass backdrop-blur-xl p-4 sm:p-6">
+            className="glass p-6 sm:p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* URL Input */}
               <div>
                 <label
                   htmlFor="githubUrl"
-                  className="block text-xs sm:text-sm font-semibold text-secondary-900 dark:text-secondary-100 mb-2 sm:mb-3">
+                  className="block text-xs sm:text-sm font-semibold text-secondary-900 dark:text-gray-100 mb-2 sm:mb-3">
                   <LinkIcon className="w-5 h-5 inline-block mr-2" />
                   GitHub Folder URL
                 </label>
@@ -209,17 +209,17 @@ const WebInterface = () => {
                   value={url}
                   onChange={handleInputChange}
                   placeholder="github.com/owner/repo/tree/branch/folder"
-                  className={`w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base border-2 rounded-xl bg-white dark:bg-secondary-800 text-secondary-900 dark:text-secondary-100 placeholder-secondary-500 dark:placeholder-secondary-400 transition-all duration-200 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 ${
+                  className={`w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base border-2 rounded-xl bg-white dark:bg-gray-800 text-secondary-900 dark:text-gray-100 placeholder-secondary-500 dark:placeholder-gray-400 transition-all duration-200 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 dark:focus:border-blue-400 ${
                     status.type === "error"
                       ? "border-red-300 dark:border-red-600"
-                      : "border-secondary-200 dark:border-secondary-600"
+                      : "border-secondary-200 dark:border-gray-600"
                   }`}
                   required
                 />
 
                 {/* Example URLs */}
-                <div className="mt-4 p-3 sm:p-4 bg-secondary-50 dark:bg-secondary-800/50 rounded-xl border-l-4 border-primary-500">
-                  <h4 className="text-xs sm:text-sm font-semibold text-secondary-900 dark:text-secondary-100 mb-2 sm:mb-3">
+                <div className="mt-4 p-3 sm:p-4 bg-secondary-50 dark:bg-gray-800/50 rounded-xl border-l-4 border-primary-500 dark:border-blue-500">
+                  <h4 className="text-xs sm:text-sm font-semibold text-secondary-900 dark:text-gray-100 mb-2 sm:mb-3">
                     Example URLs:
                   </h4>
                   <div className="space-y-2">
@@ -228,7 +228,7 @@ const WebInterface = () => {
                         key={index}
                         type="button"
                         onClick={() => handleExampleClick(exampleUrl)}
-                        className="block w-full text-left text-xs sm:text-sm font-mono text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 break-all transition-colors duration-200 leading-relaxed">
+                        className="block w-full text-left text-xs sm:text-sm font-mono text-primary-600 dark:text-blue-400 hover:text-primary-700 dark:hover:text-blue-300 break-all transition-colors duration-200 leading-relaxed">
                         {exampleUrl}
                       </button>
                     ))}
@@ -322,10 +322,10 @@ const WebInterface = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
+              <h3 className="text-lg sm:text-xl font-semibold text-secondary-900 dark:text-gray-100 mb-2">
                 Lightning Fast
               </h3>
-              <p className="text-sm sm:text-base text-secondary-600 dark:text-secondary-400">
+              <p className="text-sm sm:text-base text-secondary-600 dark:text-gray-300">
                 Download only what you need without cloning entire repositories
               </p>
             </div>
@@ -345,10 +345,10 @@ const WebInterface = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
+              <h3 className="text-lg sm:text-xl font-semibold text-secondary-900 dark:text-gray-100 mb-2">
                 Safe & Secure
               </h3>
-              <p className="text-sm sm:text-base text-secondary-600 dark:text-secondary-400">
+              <p className="text-sm sm:text-base text-secondary-600 dark:text-gray-300">
                 Works with public repositories, your data stays private
               </p>
             </div>
@@ -368,10 +368,10 @@ const WebInterface = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
+              <h3 className="text-lg sm:text-xl font-semibold text-secondary-900 dark:text-gray-100 mb-2">
                 User Friendly
               </h3>
-              <p className="text-sm sm:text-base text-secondary-600 dark:text-secondary-400">
+              <p className="text-sm sm:text-base text-secondary-600 dark:text-gray-300">
                 No command line needed, just paste the URL and download
               </p>
             </div>

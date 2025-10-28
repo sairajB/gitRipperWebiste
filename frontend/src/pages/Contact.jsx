@@ -162,14 +162,14 @@ const Contact = () => {
 
       <div className="min-h-screen pt-16">
         {/* Header */}
-        <section className="section-padding bg-gradient-to-br from-primary-50/70 to-secondary-50/60 dark:from-secondary-800/60 dark:to-secondary-900/60 backdrop-blur-sm rounded-b-3xl">
+        <section className="section-padding bg-gradient-to-br from-primary-50/70 to-secondary-50/60 dark:from-gray-800/60 dark:via-gray-900/60 dark:to-gray-900/60 backdrop-blur-sm rounded-b-3xl">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="text-center max-w-3xl mx-auto">
-              <div className="inline-flex items-center space-x-2 bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+              <div className="inline-flex items-center space-x-2 bg-primary-100 dark:bg-blue-500/20 text-primary-700 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-4 border border-primary-200 dark:border-blue-500/30">
                 <EnvelopeIcon className="w-4 h-4" />
                 <span>Get in Touch</span>
               </div>
@@ -211,12 +211,12 @@ const Contact = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="card text-center group hover:shadow-2xl hover:-translate-y-1">
-                    <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-200">
+                    className="card glass-card text-center group hover:shadow-2xl hover:-translate-y-1">
+                    <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 dark:from-blue-500 dark:to-blue-700 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg dark:shadow-blue-500/30 group-hover:scale-110 transition-transform duration-200">
                       <Icon className="w-8 h-8 text-white" />
                     </div>
 
-                    <h3 className="text-xl font-semibold text-secondary-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-blue-300 transition-colors">
+                    <h3 className="text-xl font-semibold text-secondary-900 dark:text-gray-100 mb-2 group-hover:text-primary-600 dark:group-hover:text-blue-300 transition-colors">
                       {method.title}
                     </h3>
 
@@ -385,7 +385,7 @@ const Contact = () => {
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}>
-                <h2 className="text-2xl font-bold text-secondary-900 dark:text-white mb-8">
+                <h2 className="text-2xl font-bold text-secondary-900 dark:text-gray-100 mb-8">
                   Frequently Asked Questions
                 </h2>
 
@@ -397,7 +397,7 @@ const Contact = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
                       className="card">
-                      <h3 className="font-semibold text-secondary-900 dark:text-white mb-3 flex items-start space-x-2">
+                      <h3 className="font-semibold text-secondary-900 dark:text-gray-100 mb-3 flex items-start space-x-2">
                         <CheckCircleIcon className="w-5 h-5 text-primary-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
                         <span>{faq.question}</span>
                       </h3>

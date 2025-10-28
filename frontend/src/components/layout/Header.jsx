@@ -45,8 +45,8 @@ const Header = () => {
       transition={{ duration: 0.5 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "glass shadow-lg backdrop-blur-xl dark:bg-gray-900/90 dark:border-gray-700 dark:shadow-black/30"
-          : "bg-transparent dark:bg-gray-900/70"
+          ? "glass-strong shadow-lg dark:shadow-black/40 backdrop-blur-md"
+          : "bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm"
       }`}>
       <nav className="container-custom">
         <div className="flex items-center justify-between h-16">

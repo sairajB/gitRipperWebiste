@@ -10,7 +10,7 @@ import {
 
 const CTA = () => {
   return (
-    <section className="section-padding bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white relative overflow-hidden">
+    <section className="section-padding bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 dark:from-blue-700 dark:via-blue-800 dark:to-blue-900 text-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-hero-pattern opacity-10"></div>
 
@@ -36,7 +36,7 @@ const CTA = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
+            className="w-20 h-20 bg-white/10 dark:bg-white/15 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg dark:shadow-blue-900/50">
             <RocketLaunchIcon className="w-10 h-10" />
           </motion.div>
 
@@ -69,7 +69,7 @@ const CTA = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
             viewport={{ once: true }}
-            className="bg-secondary-900/50 backdrop-blur-sm rounded-lg p-6 mb-8 max-w-2xl mx-auto border border-white/10">
+            className="glass-strong rounded-xl p-6 mb-8 max-w-2xl mx-auto shadow-xl dark:shadow-black/60">
             <div className="text-primary-300 text-sm font-medium mb-2">
               Get started in seconds:
             </div>
@@ -92,14 +92,14 @@ const CTA = () => {
               href="https://www.npmjs.com/package/git-ripper"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white text-primary-600 hover:bg-primary-50 dark:bg-secondary-900 dark:text-primary-300 dark:hover:bg-secondary-800 font-bold py-4 px-8 rounded-lg transition-all duration-200 shadow-xl hover:shadow-2xl dark:shadow-primary-900/30 transform hover:-translate-y-1 flex items-center space-x-3 text-lg">
+              className="bg-white text-primary-600 hover:bg-primary-50 dark:bg-gray-900 dark:text-blue-300 dark:hover:bg-gray-800 dark:border-2 dark:border-blue-500/30 dark:hover:border-blue-400/50 font-bold py-4 px-10 rounded-xl transition-all duration-300 shadow-xl hover:shadow-2xl dark:shadow-blue-900/30 transform hover:-translate-y-2 hover:scale-105 flex items-center space-x-3 text-lg backdrop-blur-sm">
               <ArrowDownIcon className="w-6 h-6" />
               <span>Install Git-ripper</span>
             </a>
 
             <Link
               to="/docs"
-              className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-bold py-4 px-8 rounded-lg transition-all duration-200 flex items-center space-x-3 text-lg">
+              className="border-2 border-white dark:border-blue-300 text-white dark:text-blue-100 hover:bg-white hover:text-primary-600 dark:hover:bg-blue-400/20 dark:hover:border-blue-200 font-bold py-4 px-8 rounded-lg transition-all duration-200 flex items-center space-x-3 text-lg">
               <DocumentTextIcon className="w-6 h-6" />
               <span>View Documentation</span>
             </Link>

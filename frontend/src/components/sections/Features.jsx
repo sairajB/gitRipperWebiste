@@ -134,14 +134,9 @@ const Features = () => {
                 key={feature.title}
                 variants={itemVariants}
                 className="group relative">
-                <div className="card group-hover:shadow-2xl dark:group-hover:shadow-black/40 group-hover:-translate-y-1 h-full relative overflow-hidden">
-                  {/* Highlight Badge */}
-                  <div className="absolute -top-3 -right-3 bg-gradient-to-r from-accent-400 to-accent-500 dark:from-yellow-400 dark:to-yellow-500 text-white dark:text-gray-900 text-xs font-medium px-3 py-1 rounded-full shadow-lg">
-                    {feature.highlight}
-                  </div>
-
+                <div className="card group-hover:shadow-2xl dark:group-hover:shadow-black/40 group-hover:-translate-y-2 h-full relative overflow-hidden transition-all duration-300 hover:scale-[1.02] border-2 border-transparent hover:border-primary-200 dark:hover:border-blue-500/30">
                   {/* Icon */}
-                  <div className="feature-icon group-hover:bg-primary-600 dark:group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+                  <div className="feature-icon group-hover:bg-gradient-to-br group-hover:from-primary-600 group-hover:to-primary-700 dark:group-hover:from-blue-500 dark:group-hover:to-blue-600 group-hover:text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
                     <Icon className="w-6 h-6" />
                   </div>
 
@@ -166,7 +161,7 @@ const Features = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           viewport={{ once: true }}
           className="text-center mt-16">
-          <div className="bg-gradient-to-r from-primary-600 to-primary-800 dark:from-blue-600 dark:to-blue-800 rounded-2xl p-8 text-white shadow-2xl dark:shadow-black/40 border border-primary-500/20 dark:border-blue-500/30">
+          <div className="bg-gradient-to-r from-primary-600 to-primary-800 dark:from-blue-600 dark:to-blue-800 rounded-2xl p-8 md:p-10 text-white shadow-2xl dark:shadow-black/40 border border-primary-500/20 dark:border-blue-500/30 relative overflow-hidden">
             <h3 className="text-2xl font-bold mb-4">
               Ready to experience the difference?
             </h3>
@@ -179,12 +174,12 @@ const Features = () => {
                 href="https://www.npmjs.com/package/git-ripper"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white dark:bg-gray-900 text-primary-600 dark:text-blue-300 hover:bg-primary-50 dark:hover:bg-gray-800 font-medium py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-blue-900/30 hover:scale-105">
+                className="bg-white dark:bg-gray-900 text-primary-600 dark:text-blue-300 hover:bg-primary-50 dark:hover:bg-gray-800 font-semibold py-3 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-blue-900/30 hover:scale-105 hover:-translate-y-1 inline-block">
                 Install Git-ripper
               </a>
               <Link
                 to="/docs"
-                className="border-2 border-white/80 dark:border-blue-300 text-white dark:text-blue-200 hover:bg-white hover:text-primary-600 dark:hover:bg-blue-400/20 dark:hover:text-blue-100 font-medium py-3 px-8 rounded-lg transition-all duration-200 hover:scale-105">
+                className="border-2 border-white/80 dark:border-blue-300 text-white dark:text-blue-200 hover:bg-white hover:text-primary-600 dark:hover:bg-blue-400/20 dark:hover:text-blue-100 font-semibold py-3 px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:-translate-y-1 inline-block backdrop-blur-sm">
                 View Documentation
               </Link>
             </div>

@@ -57,6 +57,19 @@ const Stats = () => {
     github: "loading",
   });
 
+  // Check dark mode and update on theme change
+  const [isDarkMode, setIsDarkMode] = useState(
+    document.documentElement.classList.contains("dark")
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDarkMode(document.documentElement.classList.contains("dark"));
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
   const fetchStats = async () => {
     try {
       setLoading(true);
@@ -126,12 +139,16 @@ const Stats = () => {
         {
           label: "Weekly Downloads",
           data: weeklyData,
-          borderColor: "rgb(14, 165, 233)",
-          backgroundColor: "rgba(14, 165, 233, 0.1)",
+          borderColor: isDarkMode ? "rgb(94, 179, 246)" : "rgb(14, 165, 233)",
+          backgroundColor: isDarkMode
+            ? "rgba(94, 179, 246, 0.15)"
+            : "rgba(14, 165, 233, 0.1)",
           fill: true,
           tension: 0.4,
-          pointBackgroundColor: "rgb(14, 165, 233)",
-          pointBorderColor: "#fff",
+          pointBackgroundColor: isDarkMode
+            ? "rgb(94, 179, 246)"
+            : "rgb(14, 165, 233)",
+          pointBorderColor: isDarkMode ? "#1a1f2e" : "#fff",
           pointBorderWidth: 2,
           pointRadius: 5,
           pointHoverRadius: 7,
@@ -154,16 +171,11 @@ const Stats = () => {
     datasets: [
       {
         data: [28, 18, 12, 15, 8, 19],
-        backgroundColor: [
-          "#0ea5e9",
-          "#3b82f6",
-          "#6366f1",
-          "#8b5cf6",
-          "#a855f7",
-          "#64748b",
-        ],
+        backgroundColor: isDarkMode
+          ? ["#5eb3f6", "#60a5fa", "#818cf8", "#a78bfa", "#c084fc", "#9ca3af"]
+          : ["#0ea5e9", "#3b82f6", "#6366f1", "#8b5cf6", "#a855f7", "#64748b"],
         borderWidth: 2,
-        borderColor: "#ffffff",
+        borderColor: isDarkMode ? "#1a1f2e" : "#ffffff",
       },
     ],
   };
@@ -180,8 +192,10 @@ const Stats = () => {
       {
         label: "Usage Frequency (%)",
         data: [85, 45, 62, 23, 12],
-        backgroundColor: "rgba(14, 165, 233, 0.8)",
-        borderColor: "rgb(14, 165, 233)",
+        backgroundColor: isDarkMode
+          ? "rgba(94, 179, 246, 0.7)"
+          : "rgba(14, 165, 233, 0.8)",
+        borderColor: isDarkMode ? "rgb(94, 179, 246)" : "rgb(14, 165, 233)",
         borderWidth: 1,
       },
     ],
@@ -195,7 +209,7 @@ const Stats = () => {
         display: true,
         position: "top",
         labels: {
-          color: "#64748b",
+          color: isDarkMode ? "#d1d5db" : "#64748b",
           font: {
             size: 12,
             weight: "500",
@@ -203,10 +217,14 @@ const Stats = () => {
         },
       },
       tooltip: {
-        backgroundColor: "rgba(30, 41, 59, 0.9)",
+        backgroundColor: isDarkMode
+          ? "rgba(26, 31, 46, 0.95)"
+          : "rgba(30, 41, 59, 0.9)",
         titleColor: "#f8fafc",
         bodyColor: "#f8fafc",
-        borderColor: "rgba(14, 165, 233, 0.3)",
+        borderColor: isDarkMode
+          ? "rgba(94, 179, 246, 0.4)"
+          : "rgba(14, 165, 233, 0.3)",
         borderWidth: 1,
         callbacks: {
           label: function (context) {
@@ -220,10 +238,12 @@ const Stats = () => {
     scales: {
       x: {
         grid: {
-          color: "rgba(148, 163, 184, 0.1)",
+          color: isDarkMode
+            ? "rgba(75, 85, 99, 0.3)"
+            : "rgba(148, 163, 184, 0.1)",
         },
         ticks: {
-          color: "#64748b",
+          color: isDarkMode ? "#9ca3af" : "#64748b",
           font: {
             size: 11,
           },
@@ -231,7 +251,7 @@ const Stats = () => {
         title: {
           display: true,
           text: "Month",
-          color: "#64748b",
+          color: isDarkMode ? "#d1d5db" : "#64748b",
           font: {
             size: 12,
             weight: "500",
@@ -240,10 +260,12 @@ const Stats = () => {
       },
       y: {
         grid: {
-          color: "rgba(148, 163, 184, 0.1)",
+          color: isDarkMode
+            ? "rgba(75, 85, 99, 0.3)"
+            : "rgba(148, 163, 184, 0.1)",
         },
         ticks: {
-          color: "#64748b",
+          color: isDarkMode ? "#9ca3af" : "#64748b",
           font: {
             size: 11,
           },
@@ -254,7 +276,7 @@ const Stats = () => {
         title: {
           display: true,
           text: "Weekly Downloads",
-          color: "#64748b",
+          color: isDarkMode ? "#d1d5db" : "#64748b",
           font: {
             size: 12,
             weight: "500",
@@ -271,16 +293,20 @@ const Stats = () => {
       legend: {
         position: "bottom",
         labels: {
-          color: "#64748b",
+          color: isDarkMode ? "#d1d5db" : "#64748b",
           usePointStyle: true,
           padding: 20,
         },
       },
       tooltip: {
-        backgroundColor: "rgba(30, 41, 59, 0.9)",
+        backgroundColor: isDarkMode
+          ? "rgba(26, 31, 46, 0.95)"
+          : "rgba(30, 41, 59, 0.9)",
         titleColor: "#f8fafc",
         bodyColor: "#f8fafc",
-        borderColor: "rgba(14, 165, 233, 0.3)",
+        borderColor: isDarkMode
+          ? "rgba(94, 179, 246, 0.4)"
+          : "rgba(14, 165, 233, 0.3)",
         borderWidth: 1,
       },
     },
@@ -376,23 +402,23 @@ const Stats = () => {
 
       <div className="min-h-screen pt-16">
         {/* Header */}
-        <section className="section-padding bg-gradient-to-br from-primary-50/70 to-secondary-50/60 dark:from-secondary-800/60 dark:to-secondary-900/60 backdrop-blur-sm rounded-b-3xl">
+        <section className="section-padding bg-gradient-to-br from-primary-50/70 to-secondary-50/60 dark:from-gray-800/60 dark:via-gray-900/60 dark:to-gray-900/60 backdrop-blur-sm rounded-b-3xl">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="text-center max-w-3xl mx-auto">
-              <div className="inline-flex items-center space-x-2 bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+              <div className="inline-flex items-center space-x-2 bg-primary-100 dark:bg-blue-500/20 text-primary-700 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-4 border border-primary-200 dark:border-blue-500/30">
                 <ChartBarIcon className="w-4 h-4" />
                 <span>Live Statistics</span>
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
+              <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-gray-100 mb-6">
                 Git-ripper <span className="gradient-text">Statistics</span>
               </h1>
 
-              <p className="text-xl text-secondary-600 dark:text-secondary-300">
+              <p className="text-xl text-secondary-600 dark:text-gray-300">
                 Real-time insights into Git-ripper's usage, growth, and
                 community engagement. See how developers worldwide are
                 transforming their GitHub workflow.
@@ -436,31 +462,33 @@ const Stats = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     className="card text-center hover:shadow-2xl hover:-translate-y-1">
-                    <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 dark:from-blue-500 dark:to-blue-700 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg dark:shadow-blue-500/30">
                       <Icon className="w-8 h-8 text-white" />
                     </div>
 
-                    <h3 className="text-3xl font-bold text-secondary-900 mb-1">
+                    <h3 className="text-3xl font-bold text-secondary-900 dark:text-gray-100 mb-1">
                       {stat.value}
                     </h3>
 
-                    <p className="text-secondary-600 font-medium mb-2">
+                    <p className="text-secondary-600 dark:text-gray-300 font-medium mb-2">
                       {stat.label}
                     </p>
 
                     <div className="flex items-center justify-center space-x-1 mb-2">
                       <span
                         className={`text-sm font-medium ${
-                          stat.positive ? "text-green-600" : "text-red-600"
+                          stat.positive
+                            ? "text-green-600 dark:text-green-400"
+                            : "text-red-600 dark:text-red-400"
                         }`}>
                         {stat.change}
                       </span>
-                      <span className="text-secondary-500 text-sm">
+                      <span className="text-secondary-500 dark:text-gray-400 text-sm">
                         vs last month
                       </span>
                     </div>
 
-                    <p className="text-secondary-500 text-xs">
+                    <p className="text-secondary-500 dark:text-gray-400 text-xs">
                       {stat.description}
                     </p>
                   </motion.div>
@@ -479,10 +507,10 @@ const Stats = () => {
                 className="card">
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h3 className="text-2xl font-bold text-secondary-900">
+                    <h3 className="text-2xl font-bold text-secondary-900 dark:text-gray-100">
                       Download Trend
                     </h3>
-                    <p className="text-secondary-600">
+                    <p className="text-secondary-600 dark:text-gray-300">
                       Weekly download statistics over the past 7 months
                     </p>
                   </div>
@@ -507,10 +535,10 @@ const Stats = () => {
                   transition={{ duration: 0.8 }}
                   viewport={{ once: true }}
                   className="card">
-                  <h3 className="text-xl font-bold text-secondary-900 mb-4">
+                  <h3 className="text-xl font-bold text-secondary-900 dark:text-gray-100 mb-4">
                     Geographic Distribution
                   </h3>
-                  <p className="text-secondary-600 text-sm mb-6">
+                  <p className="text-secondary-600 dark:text-gray-300 text-sm mb-6">
                     Top countries by download volume
                   </p>
 
@@ -526,10 +554,10 @@ const Stats = () => {
                   transition={{ duration: 0.8 }}
                   viewport={{ once: true }}
                   className="card">
-                  <h3 className="text-xl font-bold text-secondary-900 mb-4">
+                  <h3 className="text-xl font-bold text-secondary-900 dark:text-gray-100 mb-4">
                     Feature Usage
                   </h3>
-                  <p className="text-secondary-600 text-sm mb-6">
+                  <p className="text-secondary-600 dark:text-gray-300 text-sm mb-6">
                     Most popular Git-ripper features
                   </p>
 
@@ -546,7 +574,7 @@ const Stats = () => {
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
                 className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="card text-center bg-gradient-to-br from-primary-600 to-primary-800 text-white">
+                <div className="card glass-subtle text-center bg-gradient-to-br from-primary-600 to-primary-800 dark:from-blue-600 dark:to-blue-800 text-white">
                   <h4 className="text-lg font-semibold mb-2">
                     Community Health
                   </h4>

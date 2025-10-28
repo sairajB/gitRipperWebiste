@@ -64,7 +64,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden transition-colors duration-500">
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden transition-colors duration-500 pt-16">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-hero-pattern opacity-40 dark:opacity-20"></div>
 
@@ -87,22 +87,23 @@ const Hero = () => {
         }}></div>
 
       {/* Enhanced floating Elements */}
-      <div className="absolute top-20 left-10 w-20 h-20 bg-primary-200 dark:bg-blue-500/30 rounded-full animate-float opacity-60 dark:opacity-80 dark:shadow-lg dark:shadow-blue-500/20"></div>
+      <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-primary-200 to-primary-300 dark:from-blue-500/30 dark:to-blue-600/40 rounded-full animate-float opacity-60 dark:opacity-80 blur-sm dark:shadow-2xl dark:shadow-blue-500/30"></div>
       <div
-        className="absolute top-40 right-20 w-16 h-16 bg-accent-200 dark:bg-yellow-400/30 rounded-full animate-float opacity-60 dark:opacity-80 dark:shadow-lg dark:shadow-yellow-400/20"
+        className="absolute top-40 right-20 w-16 h-16 bg-gradient-to-br from-accent-200 to-accent-300 dark:from-yellow-400/30 dark:to-yellow-500/40 rounded-full animate-float opacity-60 dark:opacity-80 blur-sm dark:shadow-2xl dark:shadow-yellow-400/30"
         style={{ animationDelay: "2s" }}></div>
       <div
-        className="absolute bottom-40 left-20 w-12 h-12 bg-secondary-200 dark:bg-purple-500/30 rounded-full animate-float opacity-60 dark:opacity-80 dark:shadow-lg dark:shadow-purple-500/20"
+        className="absolute bottom-40 left-20 w-12 h-12 bg-gradient-to-br from-secondary-200 to-secondary-300 dark:from-purple-500/30 dark:to-purple-600/40 rounded-full animate-float opacity-60 dark:opacity-80 blur-sm dark:shadow-2xl dark:shadow-purple-500/30"
         style={{ animationDelay: "4s" }}></div>
 
       <div className="container-custom section-padding relative z-10">
         <div className="text-center max-w-4xl mx-auto">
           {/* Badge */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center space-x-2 bg-primary-100 dark:bg-blue-500/20 text-primary-700 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-8 border border-primary-200 dark:border-blue-500/30 dark:shadow-lg dark:shadow-blue-500/10">
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+            whileHover={{ scale: 1.05, y: -2 }}
+            className="inline-flex items-center space-x-2 bg-primary-100 dark:bg-blue-500/20 text-primary-700 dark:text-blue-300 px-5 py-2.5 rounded-full text-sm font-medium mb-8 border border-primary-200 dark:border-blue-500/30 shadow-md dark:shadow-lg dark:shadow-blue-500/20 backdrop-blur-sm">
             <CommandLineIcon className="w-4 h-4" />
             <span>CLI Tool for Selective Downloads</span>
           </motion.div>
@@ -111,8 +112,8 @@ const Hero = () => {
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-bold text-secondary-900 dark:text-secondary-100 mb-6 text-shadow">
+            transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
+            className="text-5xl md:text-7xl font-extrabold text-secondary-900 dark:text-secondary-100 mb-6 text-shadow leading-tight tracking-tight">
             Download GitHub
             <span className="block gradient-text">Folders Instantly</span>
           </motion.h1>
@@ -138,7 +139,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             className="mb-8 hidden md:block">
-            <div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-6 max-w-2xl mx-auto border border-gray-700 dark:border-gray-800 shadow-2xl dark:shadow-black/50">
+            <div className="glass rounded-xl p-6 max-w-2xl mx-auto shadow-2xl dark:shadow-black/60">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-emerald-400 text-sm font-medium">
                   INSTALLATION
@@ -166,7 +167,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
             className="mb-12 hidden md:block">
-            <div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-6 max-w-4xl mx-auto border border-gray-700 dark:border-gray-800 shadow-2xl dark:shadow-black/50">
+            <div className="glass-strong rounded-xl p-6 max-w-4xl mx-auto shadow-2xl dark:shadow-black/60">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-emerald-400 text-sm font-medium">
                   USAGE

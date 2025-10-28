@@ -82,7 +82,7 @@ const HowItWorks = () => {
   };
 
   return (
-    <section className="section-padding bg-gradient-to-br from-secondary-50 to-primary-50 dark:from-secondary-900 dark:to-secondary-800 transition-colors duration-500">
+    <section className="section-padding bg-gradient-to-br from-secondary-50 to-primary-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 transition-colors duration-500">
       <div className="container-custom">
         {/* Header */}
         <motion.div
@@ -91,16 +91,16 @@ const HowItWorks = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
           className="text-center mb-16">
-          <div className="inline-flex items-center space-x-2 bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+          <div className="inline-flex items-center space-x-2 bg-primary-100 dark:bg-blue-500/20 text-primary-700 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-4 border border-primary-200 dark:border-blue-500/30 dark:shadow-lg dark:shadow-blue-500/10">
             <CheckCircleIcon className="w-4 h-4" />
             <span>Simple Process</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-gray-100 mb-6">
             How <span className="gradient-text">Git-ripper</span> Works
           </h2>
 
-          <p className="text-xl text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
+          <p className="text-xl text-secondary-600 dark:text-gray-300 max-w-3xl mx-auto">
             Behind the scenes, Git-ripper uses an intelligent four-step process
             to efficiently download only the content you need from GitHub
             repositories.
@@ -135,15 +135,15 @@ const HowItWorks = () => {
 
                     <div className="relative z-10">
                       <div className="flex items-center space-x-4 mb-4">
-                        <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center shadow-lg">
+                        <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 dark:from-blue-500 dark:to-blue-700 rounded-xl flex items-center justify-center shadow-lg dark:shadow-blue-500/30">
                           <Icon className="w-8 h-8 text-white" />
                         </div>
-                        <h3 className="text-2xl md:text-3xl font-bold text-secondary-900 dark:text-secondary-100">
+                        <h3 className="text-2xl md:text-3xl font-bold text-secondary-900 dark:text-gray-100">
                           {step.title}
                         </h3>
                       </div>
 
-                      <p className="text-lg text-secondary-600 dark:text-secondary-300 mb-6 leading-relaxed">
+                      <p className="text-lg text-secondary-600 dark:text-gray-300 mb-6 leading-relaxed">
                         {step.description}
                       </p>
 
@@ -152,8 +152,8 @@ const HowItWorks = () => {
                           <li
                             key={detailIndex}
                             className="flex items-center space-x-3">
-                            <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
-                            <span className="text-secondary-700 dark:text-secondary-400">
+                            <div className="w-2 h-2 bg-primary-500 dark:bg-blue-400 rounded-full"></div>
+                            <span className="text-secondary-700 dark:text-gray-300">
                               {detail}
                             </span>
                           </li>
@@ -166,14 +166,15 @@ const HowItWorks = () => {
                 {/* Visual */}
                 <div className="flex-1">
                   <div className="relative">
-                    <div className="w-full h-64 bg-gradient-to-br from-primary-600 to-primary-800 rounded-2xl shadow-2xl flex items-center justify-center">
-                      <Icon className="w-24 h-24 text-white opacity-80" />
+                    <div className="w-full h-64 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 dark:from-blue-600 dark:via-blue-700 dark:to-blue-800 rounded-2xl shadow-2xl dark:shadow-blue-900/50 flex items-center justify-center overflow-hidden group-hover:shadow-3xl transition-shadow duration-300">
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <Icon className="w-24 h-24 text-white opacity-80 group-hover:scale-110 transition-transform duration-300 relative z-10" />
                     </div>
 
                     {/* Decorative elements */}
-                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-accent-400 rounded-full animate-pulse"></div>
+                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-accent-400 dark:bg-yellow-400 rounded-full animate-pulse dark:shadow-lg dark:shadow-yellow-400/50"></div>
                     <div
-                      className="absolute -bottom-4 -left-4 w-6 h-6 bg-secondary-400 rounded-full animate-pulse"
+                      className="absolute -bottom-4 -left-4 w-6 h-6 bg-secondary-400 dark:bg-purple-500 rounded-full animate-pulse dark:shadow-lg dark:shadow-purple-500/50"
                       style={{ animationDelay: "1s" }}></div>
                   </div>
                 </div>
@@ -196,39 +197,39 @@ const HowItWorks = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
-                <div className="w-16 h-16 bg-primary-100 text-primary-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-primary-100 dark:bg-blue-500/20 text-primary-600 dark:text-blue-400 rounded-lg flex items-center justify-center mx-auto mb-4 dark:border dark:border-blue-500/30">
                   <MagnifyingGlassIcon className="w-8 h-8" />
                 </div>
-                <h4 className="font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
+                <h4 className="font-semibold text-secondary-900 dark:text-gray-100 mb-2">
                   GitHub API
                 </h4>
-                <p className="text-secondary-600 dark:text-secondary-400 text-sm">
+                <p className="text-secondary-600 dark:text-gray-300 text-sm">
                   Leverages GitHub's REST API for efficient tree traversal and
                   metadata collection
                 </p>
               </div>
 
               <div className="text-center">
-                <div className="w-16 h-16 bg-primary-100 text-primary-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-primary-100 dark:bg-blue-500/20 text-primary-600 dark:text-blue-400 rounded-lg flex items-center justify-center mx-auto mb-4 dark:border dark:border-blue-500/30">
                   <CloudArrowDownIcon className="w-8 h-8" />
                 </div>
-                <h4 className="font-semibold text-secondary-900 mb-2">
+                <h4 className="font-semibold text-secondary-900 dark:text-gray-100 mb-2">
                   Parallel Processing
                 </h4>
-                <p className="text-secondary-600 text-sm">
+                <p className="text-secondary-600 dark:text-gray-300 text-sm">
                   Concurrent downloads with intelligent rate limiting and error
                   recovery
                 </p>
               </div>
 
               <div className="text-center">
-                <div className="w-16 h-16 bg-primary-100 text-primary-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-primary-100 dark:bg-blue-500/20 text-primary-600 dark:text-blue-400 rounded-lg flex items-center justify-center mx-auto mb-4 dark:border dark:border-blue-500/30">
                   <DocumentCheckIcon className="w-8 h-8" />
                 </div>
-                <h4 className="font-semibold text-secondary-900 mb-2">
+                <h4 className="font-semibold text-secondary-900 dark:text-gray-100 mb-2">
                   Resume Logic
                 </h4>
-                <p className="text-secondary-600 text-sm">
+                <p className="text-secondary-600 dark:text-gray-300 text-sm">
                   Checkpoint-based resume system with file integrity
                   verification
                 </p>

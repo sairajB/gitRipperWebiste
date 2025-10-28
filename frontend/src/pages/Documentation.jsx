@@ -138,14 +138,14 @@ const Documentation = () => {
 
       <div className="min-h-screen pt-16">
         {/* Header */}
-        <section className="section-padding bg-gradient-to-br from-primary-50/70 to-secondary-50/60 dark:from-secondary-800/60 dark:to-secondary-900/60 backdrop-blur-sm rounded-b-3xl">
+        <section className="section-padding bg-gradient-to-br from-primary-50/70 to-secondary-50/60 dark:from-gray-800/60 dark:via-gray-900/60 dark:to-gray-900/60 backdrop-blur-sm rounded-b-3xl">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="text-center max-w-3xl mx-auto">
-              <div className="inline-flex items-center space-x-2 bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+              <div className="inline-flex items-center space-x-2 bg-primary-100 dark:bg-blue-500/20 text-primary-700 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-4 border border-primary-200 dark:border-blue-500/30">
                 <BookOpenIcon className="w-4 h-4" />
                 <span>Documentation</span>
               </div>
@@ -170,8 +170,8 @@ const Documentation = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="bg-secondary-50 dark:bg-gray-800 rounded-xl p-8 mb-16">
-                <h2 className="text-2xl font-bold text-secondary-900 dark:text-white mb-6">
+                className="bg-secondary-50 dark:bg-gray-800/50 glass-subtle rounded-xl p-8 mb-16">
+                <h2 className="text-2xl font-bold text-secondary-900 dark:text-gray-100 mb-6">
                   Table of Contents
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -181,11 +181,11 @@ const Documentation = () => {
                       <a
                         key={section.id}
                         href={`#${section.id}`}
-                        className="flex items-center space-x-3 p-4 bg-white dark:bg-gray-700 rounded-lg hover:shadow-md transition-all duration-200 group">
-                        <div className="w-10 h-10 bg-primary-100 dark:bg-blue-500/20 text-primary-600 dark:text-blue-400 rounded-lg flex items-center justify-center group-hover:bg-primary-600 dark:group-hover:bg-blue-500 group-hover:text-white transition-all duration-200">
+                        className="flex items-center space-x-3 p-4 bg-white dark:bg-gray-700 rounded-lg hover:shadow-md dark:hover:shadow-blue-500/20 transition-all duration-200 group">
+                        <div className="w-10 h-10 bg-primary-100 dark:bg-blue-500/20 text-primary-600 dark:text-blue-400 rounded-lg flex items-center justify-center group-hover:bg-primary-600 dark:group-hover:bg-blue-500 group-hover:text-white transition-all duration-200 dark:border dark:border-blue-500/30">
                           <Icon className="w-5 h-5" />
                         </div>
-                        <span className="font-medium text-secondary-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-blue-300 transition-colors">
+                        <span className="font-medium text-secondary-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-blue-300 transition-colors">
                           {section.title}
                         </span>
                       </a>
@@ -209,10 +209,10 @@ const Documentation = () => {
                       viewport={{ once: true }}
                       className="scroll-mt-24">
                       <div className="flex items-center space-x-3 mb-8">
-                        <div className="w-12 h-12 bg-primary-600 dark:bg-blue-500 text-white rounded-xl flex items-center justify-center">
+                        <div className="w-12 h-12 bg-primary-600 dark:bg-blue-500 text-white rounded-xl flex items-center justify-center shadow-lg dark:shadow-blue-500/30">
                           <Icon className="w-6 h-6" />
                         </div>
-                        <h2 className="text-3xl font-bold text-secondary-900 dark:text-white">
+                        <h2 className="text-3xl font-bold text-secondary-900 dark:text-gray-100">
                           {section.title}
                         </h2>
                       </div>
@@ -221,7 +221,7 @@ const Documentation = () => {
                         {section.content.map((item, itemIndex) => (
                           <div key={itemIndex} className="card">
                             {item.subtitle && (
-                              <h3 className="text-xl font-semibold text-secondary-900 dark:text-white mb-4">
+                              <h3 className="text-xl font-semibold text-secondary-900 dark:text-gray-100 mb-4">
                                 {item.subtitle}
                               </h3>
                             )}
