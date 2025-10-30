@@ -115,7 +115,9 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
             className="text-5xl md:text-7xl font-extrabold text-secondary-900 dark:text-secondary-100 mb-6 text-shadow leading-tight tracking-tight">
             Download GitHub
-            <span className="block gradient-text">Folders Instantly</span>
+            <span className="block bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 dark:from-emerald-300 dark:via-teal-300 dark:to-cyan-300 bg-clip-text text-transparent">
+              Folders Instantly
+            </span>
           </motion.h1>
 
           {/* Subtitle */}

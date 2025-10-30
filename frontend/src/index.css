@@ -74,6 +74,32 @@
     background-attachment: fixed;
     transition: background-color 0.35s ease, color 0.35s ease;
     overflow-x: hidden;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%230ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><path d="M12 11v6"/><path d="m15 14-3 3-3-3"/></svg>'),
+      auto;
+  }
+
+  .dark body {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%235eb3f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><path d="M12 11v6"/><path d="m15 14-3 3-3-3"/></svg>'),
+      auto;
+  }
+
+  /* Custom pointer cursor for interactive elements */
+  a,
+  button,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"] {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%230ea5e9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>'),
+      pointer;
+  }
+
+  .dark a,
+  .dark button,
+  .dark [role="button"],
+  .dark input[type="submit"],
+  .dark input[type="button"] {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%235eb3f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>'),
+      pointer;
   }
 
   /* Custom scrollbar */
@@ -376,7 +402,7 @@
     backdrop-filter: blur(20px) saturate(200%);
     background-color: rgba(26, 31, 46, 0.8);
     border: 1px solid rgba(94, 179, 246, 0.12);
-    box-shadow: 0 8px 32px rgba(94, 179, 246, 0.10),
+    box-shadow: 0 8px 32px rgba(94, 179, 246, 0.1),
       0 0 24px rgba(94, 179, 246, 0.08);
   }
 
@@ -392,7 +418,7 @@
     backdrop-filter: blur(20px) saturate(200%);
     background-color: rgba(26, 31, 46, 0.8);
     border: 1px solid rgba(94, 179, 246, 0.12);
-    box-shadow: 0 8px 32px rgba(94, 179, 246, 0.10),
+    box-shadow: 0 8px 32px rgba(94, 179, 246, 0.1),
       0 0 24px rgba(94, 179, 246, 0.08);
   }
 
