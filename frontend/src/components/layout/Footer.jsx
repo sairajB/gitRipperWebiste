@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -6,10 +6,21 @@ import {
   HeartIcon,
   StarIcon,
   GlobeAltIcon,
+  EyeIcon,
 } from "@heroicons/react/24/outline";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [visitCount, setVisitCount] = useState(0);
+
+  useEffect(() => {
+    // Increment visit counter on mount
+    const raw = localStorage.getItem("gitRipperVisits");
+    const current = raw ? parseInt(raw, 10) : 0;
+    const updated = current + 1;
+    localStorage.setItem("gitRipperVisits", String(updated));
+    setVisitCount(updated);
+  }, []);
 
   const quickLinks = [
     { name: "Documentation", href: "/docs" },
@@ -127,6 +138,12 @@ const Footer = () => {
           </div>
 
           <div className="flex items-center space-x-4 text-gray-400 dark:text-gray-300">
+            <div className="flex items-center space-x-1">
+              <EyeIcon className="w-4 h-4" />
+              <span className="text-sm">
+                {visitCount.toLocaleString()} visits
+              </span>
+            </div>
             <span className="text-sm">MIT License</span>
             <div className="flex items-center space-x-1">
               <GlobeAltIcon className="w-4 h-4" />
