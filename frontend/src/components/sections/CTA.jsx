@@ -10,17 +10,32 @@ import {
 
 const CTA = () => {
   return (
-    <section className="section-padding bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 dark:from-blue-700 dark:via-blue-800 dark:to-blue-900 text-white relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-hero-pattern opacity-10"></div>
+    <section className="section-padding relative overflow-hidden bg-gradient-to-b from-[#0a0a0f] via-[#0d0d15] to-[#0a0a0f]">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-purple/10 rounded-full blur-[150px] animate-pulse"></div>
+        <div
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neon-cyan/10 rounded-full blur-[150px] animate-pulse"
+          style={{ animationDelay: "1s" }}></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neon-blue/5 rounded-full blur-[200px]"></div>
+      </div>
+
+      {/* Grid Pattern */}
+      <div
+        className="absolute inset-0 opacity-5"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)",
+          backgroundSize: "32px 32px",
+        }}></div>
 
       {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-16 h-16 bg-white/10 rounded-full animate-float"></div>
+      <div className="absolute top-20 left-10 w-16 h-16 bg-neon-cyan/10 border border-neon-cyan/30 rounded-full animate-float"></div>
       <div
-        className="absolute top-40 right-20 w-12 h-12 bg-accent-400/20 rounded-full animate-float"
+        className="absolute top-40 right-20 w-12 h-12 bg-neon-purple/10 border border-neon-purple/30 rounded-full animate-float"
         style={{ animationDelay: "2s" }}></div>
       <div
-        className="absolute bottom-40 left-20 w-20 h-20 bg-white/5 rounded-full animate-float"
+        className="absolute bottom-40 left-20 w-20 h-20 bg-neon-blue/5 border border-neon-blue/20 rounded-full animate-float"
         style={{ animationDelay: "4s" }}></div>
 
       <div className="container-custom relative z-10">
@@ -36,8 +51,8 @@ const CTA = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="w-20 h-20 bg-white/10 dark:bg-white/15 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg dark:shadow-blue-900/50">
-            <RocketLaunchIcon className="w-10 h-10" />
+            className="w-20 h-20 bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 border border-neon-cyan/30 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-[0_0_40px_rgba(0,245,255,0.2)] backdrop-blur-sm">
+            <RocketLaunchIcon className="w-10 h-10 text-neon-cyan" />
           </motion.div>
 
           {/* Heading */}
@@ -46,9 +61,11 @@ const CTA = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-bold mb-6">
+            className="text-4xl md:text-6xl font-bold mb-6 text-white">
             Ready to Transform Your
-            <span className="block text-accent-300">GitHub Workflow?</span>
+            <span className="block bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-blue bg-clip-text text-transparent">
+              GitHub Workflow?
+            </span>
           </motion.h2>
 
           {/* Subtitle */}
@@ -57,7 +74,7 @@ const CTA = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
-            className="text-xl md:text-2xl text-primary-100 mb-8 leading-relaxed">
+            className="text-xl md:text-2xl text-gray-400 mb-8 leading-relaxed">
             Join thousands of developers who have already discovered the power
             of selective downloads. Install Git-ripper today and start saving
             time, bandwidth, and storage space.
@@ -69,15 +86,13 @@ const CTA = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
             viewport={{ once: true }}
-            className="glass-strong rounded-xl p-6 mb-8 max-w-2xl mx-auto shadow-xl dark:shadow-black/60">
-            <div className="text-primary-300 text-sm font-medium mb-2">
+            className="bg-[#12121a]/80 backdrop-blur-sm border border-neon-cyan/30 rounded-xl p-6 mb-8 max-w-2xl mx-auto shadow-[0_0_30px_rgba(0,245,255,0.1)]">
+            <div className="text-neon-cyan text-sm font-medium mb-2">
               Get started in seconds:
             </div>
-            <div className="font-mono text-left">
-              <span className="text-primary-400">$</span>
-              <span className="text-green-400 ml-2">
-                npm install -g git-ripper
-              </span>
+            <div className="font-mono text-left flex items-center gap-2">
+              <span className="text-gray-500">$</span>
+              <span className="text-neon-cyan">npm install -g git-ripper</span>
             </div>
           </motion.div>
 
@@ -92,14 +107,14 @@ const CTA = () => {
               href="https://www.npmjs.com/package/git-ripper"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white text-primary-600 hover:bg-primary-50 dark:bg-gray-900 dark:text-blue-300 dark:hover:bg-gray-800 dark:border-2 dark:border-blue-500/30 dark:hover:border-blue-400/50 font-bold py-4 px-10 rounded-xl transition-all duration-300 shadow-xl hover:shadow-2xl dark:shadow-blue-900/30 transform hover:-translate-y-2 hover:scale-105 flex items-center space-x-3 text-lg backdrop-blur-sm">
+              className="bg-gradient-to-r from-neon-cyan to-neon-blue text-[#0a0a0f] font-bold py-4 px-10 rounded-xl transition-all duration-300 shadow-[0_0_30px_rgba(0,245,255,0.3)] hover:shadow-[0_0_50px_rgba(0,245,255,0.5)] transform hover:-translate-y-2 hover:scale-105 flex items-center space-x-3 text-lg">
               <ArrowDownIcon className="w-6 h-6" />
               <span>Install Git-ripper</span>
             </a>
 
             <Link
               to="/docs"
-              className="border-2 border-white dark:border-blue-300 text-white dark:text-blue-100 hover:bg-white hover:text-primary-600 dark:hover:bg-blue-400/20 dark:hover:border-blue-200 font-bold py-4 px-8 rounded-lg transition-all duration-200 flex items-center space-x-3 text-lg">
+              className="border-2 border-neon-purple/50 text-neon-purple hover:bg-neon-purple/10 hover:border-neon-purple font-bold py-4 px-8 rounded-xl transition-all duration-300 flex items-center space-x-3 text-lg hover:shadow-[0_0_30px_rgba(191,0,255,0.2)]">
               <DocumentTextIcon className="w-6 h-6" />
               <span>View Documentation</span>
             </Link>
@@ -117,22 +132,29 @@ const CTA = () => {
                 icon: "⚡",
                 title: "Lightning Fast",
                 desc: "Download only what you need",
+                color: "neon-cyan",
               },
               {
                 icon: "🔄",
                 title: "Resume Downloads",
                 desc: "Never lose progress again",
+                color: "neon-purple",
               },
               {
                 icon: "📦",
                 title: "ZIP Archives",
                 desc: "Automatic compression option",
+                color: "neon-blue",
               },
             ].map((feature, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl mb-2">{feature.icon}</div>
-                <h3 className="font-semibold text-lg mb-1">{feature.title}</h3>
-                <p className="text-primary-200 text-sm">{feature.desc}</p>
+              <div key={index} className="text-center group">
+                <div className="text-4xl mb-3 transform group-hover:scale-125 transition-transform duration-300">
+                  {feature.icon}
+                </div>
+                <h3 className="font-semibold text-lg mb-1 text-white group-hover:text-neon-cyan transition-colors duration-300">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-500 text-sm">{feature.desc}</p>
               </div>
             ))}
           </motion.div>
@@ -143,18 +165,18 @@ const CTA = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
             viewport={{ once: true }}
-            className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 text-primary-200">
-            <div className="flex items-center space-x-2">
+            className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 text-gray-500">
+            <div className="flex items-center space-x-2 group hover:text-neon-cyan transition-colors duration-300">
               <ArrowDownIcon className="w-5 h-5" />
               <span>3.0K Total Downloads</span>
             </div>
 
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 group hover:text-yellow-400 transition-colors duration-300">
               <StarIcon className="w-5 h-5" />
               <span>6 GitHub Stars</span>
             </div>
 
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 group hover:text-neon-purple transition-colors duration-300">
               <span className="text-lg">💝</span>
               <span>98% User Satisfaction</span>
             </div>

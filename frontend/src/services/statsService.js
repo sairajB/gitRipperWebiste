@@ -6,32 +6,62 @@ const API_BASE_URL = import.meta.env.PROD
 class StatsService {
   static async getNpmStats(packageName = "git-ripper") {
     try {
-      const url = `${API_BASE_URL}/api/npm/stats/${packageName}`;
+      // Add cache-busting timestamp to ensure fresh data
+      const timestamp = Date.now();
+      const url = `${API_BASE_URL}/api/npm/stats/${packageName}?_t=${timestamp}`;
       console.log("Fetching NPM stats from:", url);
+      console.log(
+        "API_BASE_URL:",
+        API_BASE_URL || "(empty - using relative URL)"
+      );
 
       const response = await fetch(url, {
         method: "GET",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
         },
       });
 
+      console.log(
+        "NPM API Response status:",
+        response.status,
+        response.statusText
+      );
+
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error("NPM API Error response:", errorText);
         throw new Error(
           `HTTP error! status: ${response.status} - ${response.statusText}`
         );
       }
 
       const data = await response.json();
+
+      // Get the date range from the download history
+      const downloads = data.downloads || [];
+      const latestDate =
+        downloads.length > 0 ? downloads[downloads.length - 1]?.day : null;
+      const earliestDate = downloads.length > 0 ? downloads[0]?.day : null;
+
       console.log("NPM API Response:", {
         totalDownloads: data.totalDownloads,
         weeklyDownloads: data.weeklyDownloads,
         monthlyDownloads: data.monthlyDownloads,
+        dataRange: `${earliestDate} to ${latestDate}`,
+        downloadDays: downloads.length,
       });
-      return data;
+
+      return {
+        ...data,
+        latestDataDate: latestDate,
+        earliestDataDate: earliestDate,
+      };
     } catch (error) {
       console.error("Error fetching NPM stats:", error);
+      console.error("Falling back to hardcoded data");
       // Return more realistic fallback data based on known values
       return {
         // Updated fallback targets
@@ -46,7 +76,9 @@ class StatsService {
 
   static async getGithubStats(owner = "sairajB", repo = "git-ripper") {
     try {
-      const url = `${API_BASE_URL}/api/github/repo/${owner}/${repo}`;
+      // Add cache-busting timestamp to ensure fresh data
+      const timestamp = Date.now();
+      const url = `${API_BASE_URL}/api/github/repo/${owner}/${repo}?_t=${timestamp}`;
       console.log("Fetching GitHub stats from:", url);
 
       const response = await fetch(url, {
@@ -54,6 +86,7 @@ class StatsService {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
         },
       });
 
@@ -104,17 +137,13 @@ class StatsService {
         githubDataIsReal: isGithubDataReal,
         actualWeeklyDownloads: npmData.weeklyDownloads,
         actualStars: githubData.stars,
+        downloadHistoryLength: npmData.downloads?.length || 0,
       });
 
       // Calculate estimated countries based on downloads
       const estimatedCountries = Math.min(
         Math.floor(npmData.totalDownloads / 100),
         25
-      );
-
-      // Generate weekly trend data for the past 7 months
-      const weeklyTrendData = this.generateWeeklyTrendData(
-        npmData.weeklyDownloads
       );
 
       return {
@@ -137,9 +166,8 @@ class StatsService {
           githubData.issues === 0 ? 0 : Math.max(githubData.issues - 2, 0),
         userSatisfaction: 98, // Keep high satisfaction rate
 
-        // Additional data
+        // Download history for charts - raw daily data from NPM
         downloadHistory: npmData.downloads || [],
-        weeklyTrendData: weeklyTrendData,
         contributors: githubData.contributors || [],
 
         // Metadata
@@ -176,47 +204,18 @@ class StatsService {
     return num.toString();
   }
 
-  static generateWeeklyTrendData(currentWeeklyDownloads = 120) {
-    const monthNames = ["Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"];
-    const currentMonth = new Date().getMonth();
-    const months = [];
-    const weeklyData = [];
-
-    // Generate last 7 months
-    for (let i = 6; i >= 0; i--) {
-      const monthIndex = (currentMonth - i + 12) % 12;
-      months.push(monthNames[monthIndex]);
-
-      // Calculate weekly downloads with realistic growth trend
-      const baseWeekly = parseInt(currentWeeklyDownloads) || 167;
-      const growthFactor = 1 + i * 0.12; // 12% growth per month
-      const monthlyWeekly = Math.floor(baseWeekly / growthFactor);
-      weeklyData.push(Math.max(monthlyWeekly, 50)); // Minimum 50 downloads
-    }
-
-    return {
-      labels: months,
-      data: weeklyData,
-      datasets: [
-        {
-          label: "Weekly Downloads",
-          data: weeklyData,
-          borderColor: "rgb(14, 165, 233)",
-          backgroundColor: "rgba(14, 165, 233, 0.1)",
-          fill: true,
-          tension: 0.4,
-          pointBackgroundColor: "rgb(14, 165, 233)",
-          pointBorderColor: "#fff",
-          pointBorderWidth: 2,
-          pointRadius: 5,
-          pointHoverRadius: 7,
-        },
-      ],
-    };
-  }
-
   static getFallbackStats() {
-    const fallbackWeeklyTrend = this.generateWeeklyTrendData(120);
+    // Generate sample download history for fallback
+    const sampleDownloadHistory = [];
+    const today = new Date();
+    for (let i = 364; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(date.getDate() - i);
+      sampleDownloadHistory.push({
+        day: date.toISOString().split("T")[0],
+        downloads: Math.floor(Math.random() * 15) + 3,
+      });
+    }
 
     return {
       totalDownloads: 3000,
@@ -231,9 +230,12 @@ class StatsService {
       activeCountries: 15,
       issuesResolved: 0,
       userSatisfaction: 98,
-      downloadHistory: [],
-      weeklyTrendData: fallbackWeeklyTrend,
+      downloadHistory: sampleDownloadHistory,
       contributors: [],
+      dataSource: {
+        npm: "fallback",
+        github: "fallback",
+      },
       formatted: {
         totalDownloads: "3.0K",
         weeklyDownloads: "120",

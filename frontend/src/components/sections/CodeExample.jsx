@@ -83,8 +83,14 @@ const CodeExample = () => {
   ];
 
   return (
-    <section className="section-padding">
-      <div className="container-custom">
+    <section className="section-padding relative overflow-hidden bg-gradient-to-b from-[#0a0a0f] via-[#0d0d15] to-[#0a0a0f]">
+      {/* Background Effects */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-neon-blue/5 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-neon-purple/5 rounded-full blur-[100px]"></div>
+      </div>
+
+      <div className="container-custom relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -92,16 +98,20 @@ const CodeExample = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
           className="text-center mb-16">
-          <div className="inline-flex items-center space-x-2 bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+          <div className="inline-flex items-center space-x-2 bg-neon-blue/10 text-neon-blue px-4 py-2 rounded-full text-sm font-medium mb-6 border border-neon-blue/30 backdrop-blur-sm shadow-[0_0_20px_rgba(0,102,255,0.15)]">
             <CommandLineIcon className="w-4 h-4" />
             <span>Live Examples</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
-            See <span className="gradient-text">Git-ripper</span> in Action
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            See{" "}
+            <span className="bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-blue bg-clip-text text-transparent">
+              Git-ripper
+            </span>{" "}
+            in Action
           </h2>
 
-          <p className="text-xl text-secondary-600 dark:text-secondary-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
             Learn how to use Git-ripper with real-world examples. From basic
             folder downloads to advanced features like resume capabilities and
             ZIP archives.
@@ -115,17 +125,17 @@ const CodeExample = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="flex flex-wrap justify-center gap-2 mb-8">
+            className="flex flex-wrap justify-center gap-3 mb-8">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  className={`flex items-center space-x-2 px-5 py-2.5 rounded-xl font-medium transition-all duration-300 ${
                     activeTab === tab.id
-                      ? "bg-primary-600 text-white shadow-lg"
-                      : "bg-secondary-100 text-secondary-700 hover:bg-secondary-200"
+                      ? "bg-gradient-to-r from-neon-cyan/20 to-neon-purple/20 text-neon-cyan border border-neon-cyan/30 shadow-[0_0_20px_rgba(0,245,255,0.2)]"
+                      : "bg-[#12121a] text-gray-400 hover:text-white border border-gray-800/50 hover:border-neon-cyan/30"
                   }`}>
                   <Icon className="w-4 h-4" />
                   <span>{tab.label}</span>
@@ -144,29 +154,34 @@ const CodeExample = () => {
             {/* Command */}
             <div>
               <div className="mb-4">
-                <h3 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100 mb-2">
+                <h3 className="text-2xl font-bold text-white mb-2">
                   {examples[activeTab].title}
                 </h3>
-                <p className="text-secondary-600 dark:text-secondary-400">
+                <p className="text-gray-500">
                   {examples[activeTab].description}
                 </p>
               </div>
 
-              <div className="bg-secondary-900 rounded-lg overflow-hidden">
-                <div className="flex items-center justify-between px-4 py-2 bg-secondary-800">
-                  <span className="text-secondary-300 text-sm font-medium">
-                    Terminal
-                  </span>
+              <div className="bg-[#12121a] rounded-xl overflow-hidden border border-gray-800/50 hover:border-neon-cyan/30 transition-all duration-500 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+                <div className="flex items-center justify-between px-4 py-3 bg-[#0a0a0f] border-b border-gray-800/50">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500/60"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-500/60"></div>
+                    <span className="text-gray-500 text-sm font-medium ml-2">
+                      Terminal
+                    </span>
+                  </div>
                   <CopyToClipboard
                     text={examples[activeTab].command}
                     onCopy={() =>
                       handleCopy(examples[activeTab].command, activeTab)
                     }>
-                    <button className="flex items-center space-x-1 text-secondary-400 hover:text-white transition-colors text-sm">
+                    <button className="flex items-center space-x-1 text-gray-500 hover:text-neon-cyan transition-colors text-sm">
                       {copiedCommand === activeTab ? (
                         <>
-                          <CheckIcon className="w-4 h-4" />
-                          <span>Copied!</span>
+                          <CheckIcon className="w-4 h-4 text-green-400" />
+                          <span className="text-green-400">Copied!</span>
                         </>
                       ) : (
                         <>
@@ -179,9 +194,9 @@ const CodeExample = () => {
                 </div>
 
                 <div className="p-4">
-                  <div className="font-mono text-sm">
-                    <span className="text-primary-400">$</span>
-                    <span className="text-green-400 ml-2">
+                  <div className="font-mono text-sm flex items-start gap-2">
+                    <span className="text-gray-600">$</span>
+                    <span className="text-neon-cyan">
                       {examples[activeTab].command}
                     </span>
                   </div>
@@ -192,23 +207,23 @@ const CodeExample = () => {
             {/* Output */}
             <div>
               <div className="mb-4">
-                <h3 className="text-xl font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
+                <h3 className="text-xl font-semibold text-white mb-2">
                   Output
                 </h3>
-                <p className="text-secondary-600 dark:text-secondary-400 text-sm">
+                <p className="text-gray-500 text-sm">
                   What you'll see when running this command
                 </p>
               </div>
 
-              <div className="bg-secondary-900 rounded-lg overflow-hidden">
-                <div className="px-4 py-2 bg-secondary-800">
-                  <span className="text-secondary-300 text-sm font-medium">
+              <div className="bg-[#12121a] rounded-xl overflow-hidden border border-gray-800/50 hover:border-neon-purple/30 transition-all duration-500 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+                <div className="px-4 py-3 bg-[#0a0a0f] border-b border-gray-800/50">
+                  <span className="text-gray-500 text-sm font-medium">
                     Output
                   </span>
                 </div>
 
                 <div className="p-4">
-                  <pre className="font-mono text-sm text-secondary-300 whitespace-pre-wrap">
+                  <pre className="font-mono text-sm text-gray-400 whitespace-pre-wrap leading-relaxed">
                     {examples[activeTab].output}
                   </pre>
                 </div>
@@ -223,7 +238,7 @@ const CodeExample = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
             className="mt-16">
-            <h3 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100 mb-8 text-center">
+            <h3 className="text-2xl font-bold text-white mb-8 text-center">
               More Command Examples
             </h3>
 
@@ -253,15 +268,17 @@ const CodeExample = () => {
                   description: "View all saved download progress",
                 },
               ].map((example, index) => (
-                <div key={index} className="card">
-                  <h4 className="font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
+                <div
+                  key={index}
+                  className="bg-[#12121a]/80 backdrop-blur-sm rounded-xl p-5 border border-gray-800/50 hover:border-neon-cyan/30 transition-all duration-500 group hover:shadow-[0_0_30px_rgba(0,245,255,0.1)]">
+                  <h4 className="font-semibold text-white mb-2 group-hover:text-neon-cyan transition-colors duration-300">
                     {example.title}
                   </h4>
-                  <p className="text-secondary-600 dark:text-secondary-400 text-sm mb-3">
+                  <p className="text-gray-500 text-sm mb-3">
                     {example.description}
                   </p>
-                  <div className="bg-secondary-900 rounded p-3">
-                    <code className="text-green-400 text-sm font-mono">
+                  <div className="bg-[#0a0a0f] rounded-lg p-3 border border-gray-800/30">
+                    <code className="text-neon-cyan text-sm font-mono">
                       {example.command}
                     </code>
                   </div>

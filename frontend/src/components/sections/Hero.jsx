@@ -64,38 +64,61 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden transition-colors duration-500 pt-16">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-hero-pattern opacity-40 dark:opacity-20"></div>
+    <section className="relative min-h-[85vh] bg-gradient-to-br from-primary-50 via-white to-secondary-50 dark:from-charcoal-950 dark:via-charcoal-950 dark:to-charcoal-900 overflow-hidden transition-colors duration-500 pt-24 pb-16">
+      {/* Light mode pattern */}
+      <div className="absolute inset-0 bg-hero-pattern opacity-40 dark:opacity-0 transition-opacity duration-500"></div>
 
-      {/* Enhanced dark mode overlays */}
+      {/* Dark mode ambient effects */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 hidden dark:block"
         style={{
-          background:
-            "radial-gradient(circle at 25% 30%, rgba(96,165,250,0.4), transparent 50%), radial-gradient(circle at 80% 70%, rgba(59,130,246,0.3), transparent 55%), radial-gradient(circle at 60% 10%, rgba(251,191,36,0.15), transparent 40%)",
-        }}></div>
+          background: `
+            radial-gradient(ellipse 80% 60% at 50% 0%, rgba(34, 211, 238, 0.15), transparent 50%),
+            radial-gradient(ellipse 60% 40% at 0% 50%, rgba(168, 85, 247, 0.1), transparent 50%),
+            radial-gradient(ellipse 50% 30% at 100% 50%, rgba(59, 130, 246, 0.1), transparent 50%),
+            radial-gradient(ellipse 40% 40% at 50% 100%, rgba(34, 211, 238, 0.08), transparent 50%)
+          `,
+        }}
+      />
 
-      {/* Animated gradient mesh */}
+      {/* Grid pattern overlay for dark mode */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 hidden dark:block opacity-30"
+        className="pointer-events-none absolute inset-0 hidden dark:block opacity-40"
         style={{
-          background:
-            "conic-gradient(from 230.29deg at 51.63% 52.16%, rgba(96,165,250,0.2) 0deg, rgba(59,130,246,0.15) 67.5deg, rgba(251,191,36,0.1) 198.75deg, rgba(96,165,250,0.2) 251.25deg, rgba(96,165,250,0.2) 301.88deg, rgba(96,165,250,0.2) 360deg)",
-        }}></div>
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2322d3ee' stroke-opacity='0.04'%3E%3Cpath d='M0 30h60M30 0v60'/%3E%3C/g%3E%3C/svg%3E")`,
+        }}
+      />
 
-      {/* Enhanced floating Elements */}
-      <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-primary-200 to-primary-300 dark:from-blue-500/30 dark:to-blue-600/40 rounded-full animate-float opacity-60 dark:opacity-80 blur-sm dark:shadow-2xl dark:shadow-blue-500/30"></div>
-      <div
-        className="absolute top-40 right-20 w-16 h-16 bg-gradient-to-br from-accent-200 to-accent-300 dark:from-yellow-400/30 dark:to-yellow-500/40 rounded-full animate-float opacity-60 dark:opacity-80 blur-sm dark:shadow-2xl dark:shadow-yellow-400/30"
-        style={{ animationDelay: "2s" }}></div>
-      <div
-        className="absolute bottom-40 left-20 w-12 h-12 bg-gradient-to-br from-secondary-200 to-secondary-300 dark:from-purple-500/30 dark:to-purple-600/40 rounded-full animate-float opacity-60 dark:opacity-80 blur-sm dark:shadow-2xl dark:shadow-purple-500/30"
-        style={{ animationDelay: "4s" }}></div>
+      {/* Animated floating orbs */}
+      <motion.div
+        animate={{ y: [-10, 10, -10], x: [-5, 5, -5] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-20 left-[10%] w-24 h-24 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 dark:from-cyan-400/30 dark:to-cyan-500/20 rounded-full blur-xl dark:shadow-neon/20"
+      />
+      <motion.div
+        animate={{ y: [10, -10, 10], x: [5, -5, 5] }}
+        transition={{
+          duration: 7,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1,
+        }}
+        className="absolute top-40 right-[15%] w-20 h-20 bg-gradient-to-br from-purple-400/20 to-pink-500/20 dark:from-purple-400/30 dark:to-purple-500/20 rounded-full blur-xl dark:shadow-neon-purple/20"
+      />
+      <motion.div
+        animate={{ y: [-15, 15, -15] }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2,
+        }}
+        className="absolute bottom-40 left-[20%] w-16 h-16 bg-gradient-to-br from-blue-400/20 to-indigo-500/20 dark:from-blue-400/30 dark:to-indigo-500/20 rounded-full blur-xl"
+      />
 
-      <div className="container-custom section-padding relative z-10">
+      <div className="container-custom relative z-10">
         <div className="text-center max-w-4xl mx-auto">
           {/* Badge */}
           <motion.div
@@ -103,7 +126,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
             whileHover={{ scale: 1.05, y: -2 }}
-            className="inline-flex items-center space-x-2 bg-primary-100 dark:bg-blue-500/20 text-primary-700 dark:text-blue-300 px-5 py-2.5 rounded-full text-sm font-medium mb-8 border border-primary-200 dark:border-blue-500/30 shadow-md dark:shadow-lg dark:shadow-blue-500/20 backdrop-blur-sm">
+            className="inline-flex items-center space-x-2 bg-primary-100 dark:bg-cyan-500/10 text-primary-700 dark:text-cyan-300 px-5 py-2.5 rounded-full text-sm font-medium mb-6 border border-primary-200 dark:border-cyan-500/20 shadow-md dark:shadow-neon/10 backdrop-blur-sm">
             <CommandLineIcon className="w-4 h-4" />
             <span>CLI Tool for Selective Downloads</span>
           </motion.div>
@@ -113,9 +136,9 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
-            className="text-5xl md:text-7xl font-extrabold text-secondary-900 dark:text-secondary-100 mb-6 text-shadow leading-tight tracking-tight">
+            className="text-5xl md:text-7xl font-extrabold text-secondary-900 dark:text-white mb-6 leading-tight tracking-tight">
             Download GitHub
-            <span className="block bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 dark:from-emerald-300 dark:via-teal-300 dark:to-cyan-300 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 dark:from-cyan-400 dark:via-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
               Folders Instantly
             </span>
           </motion.h1>
@@ -125,9 +148,9 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-secondary-600 dark:text-secondary-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+            className="text-xl md:text-2xl text-secondary-600 dark:text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
             Skip the entire repository clone. Get exactly what you need with
-            <span className="font-semibold text-primary-600">
+            <span className="font-semibold text-cyan-600 dark:text-cyan-400">
               {" "}
               Git-ripper
             </span>{" "}
@@ -140,23 +163,26 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="mb-8 hidden md:block">
-            <div className="glass rounded-xl p-6 max-w-2xl mx-auto shadow-2xl dark:shadow-black/60">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-emerald-400 text-sm font-medium">
-                  INSTALLATION
+            className="mb-8">
+            <div className="glass-strong rounded-2xl p-6 max-w-2xl mx-auto dark:border-cyan-500/20">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-cyan-600 dark:text-cyan-400 text-sm font-medium uppercase tracking-wider">
+                  Installation
                 </span>
                 <CopyToClipboard
                   text="npm install -g git-ripper"
                   onCopy={() => handleCopy("install")}>
-                  <button className="text-gray-400 hover:text-white transition-colors text-sm">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="text-secondary-500 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors text-sm font-medium">
                     {copiedCommand === "install" ? "Copied!" : "Copy"}
-                  </button>
+                  </motion.button>
                 </CopyToClipboard>
               </div>
-              <div className="font-mono text-left">
-                <span className="text-emerald-400">$</span>
-                <span className="text-green-400 ml-2">
+              <div className="font-mono text-left bg-secondary-900 dark:bg-charcoal-950 rounded-xl p-4 border border-secondary-800 dark:border-cyan-500/10">
+                <span className="text-cyan-400">$</span>
+                <span className="text-emerald-400 ml-2">
                   npm install -g git-ripper
                 </span>
               </div>
@@ -168,29 +194,32 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="mb-12 hidden md:block">
-            <div className="glass-strong rounded-xl p-6 max-w-4xl mx-auto shadow-2xl dark:shadow-black/60">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-emerald-400 text-sm font-medium">
-                  USAGE
+            className="mb-12">
+            <div className="glass-strong rounded-2xl p-6 max-w-4xl mx-auto dark:border-purple-500/20">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-purple-600 dark:text-purple-400 text-sm font-medium uppercase tracking-wider">
+                  Usage
                 </span>
                 <CopyToClipboard
                   text="git-ripper https://github.com/facebook/react/tree/main/packages/react-dom"
                   onCopy={() => handleCopy("usage")}>
-                  <button className="text-gray-400 hover:text-white transition-colors text-sm">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="text-secondary-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-300 transition-colors text-sm font-medium">
                     {copiedCommand === "usage" ? "Copied!" : "Copy"}
-                  </button>
+                  </motion.button>
                 </CopyToClipboard>
               </div>
-              <div className="font-mono text-left text-sm md:text-base">
+              <div className="font-mono text-left bg-secondary-900 dark:bg-charcoal-950 rounded-xl p-4 border border-secondary-800 dark:border-purple-500/10 text-sm md:text-base">
                 <div className="mb-2">
-                  <span className="text-emerald-400">$</span>
-                  <span className="text-green-400 ml-2">git-ripper</span>
-                  <span className="text-yellow-400 ml-2">
+                  <span className="text-cyan-400">$</span>
+                  <span className="text-emerald-400 ml-2">git-ripper</span>
+                  <span className="text-amber-400 ml-2 break-all">
                     https://github.com/facebook/react/tree/main/packages/react-dom
                   </span>
                 </div>
-                <div className="text-gray-400 text-xs">
+                <div className="text-gray-500 dark:text-gray-500 text-xs">
                   ✓ Downloading react-dom package... (45 files, 2.3MB)
                 </div>
               </div>
@@ -202,20 +231,26 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.0 }}
-            className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-16">
-            <a
+            className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-12">
+            <motion.a
+              whileHover={{ scale: 1.05, y: -3 }}
+              whileTap={{ scale: 0.98 }}
               href="#features"
-              className="btn-primary flex items-center space-x-2">
+              className="btn-primary flex items-center space-x-2 px-8 py-4 text-base">
               <PlayIcon className="w-5 h-5" />
               <span>Get Started</span>
-            </a>
+            </motion.a>
 
-            <Link
-              to="/docs"
-              className="btn-secondary flex items-center space-x-2">
-              <DocumentTextIcon className="w-5 h-5" />
-              <span>Documentation</span>
-            </Link>
+            <motion.div
+              whileHover={{ scale: 1.05, y: -3 }}
+              whileTap={{ scale: 0.98 }}>
+              <Link
+                to="/docs"
+                className="btn-secondary flex items-center space-x-2 px-8 py-4 text-base">
+                <DocumentTextIcon className="w-5 h-5" />
+                <span>Documentation</span>
+              </Link>
+            </motion.div>
           </motion.div>
 
           {/* Stats */}
@@ -227,17 +262,20 @@ const Hero = () => {
             {stats.map((stat, index) => {
               const Icon = stat.icon;
               return (
-                <div key={stat.label} className="text-center">
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-100 dark:bg-blue-500/20 text-primary-600 dark:text-blue-400 rounded-lg mb-2 border border-primary-200 dark:border-blue-500/30 dark:shadow-lg dark:shadow-blue-500/10">
-                    <Icon className="w-6 h-6" />
+                <motion.div
+                  key={stat.label}
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  className="text-center group">
+                  <div className="inline-flex items-center justify-center w-14 h-14 bg-primary-100 dark:bg-cyan-500/10 text-primary-600 dark:text-cyan-400 rounded-2xl mb-3 border border-primary-200 dark:border-cyan-500/20 shadow-lg dark:shadow-neon/10 group-hover:shadow-xl dark:group-hover:shadow-neon/20 transition-all duration-300">
+                    <Icon className="w-7 h-7" />
                   </div>
-                  <div className="text-2xl font-bold text-secondary-900 dark:text-gray-100">
+                  <div className="text-3xl font-bold text-secondary-900 dark:text-white mb-1">
                     {stat.value}
                   </div>
-                  <div className="text-secondary-600 dark:text-gray-400">
+                  <div className="text-secondary-600 dark:text-gray-400 text-sm">
                     {stat.label}
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </motion.div>
@@ -250,9 +288,11 @@ const Hero = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.5 }}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <div className="animate-bounce">
-          <ArrowDownIcon className="w-6 h-6 text-secondary-400 dark:text-gray-400" />
-        </div>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
+          <ArrowDownIcon className="w-6 h-6 text-secondary-400 dark:text-cyan-400/50" />
+        </motion.div>
       </motion.div>
     </section>
   );

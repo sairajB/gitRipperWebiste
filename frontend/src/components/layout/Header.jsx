@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Bars3Icon,
   XMarkIcon,
@@ -40,134 +40,216 @@ const Header = () => {
 
   return (
     <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "glass-strong shadow-lg dark:shadow-black/40 backdrop-blur-md"
-          : "bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm"
+          ? "glass-strong shadow-xl dark:shadow-none"
+          : "bg-white/60 dark:bg-transparent backdrop-blur-sm"
       }`}>
+      {/* Neon border bottom on scroll */}
+      <div
+        className={`absolute bottom-0 left-0 right-0 h-px transition-opacity duration-500 ${
+          isScrolled ? "opacity-100" : "opacity-0"
+        }`}
+        style={{
+          background:
+            theme === "dark"
+              ? "linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.5), rgba(168, 85, 247, 0.5), transparent)"
+              : "linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.3), transparent)",
+        }}
+      />
+
       <nav className="container-custom">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center space-x-2 text-lg md:text-xl font-bold text-secondary-800 dark:text-secondary-100 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-            <div className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-primary-500 to-primary-700 dark:from-blue-400 dark:to-blue-600 rounded-lg flex items-center justify-center shadow-lg dark:shadow-blue-500/30">
-              <CommandLineIcon className="w-5 h-5 text-white" />
-            </div>
-            <span className="gradient-text">Git-ripper</span>
+            className="flex items-center space-x-2 text-lg md:text-xl font-bold text-secondary-800 dark:text-white hover:text-primary-600 dark:hover:text-cyan-400 transition-colors group">
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-7 h-7 md:w-8 md:h-8 bg-gradient-to-br from-cyan-400 to-blue-600 dark:from-cyan-400 dark:to-purple-500 rounded-lg flex items-center justify-center shadow-lg dark:shadow-neon">
+              <CommandLineIcon className="w-4 h-4 md:w-5 md:h-5 text-white" />
+            </motion.div>
+            <span className="gradient-text font-extrabold tracking-tight">
+              Git-ripper
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-1">
             {navigation.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.href;
 
               return (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    isActive
-                      ? "bg-primary-100 text-primary-700 dark:bg-blue-500/20 dark:text-blue-300 dark:border dark:border-blue-500/30"
-                      : "text-secondary-600 hover:text-primary-600 hover:bg-primary-50 dark:text-gray-300 dark:hover:text-blue-300 dark:hover:bg-blue-500/10"
-                  }`}>
-                  <Icon className="w-4 h-4" />
-                  <span>{item.name}</span>
+                <Link key={item.name} to={item.href} className="relative group">
+                  <motion.div
+                    whileHover={{ y: -2 }}
+                    whileTap={{ y: 0 }}
+                    className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                      isActive
+                        ? "bg-cyan-500/10 text-cyan-600 dark:bg-cyan-500/20 dark:text-cyan-300"
+                        : "text-secondary-600 hover:text-primary-600 hover:bg-primary-50/50 dark:text-gray-300 dark:hover:text-cyan-300 dark:hover:bg-cyan-500/10"
+                    }`}>
+                    <Icon className="w-4 h-4" />
+                    <span>{item.name}</span>
+                  </motion.div>
+
+                  {/* Active indicator line */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeNav"
+                      className="absolute -bottom-0.5 left-2 right-2 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 dark:from-cyan-400 dark:to-purple-500 rounded-full"
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
+                    />
+                  )}
                 </Link>
               );
             })}
           </div>
 
           {/* CTA Button */}
-          <div className="hidden md:flex items-center space-x-4">
-            <button
+          <div className="hidden md:flex items-center space-x-3">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={toggleTheme}
               aria-label="Toggle dark mode"
-              className="p-2 rounded-lg border border-secondary-200 dark:border-gray-600 text-secondary-600 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 dark:hover:border-blue-500/50 transition-all duration-200">
-              {theme === "dark" ? (
-                <SunIcon className="w-5 h-5" />
-              ) : (
-                <MoonIcon className="w-5 h-5" />
-              )}
-            </button>
-            <a
+              className="p-2.5 rounded-xl border border-secondary-200 dark:border-gray-700/50 text-secondary-600 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-cyan-500/10 dark:hover:border-cyan-500/30 transition-all duration-300 hover:shadow-lg dark:hover:shadow-neon/20">
+              <AnimatePresence mode="wait">
+                {theme === "dark" ? (
+                  <motion.div
+                    key="sun"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}>
+                    <SunIcon className="w-5 h-5" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="moon"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}>
+                    <MoonIcon className="w-5 h-5" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.button>
+            <motion.a
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.98 }}
               href="https://www.npmjs.com/package/git-ripper"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-outline text-sm dark:border-blue-400 dark:text-blue-300 dark:hover:bg-blue-500/20 dark:hover:border-blue-300 transition-all duration-200">
+              className="btn-outline text-sm px-4 py-2 dark:border-cyan-400/50 dark:text-cyan-300 dark:hover:bg-cyan-500/15 dark:hover:border-cyan-400 dark:hover:shadow-neon/30 transition-all duration-300">
               Install Now
-            </a>
+            </motion.a>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-2">
-            <button
+            <motion.button
+              whileTap={{ scale: 0.9 }}
               onClick={toggleTheme}
               aria-label="Toggle dark mode"
-              className="p-2 rounded-lg text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-300 hover:bg-primary-50 dark:hover:bg-secondary-700 transition-colors">
+              className="p-2 rounded-lg text-secondary-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-cyan-300 hover:bg-primary-50 dark:hover:bg-cyan-500/10 transition-colors">
               {theme === "dark" ? (
                 <SunIcon className="w-6 h-6" />
               ) : (
                 <MoonIcon className="w-6 h-6" />
               )}
-            </button>
-            <button
+            </motion.button>
+            <motion.button
+              whileTap={{ scale: 0.9 }}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-lg text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-300 hover:bg-primary-50 dark:hover:bg-secondary-700 transition-colors">
-              {isMenuOpen ? (
-                <XMarkIcon className="w-6 h-6" />
-              ) : (
-                <Bars3Icon className="w-6 h-6" />
-              )}
-            </button>
+              className="p-2 rounded-lg text-secondary-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-cyan-300 hover:bg-primary-50 dark:hover:bg-cyan-500/10 transition-colors">
+              <AnimatePresence mode="wait">
+                {isMenuOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}>
+                    <XMarkIcon className="w-6 h-6" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}>
+                    <Bars3Icon className="w-6 h-6" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{
-            opacity: isMenuOpen ? 1 : 0,
-            height: isMenuOpen ? "auto" : 0,
-          }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden bg-white dark:bg-gray-900 border-t border-secondary-200 dark:border-gray-700 shadow-lg dark:shadow-black/20">
-          <div className="py-4 space-y-2">
-            {navigation.map((item) => {
-              const Icon = item.icon;
-              const isActive = location.pathname === item.href;
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+              className="md:hidden overflow-hidden glass-strong rounded-b-2xl border-t border-secondary-200 dark:border-cyan-500/10">
+              <div className="py-4 space-y-1 px-2">
+                {navigation.map((item, index) => {
+                  const Icon = item.icon;
+                  const isActive = location.pathname === item.href;
 
-              return (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                    isActive
-                      ? "bg-primary-100 text-primary-700 dark:bg-blue-500/20 dark:text-blue-300 dark:border dark:border-blue-500/30"
-                      : "text-secondary-600 hover:text-primary-600 hover:bg-primary-50 dark:text-gray-300 dark:hover:text-blue-300 dark:hover:bg-blue-500/10"
-                  }`}>
-                  <Icon className="w-5 h-5" />
-                  <span>{item.name}</span>
-                </Link>
-              );
-            })}
+                  return (
+                    <motion.div
+                      key={item.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.05 }}>
+                      <Link
+                        to={item.href}
+                        onClick={() => setIsMenuOpen(false)}
+                        className={`flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
+                          isActive
+                            ? "bg-cyan-500/10 text-cyan-600 dark:bg-cyan-500/20 dark:text-cyan-300 dark:shadow-neon/10"
+                            : "text-secondary-600 hover:text-primary-600 hover:bg-primary-50 dark:text-gray-300 dark:hover:text-cyan-300 dark:hover:bg-cyan-500/10"
+                        }`}>
+                        <Icon className="w-5 h-5" />
+                        <span>{item.name}</span>
+                      </Link>
+                    </motion.div>
+                  );
+                })}
 
-            <div className="pt-4 border-t border-secondary-200 dark:border-gray-700">
-              <a
-                href="https://www.npmjs.com/package/git-ripper"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full btn-primary text-center text-sm dark:bg-blue-600 dark:hover:bg-blue-500 dark:shadow-lg dark:shadow-blue-500/20">
-                Install Now
-              </a>
-            </div>
-          </div>
-        </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="pt-4 px-2 border-t border-secondary-200 dark:border-cyan-500/10">
+                  <a
+                    href="https://www.npmjs.com/package/git-ripper"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full btn-primary text-center text-sm">
+                    Install Now
+                  </a>
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
     </motion.header>
   );
