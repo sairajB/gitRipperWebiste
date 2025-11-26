@@ -5,10 +5,11 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-// Import git-ripper modules
-import { parseGitHubUrl } from "../src/parser.js";
-import { downloadFolder } from "../src/downloader.js";
-import { createArchive } from "../src/archiver.js";
+// Use the official git-ripper npm package
+// This provides: resume capability, progress tracking, file integrity verification,
+// optimized concurrent downloads, and built-in archiving
+import { parseGitHubUrl } from "git-ripper/src/parser.js";
+import { downloadAndArchive } from "git-ripper/src/archiver.js";
 
 const router = express.Router();
 
@@ -37,14 +38,17 @@ const validateGitHubUrl = [
     .withMessage("URL is too long"),
 ];
 
-// Temporary file cleanup utility
-const cleanupTempFiles = async (tempDir, zipPath = null) => {
+// Cleanup utility for temporary files
+const cleanupTempFiles = async (zipPath) => {
   try {
-    if (tempDir && fs.existsSync(tempDir)) {
-      await fs.promises.rm(tempDir, { recursive: true, force: true });
-    }
     if (zipPath && fs.existsSync(zipPath)) {
       await fs.promises.rm(zipPath, { force: true });
+    }
+    // Also cleanup any temp directories created by git-ripper
+    const tempDir = path.dirname(zipPath);
+    const downloadDir = zipPath.replace(".zip", "");
+    if (fs.existsSync(downloadDir)) {
+      await fs.promises.rm(downloadDir, { recursive: true, force: true });
     }
   } catch (error) {
     console.error("Error cleaning up temporary files:", error);
@@ -63,62 +67,50 @@ router.post("/rip", validateGitHubUrl, async (req, res) => {
   }
 
   const { url } = req.body;
-  let tempDir = null;
   let zipPath = null;
 
   try {
     console.log(`Processing download request for: ${url}`);
 
-    // Parse the GitHub URL
+    // Parse the GitHub URL using git-ripper's parser
     const parsedUrl = parseGitHubUrl(url);
     console.log("Parsed URL:", parsedUrl);
 
-    // Create temporary directory for download
+    // Generate unique temp directory for this download
     const tempId = `git-ripper-${Date.now()}-${Math.random()
       .toString(36)
-      .substr(2, 9)}`;
-    tempDir = path.join(os.tmpdir(), tempId);
+      .substring(2, 11)}`;
+    const tempDir = path.join(os.tmpdir(), tempId);
 
-    // Ensure temp directory exists
-    await fs.promises.mkdir(tempDir, { recursive: true });
-
-    // Download the folder
-    console.log(`Downloading to temporary directory: ${tempDir}`);
-    const downloadResult = await downloadFolder(parsedUrl, tempDir);
-
-    // Check if download was successful
-    if (!downloadResult || !downloadResult.success) {
-      throw new Error(
-        `Download failed: ${downloadResult?.error || "Unknown error"}`
-      );
-    }
-
-    // Check if any files were downloaded
-    const files = await fs.promises.readdir(tempDir, { recursive: true });
-    const fileCount = files.filter((file) => {
-      const fullPath = path.join(tempDir, file);
-      return fs.statSync(fullPath).isFile();
-    }).length;
-
-    if (fileCount === 0) {
-      throw new Error(
-        "No files found to download. The folder may be empty or not exist."
-      );
-    }
-
-    // Create ZIP archive
+    // Generate ZIP filename
     const { owner, repo, folderPath } = parsedUrl;
     const folderName = folderPath ? folderPath.split("/").pop() : repo;
     const zipFileName = `${folderName || repo}-${owner}.zip`;
-    zipPath = path.join(os.tmpdir(), `${tempId}-${zipFileName}`);
 
-    console.log(`Creating ZIP archive: ${zipPath}`);
-    await createArchive(tempDir, zipPath);
+    console.log(`Using git-ripper package to download and archive...`);
+
+    // Use git-ripper's downloadAndArchive function
+    // This handles: downloading, resume capability, progress tracking,
+    // file integrity verification, and ZIP creation in one optimized operation
+    zipPath = await downloadAndArchive(parsedUrl, tempDir, zipFileName);
+
+    console.log(`Archive created at: ${zipPath}`);
+
+    // Verify the ZIP file exists and has content
+    if (!fs.existsSync(zipPath)) {
+      throw new Error("Archive creation failed - file not found");
+    }
+
+    const stats = await fs.promises.stat(zipPath);
+    if (stats.size === 0) {
+      throw new Error("Archive creation failed - empty file");
+    }
 
     // Send the ZIP file
     res.set({
       "Content-Type": "application/zip",
       "Content-Disposition": `attachment; filename="${zipFileName}"`,
+      "Content-Length": stats.size,
       "Cache-Control": "no-cache",
     });
 
@@ -128,12 +120,12 @@ router.post("/rip", validateGitHubUrl, async (req, res) => {
 
     fileStream.on("end", async () => {
       console.log(`Download completed for: ${url}`);
-      await cleanupTempFiles(tempDir, zipPath);
+      await cleanupTempFiles(zipPath);
     });
 
     fileStream.on("error", async (error) => {
       console.error("Error streaming file:", error);
-      await cleanupTempFiles(tempDir, zipPath);
+      await cleanupTempFiles(zipPath);
       if (!res.headersSent) {
         res.status(500).json({ error: "Error sending file" });
       }
@@ -142,19 +134,36 @@ router.post("/rip", validateGitHubUrl, async (req, res) => {
     console.error("Download error:", error);
 
     // Cleanup temporary files
-    await cleanupTempFiles(tempDir, zipPath);
+    if (zipPath) {
+      await cleanupTempFiles(zipPath);
+    }
 
-    // Send appropriate error response
-    if (error.message.includes("Invalid GitHub URL")) {
+    // Send appropriate error response based on error type
+    const errorMessage = error.message.toLowerCase();
+
+    if (
+      errorMessage.includes("invalid github url") ||
+      errorMessage.includes("invalid url")
+    ) {
       return res.status(400).json({ error: error.message });
     } else if (
-      error.message.includes("not found") ||
-      error.message.includes("404")
+      errorMessage.includes("not found") ||
+      errorMessage.includes("404") ||
+      errorMessage.includes("path not found")
     ) {
       return res.status(404).json({ error: "Repository or folder not found" });
-    } else if (error.message.includes("rate limit")) {
+    } else if (
+      errorMessage.includes("rate limit") ||
+      errorMessage.includes("403") ||
+      errorMessage.includes("forbidden")
+    ) {
       return res.status(429).json({
         error: "GitHub API rate limit exceeded. Please try again later.",
+      });
+    } else if (errorMessage.includes("no files")) {
+      return res.status(404).json({
+        error:
+          "No files found in the specified folder. The folder may be empty.",
       });
     } else {
       return res.status(500).json({ error: "Internal server error occurred" });
