@@ -1,10 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowDownTrayIcon,
   LinkIcon,
   CheckCircleIcon,
   ExclamationCircleIcon,
+  DocumentArrowDownIcon,
+  ArchiveBoxIcon,
+  FolderIcon,
 } from "@heroicons/react/24/outline";
 
 const WebInterface = () => {
@@ -12,7 +15,9 @@ const WebInterface = () => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [status, setStatus] = useState({ type: "", message: "" });
   const [progress, setProgress] = useState(0);
+  const [progressDetails, setProgressDetails] = useState(null);
   const inputRef = useRef(null);
+  const eventSourceRef = useRef(null);
 
   const exampleUrls = [
     "https://github.com/facebook/react/tree/main/packages/react",
@@ -32,21 +37,47 @@ const WebInterface = () => {
     inputRef.current?.focus();
   };
 
-  const simulateProgress = () => {
-    let progress = 0;
-    const progressInterval = setInterval(() => {
-      if (!isDownloading) {
-        clearInterval(progressInterval);
-        return;
-      }
-      progress += Math.random() * 10;
-      if (progress > 85) {
-        progress = 85;
-        clearInterval(progressInterval);
-      }
-      setProgress(progress);
-    }, 500);
+  // Generate unique download ID
+  const generateDownloadId = () => {
+    return `dl-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
   };
+
+  // Connect to SSE for progress updates
+  const connectToProgress = useCallback((downloadId) => {
+    // Close any existing connection
+    if (eventSourceRef.current) {
+      eventSourceRef.current.close();
+    }
+
+    const eventSource = new EventSource(
+      `/api/git-ripper/progress/${downloadId}`
+    );
+    eventSourceRef.current = eventSource;
+
+    eventSource.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        setProgress(data.percent || 0);
+        setProgressDetails(data);
+
+        if (data.message) {
+          setStatus({ type: "info", message: data.message });
+        }
+      } catch (e) {
+        console.error("Error parsing progress data:", e);
+      }
+    };
+
+    eventSource.onerror = () => {
+      eventSource.close();
+      eventSourceRef.current = null;
+    };
+
+    return () => {
+      eventSource.close();
+      eventSourceRef.current = null;
+    };
+  }, []);
 
   const downloadBlob = (blob, filename) => {
     const url = window.URL.createObjectURL(blob);
@@ -58,6 +89,14 @@ const WebInterface = () => {
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
+  };
+
+  const formatBytes = (bytes) => {
+    if (!bytes) return "0 B";
+    const k = 1024;
+    const sizes = ["B", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
   const handleSubmit = async (e) => {
@@ -76,20 +115,29 @@ const WebInterface = () => {
       return;
     }
 
+    const downloadId = generateDownloadId();
     setIsDownloading(true);
-    setStatus({ type: "info", message: "Preparing download..." });
+    setStatus({ type: "info", message: "Initializing download..." });
     setProgress(0);
+    setProgressDetails(null);
+
+    // Connect to progress stream
+    connectToProgress(downloadId);
 
     try {
-      simulateProgress();
-
       const response = await fetch("/api/git-ripper/rip", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ url, downloadId }),
       });
+
+      // Close SSE connection
+      if (eventSourceRef.current) {
+        eventSourceRef.current.close();
+        eventSourceRef.current = null;
+      }
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -116,6 +164,13 @@ const WebInterface = () => {
       });
     } catch (error) {
       console.error("Download error:", error);
+
+      // Close SSE connection on error
+      if (eventSourceRef.current) {
+        eventSourceRef.current.close();
+        eventSourceRef.current = null;
+      }
+
       let errorMessage = "An unexpected error occurred";
 
       if (
@@ -140,7 +195,10 @@ const WebInterface = () => {
       setStatus({ type: "error", message: errorMessage });
     } finally {
       setIsDownloading(false);
-      setTimeout(() => setProgress(0), 2000);
+      setTimeout(() => {
+        setProgress(0);
+        setProgressDetails(null);
+      }, 3000);
     }
   };
 
@@ -148,6 +206,25 @@ const WebInterface = () => {
     setUrl(e.target.value);
     if (status.type === "error") {
       setStatus({ type: "", message: "" });
+    }
+  };
+
+  // Get status icon based on current phase
+  const getStatusIcon = () => {
+    if (!progressDetails) return null;
+
+    switch (progressDetails.status) {
+      case "parsing":
+      case "fetching":
+        return <FolderIcon className="w-5 h-5 animate-pulse" />;
+      case "downloading":
+        return <DocumentArrowDownIcon className="w-5 h-5 animate-bounce" />;
+      case "archiving":
+        return <ArchiveBoxIcon className="w-5 h-5 animate-pulse" />;
+      case "complete":
+        return <CheckCircleIcon className="w-5 h-5" />;
+      default:
+        return null;
     }
   };
 
@@ -283,20 +360,48 @@ const WebInterface = () => {
             )}
 
             {/* Progress Bar */}
-            {progress > 0 && (
+            {(progress > 0 || isDownloading) && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
-                className="mt-4">
-                <div className="w-full bg-secondary-200 dark:bg-secondary-700 rounded-full h-2 overflow-hidden">
+                className="mt-4 space-y-2">
+                {/* Progress percentage and details */}
+                <div className="flex items-center justify-between text-sm">
+                  <div className="flex items-center space-x-2 text-secondary-600 dark:text-gray-300">
+                    {getStatusIcon()}
+                    <span>{progressDetails?.message || "Processing..."}</span>
+                  </div>
+                  <span className="font-mono text-primary-600 dark:text-blue-400">
+                    {Math.round(progress)}%
+                  </span>
+                </div>
+
+                {/* Progress bar */}
+                <div className="w-full bg-secondary-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}
-                    transition={{ duration: 0.3 }}
-                    className="h-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-full"
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className={`h-full rounded-full transition-colors ${
+                      progressDetails?.status === "complete"
+                        ? "bg-gradient-to-r from-green-500 to-emerald-500"
+                        : progressDetails?.status === "error"
+                        ? "bg-gradient-to-r from-red-500 to-red-600"
+                        : "bg-gradient-to-r from-primary-500 to-blue-500"
+                    }`}
                   />
                 </div>
+
+                {/* Additional stats */}
+                {progressDetails?.filesDownloaded && (
+                  <div className="flex items-center justify-between text-xs text-secondary-500 dark:text-gray-400">
+                    <span>Files: {progressDetails.filesDownloaded}</span>
+                    {progressDetails.fileSize && (
+                      <span>Size: {formatBytes(progressDetails.fileSize)}</span>
+                    )}
+                  </div>
+                )}
               </motion.div>
             )}
           </motion.div>
