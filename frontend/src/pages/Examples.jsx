@@ -231,7 +231,7 @@ const Examples = () => {
                       <div className="w-12 h-12 bg-primary-600 text-white rounded-xl flex items-center justify-center">
                         <Icon className="w-6 h-6" />
                       </div>
-                      <h2 className="text-3xl font-bold text-secondary-900">
+                      <h2 className="text-3xl font-bold text-secondary-900 dark:text-white">
                         {category.title}
                       </h2>
                     </div>
@@ -254,10 +254,10 @@ const Examples = () => {
                             className="card group hover:shadow-2xl hover:-translate-y-1">
                             {/* Example Header */}
                             <div className="mb-4">
-                              <h3 className="text-xl font-semibold text-secondary-900 mb-2 group-hover:text-primary-600 transition-colors">
+                              <h3 className="text-xl font-semibold text-secondary-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                                 {example.title}
                               </h3>
-                              <p className="text-secondary-600 text-sm">
+                              <p className="text-secondary-600 dark:text-secondary-400 text-sm">
                                 {example.description}
                               </p>
                             </div>
@@ -301,7 +301,7 @@ const Examples = () => {
 
                             {/* Stats */}
                             {example.size !== "-" && (
-                              <div className="flex items-center justify-between text-sm text-secondary-600">
+                              <div className="flex items-center justify-between text-sm text-secondary-600 dark:text-secondary-400">
                                 <div className="flex items-center space-x-4">
                                   <span>📁 {example.files}</span>
                                   <span>📦 {example.size}</span>

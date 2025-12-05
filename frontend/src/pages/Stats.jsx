@@ -28,6 +28,7 @@ import {
   CubeIcon,
 } from "@heroicons/react/24/outline";
 import StatsService from "../services/statsService";
+import { useTheme } from "../context/ThemeContext";
 
 ChartJS.register(
   CategoryScale,
@@ -43,6 +44,8 @@ ChartJS.register(
 );
 
 const Stats = () => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const [stats, setStats] = useState(null);
   const [rawDownloadHistory, setRawDownloadHistory] = useState([]);
   const [latestDataDate, setLatestDataDate] = useState(null);
@@ -112,6 +115,15 @@ const Stats = () => {
 
   // Process download history into chart data based on selected period
   const downloadTrendData = useMemo(() => {
+    const lineColor = isDark ? "#00f5ff" : "#0ea5e9";
+    const pointBorderColor = isDark ? "#0a0a0f" : "#ffffff";
+    const gradientStart = isDark
+      ? "rgba(0, 245, 255, 0.25)"
+      : "rgba(14, 165, 233, 0.25)";
+    const gradientEnd = isDark
+      ? "rgba(0, 245, 255, 0.02)"
+      : "rgba(14, 165, 233, 0.02)";
+
     if (!rawDownloadHistory || rawDownloadHistory.length === 0) {
       // Generate placeholder data when no history available
       const days = parseInt(chartPeriod);
@@ -134,12 +146,12 @@ const Stats = () => {
           {
             label: "Daily Downloads",
             data,
-            borderColor: "#00f5ff",
-            backgroundColor: "rgba(0, 245, 255, 0.1)",
+            borderColor: lineColor,
+            backgroundColor: gradientStart,
             fill: true,
             tension: 0.4,
-            pointBackgroundColor: "#00f5ff",
-            pointBorderColor: "#0a0a0f",
+            pointBackgroundColor: lineColor,
+            pointBorderColor: pointBorderColor,
             pointBorderWidth: 2,
             pointRadius: days > 60 ? 0 : 3,
             pointHoverRadius: 6,
@@ -182,18 +194,18 @@ const Stats = () => {
           {
             label: "Weekly Downloads",
             data: weeklyData,
-            borderColor: "#00f5ff",
+            borderColor: lineColor,
             backgroundColor: (context) => {
               const ctx = context.chart.ctx;
               const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-              gradient.addColorStop(0, "rgba(0, 245, 255, 0.25)");
-              gradient.addColorStop(1, "rgba(0, 245, 255, 0.02)");
+              gradient.addColorStop(0, gradientStart);
+              gradient.addColorStop(1, gradientEnd);
               return gradient;
             },
             fill: true,
             tension: 0.4,
-            pointBackgroundColor: "#00f5ff",
-            pointBorderColor: "#0a0a0f",
+            pointBackgroundColor: lineColor,
+            pointBorderColor: pointBorderColor,
             pointBorderWidth: 2,
             pointRadius: 4,
             pointHoverRadius: 7,
@@ -219,18 +231,18 @@ const Stats = () => {
         {
           label: "Daily Downloads",
           data,
-          borderColor: "#00f5ff",
+          borderColor: lineColor,
           backgroundColor: (context) => {
             const ctx = context.chart.ctx;
             const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-            gradient.addColorStop(0, "rgba(0, 245, 255, 0.25)");
-            gradient.addColorStop(1, "rgba(0, 245, 255, 0.02)");
+            gradient.addColorStop(0, gradientStart);
+            gradient.addColorStop(1, gradientEnd);
             return gradient;
           },
           fill: true,
           tension: 0.4,
-          pointBackgroundColor: "#00f5ff",
-          pointBorderColor: "#0a0a0f",
+          pointBackgroundColor: lineColor,
+          pointBorderColor: pointBorderColor,
           pointBorderWidth: 2,
           pointRadius: days > 30 ? 0 : 4,
           pointHoverRadius: 7,
@@ -238,7 +250,7 @@ const Stats = () => {
         },
       ],
     };
-  }, [rawDownloadHistory, chartPeriod]);
+  }, [rawDownloadHistory, chartPeriod, isDark]);
 
   // Calculate actual growth rate from download history
   const growthMetrics = useMemo(() => {
@@ -317,14 +329,22 @@ const Stats = () => {
         {
           label: "Feature Usage (%)",
           data: baseData.map((d) => d.percentage),
-          backgroundColor: [
-            "rgba(0, 245, 255, 0.8)",
-            "rgba(0, 102, 255, 0.75)",
-            "rgba(191, 0, 255, 0.7)",
-            "rgba(139, 92, 246, 0.65)",
-            "rgba(99, 102, 241, 0.6)",
-          ],
-          borderColor: "#00f5ff",
+          backgroundColor: isDark
+            ? [
+                "rgba(0, 245, 255, 0.8)",
+                "rgba(0, 102, 255, 0.75)",
+                "rgba(191, 0, 255, 0.7)",
+                "rgba(139, 92, 246, 0.65)",
+                "rgba(99, 102, 241, 0.6)",
+              ]
+            : [
+                "rgba(14, 165, 233, 0.8)",
+                "rgba(59, 130, 246, 0.75)",
+                "rgba(168, 85, 247, 0.7)",
+                "rgba(139, 92, 246, 0.65)",
+                "rgba(99, 102, 241, 0.6)",
+              ],
+          borderColor: isDark ? "#00f5ff" : "#0ea5e9",
           borderWidth: 1,
           borderRadius: 8,
           borderSkipped: false,
@@ -332,7 +352,7 @@ const Stats = () => {
       ],
       details: baseData,
     };
-  }, []);
+  }, [isDark]);
 
   // Download distribution by time period
   const downloadDistributionData = useMemo(() => {
@@ -355,152 +375,175 @@ const Stats = () => {
             Math.max(0, lastMonthPercent - lastWeekPercent),
             olderPercent,
           ],
-          backgroundColor: ["#00f5ff", "#bf00ff", "#4b5563"],
+          backgroundColor: isDark
+            ? ["#00f5ff", "#bf00ff", "#4b5563"]
+            : ["#0ea5e9", "#a855f7", "#9ca3af"],
           borderWidth: 3,
-          borderColor: "#0a0a0f",
+          borderColor: isDark ? "#0a0a0f" : "#ffffff",
           hoverOffset: 8,
         },
       ],
     };
-  }, [stats]);
+  }, [stats, isDark]);
 
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    interaction: {
-      mode: "index",
-      intersect: false,
-    },
-    plugins: {
-      legend: {
-        display: false,
+  const chartOptions = useMemo(
+    () => ({
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: "index",
+        intersect: false,
       },
-      tooltip: {
-        backgroundColor: "rgba(10, 10, 15, 0.95)",
-        titleColor: "#00f5ff",
-        bodyColor: "#d1d5db",
-        borderColor: "rgba(0, 245, 255, 0.3)",
-        borderWidth: 1,
-        padding: 12,
-        cornerRadius: 8,
-        displayColors: false,
-        callbacks: {
-          title: function (context) {
-            return context[0].label;
-          },
-          label: function (context) {
-            return `${context.parsed.y.toLocaleString()} downloads`;
-          },
-        },
-      },
-    },
-    scales: {
-      x: {
-        grid: {
+      plugins: {
+        legend: {
           display: false,
         },
-        ticks: {
-          color: "#6b7280",
-          font: {
-            size: 11,
+        tooltip: {
+          backgroundColor: isDark
+            ? "rgba(10, 10, 15, 0.95)"
+            : "rgba(255, 255, 255, 0.95)",
+          titleColor: isDark ? "#00f5ff" : "#0ea5e9",
+          bodyColor: isDark ? "#d1d5db" : "#374151",
+          borderColor: isDark
+            ? "rgba(0, 245, 255, 0.3)"
+            : "rgba(14, 165, 233, 0.3)",
+          borderWidth: 1,
+          padding: 12,
+          cornerRadius: 8,
+          displayColors: false,
+          callbacks: {
+            title: function (context) {
+              return context[0].label;
+            },
+            label: function (context) {
+              return `${context.parsed.y.toLocaleString()} downloads`;
+            },
           },
-          maxRotation: 45,
-          minRotation: 0,
-        },
-        border: {
-          display: false,
         },
       },
-      y: {
-        grid: {
-          color: "rgba(75, 85, 99, 0.15)",
-          drawBorder: false,
-        },
-        ticks: {
-          color: "#6b7280",
-          font: {
-            size: 11,
+      scales: {
+        x: {
+          grid: {
+            display: false,
           },
-          callback: function (value) {
-            return value.toLocaleString();
+          ticks: {
+            color: isDark ? "#6b7280" : "#4b5563",
+            font: {
+              size: 11,
+            },
+            maxRotation: 45,
+            minRotation: 0,
           },
-          padding: 8,
+          border: {
+            display: false,
+          },
         },
-        border: {
-          display: false,
+        y: {
+          grid: {
+            color: isDark
+              ? "rgba(75, 85, 99, 0.15)"
+              : "rgba(156, 163, 175, 0.2)",
+            drawBorder: false,
+          },
+          ticks: {
+            color: isDark ? "#6b7280" : "#4b5563",
+            font: {
+              size: 11,
+            },
+            callback: function (value) {
+              return value.toLocaleString();
+            },
+            padding: 8,
+          },
+          border: {
+            display: false,
+          },
         },
       },
-    },
-  };
+    }),
+    [isDark]
+  );
 
-  const barChartOptions = {
-    ...chartOptions,
-    indexAxis: "y",
-    plugins: {
-      ...chartOptions.plugins,
-      tooltip: {
-        ...chartOptions.plugins.tooltip,
-        callbacks: {
-          label: function (context) {
-            return `${context.parsed.x}% of users`;
+  const barChartOptions = useMemo(
+    () => ({
+      ...chartOptions,
+      indexAxis: "y",
+      plugins: {
+        ...chartOptions.plugins,
+        tooltip: {
+          ...chartOptions.plugins.tooltip,
+          callbacks: {
+            label: function (context) {
+              return `${context.parsed.x}% of users`;
+            },
           },
         },
       },
-    },
-    scales: {
-      x: {
-        grid: {
-          color: "rgba(75, 85, 99, 0.15)",
+      scales: {
+        x: {
+          grid: {
+            color: isDark
+              ? "rgba(75, 85, 99, 0.15)"
+              : "rgba(156, 163, 175, 0.2)",
+          },
+          ticks: {
+            color: isDark ? "#6b7280" : "#4b5563",
+            callback: (value) => `${value}%`,
+          },
+          max: 100,
+          border: { display: false },
         },
-        ticks: {
-          color: "#6b7280",
-          callback: (value) => `${value}%`,
+        y: {
+          grid: { display: false },
+          ticks: {
+            color: isDark ? "#d1d5db" : "#374151",
+            font: { size: 12, weight: "500" },
+          },
+          border: { display: false },
         },
-        max: 100,
-        border: { display: false },
       },
-      y: {
-        grid: { display: false },
-        ticks: {
-          color: "#d1d5db",
-          font: { size: 12, weight: "500" },
-        },
-        border: { display: false },
-      },
-    },
-  };
+    }),
+    [chartOptions, isDark]
+  );
 
-  const doughnutOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    cutout: "65%",
-    plugins: {
-      legend: {
-        position: "bottom",
-        labels: {
-          color: "#9ca3af",
-          usePointStyle: true,
-          pointStyle: "circle",
-          padding: 16,
-          font: { size: 12 },
+  const doughnutOptions = useMemo(
+    () => ({
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: "65%",
+      plugins: {
+        legend: {
+          position: "bottom",
+          labels: {
+            color: isDark ? "#9ca3af" : "#4b5563",
+            usePointStyle: true,
+            pointStyle: "circle",
+            padding: 16,
+            font: { size: 12 },
+          },
         },
-      },
-      tooltip: {
-        backgroundColor: "rgba(10, 10, 15, 0.95)",
-        titleColor: "#00f5ff",
-        bodyColor: "#d1d5db",
-        borderColor: "rgba(0, 245, 255, 0.3)",
-        borderWidth: 1,
-        padding: 12,
-        cornerRadius: 8,
-        callbacks: {
-          label: function (context) {
-            return ` ${context.label}: ${context.parsed}%`;
+        tooltip: {
+          backgroundColor: isDark
+            ? "rgba(10, 10, 15, 0.95)"
+            : "rgba(255, 255, 255, 0.95)",
+          titleColor: isDark ? "#00f5ff" : "#0ea5e9",
+          bodyColor: isDark ? "#d1d5db" : "#374151",
+          borderColor: isDark
+            ? "rgba(0, 245, 255, 0.3)"
+            : "rgba(14, 165, 233, 0.3)",
+          borderWidth: 1,
+          padding: 12,
+          cornerRadius: 8,
+          callbacks: {
+            label: function (context) {
+              return ` ${context.label}: ${context.parsed}%`;
+            },
           },
         },
       },
-    },
-  };
+    }),
+    [isDark]
+  );
 
   // Format number helper
   const formatNumber = (num) => {
@@ -598,19 +641,21 @@ const Stats = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen pt-16 flex items-center justify-center bg-gradient-to-b from-[#0a0a0f] via-[#0d0d15] to-[#0a0a0f]">
+      <div className="min-h-screen pt-16 flex items-center justify-center bg-gradient-to-b from-gray-50 via-gray-100 to-gray-50 dark:from-[#0a0a0f] dark:via-[#0d0d15] dark:to-[#0a0a0f]">
         <div className="text-center">
           <div className="relative w-16 h-16 mx-auto mb-6">
-            <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-neon-cyan border-r-neon-purple animate-spin"></div>
+            <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-primary-500 dark:border-t-neon-cyan border-r-purple-500 dark:border-r-neon-purple animate-spin"></div>
             <div
-              className="absolute inset-2 rounded-full border-2 border-transparent border-b-neon-blue border-l-neon-cyan animate-spin"
+              className="absolute inset-2 rounded-full border-2 border-transparent border-b-blue-500 dark:border-b-neon-blue border-l-primary-500 dark:border-l-neon-cyan animate-spin"
               style={{
                 animationDirection: "reverse",
                 animationDuration: "1.5s",
               }}></div>
-            <div className="absolute inset-4 rounded-full bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 animate-pulse"></div>
+            <div className="absolute inset-4 rounded-full bg-gradient-to-br from-primary-500/20 dark:from-neon-cyan/20 to-purple-500/20 dark:to-neon-purple/20 animate-pulse"></div>
           </div>
-          <p className="text-gray-400 font-medium">Loading statistics...</p>
+          <p className="text-gray-600 dark:text-gray-400 font-medium">
+            Loading statistics...
+          </p>
         </div>
       </div>
     );
@@ -626,52 +671,52 @@ const Stats = () => {
         />
       </Helmet>
 
-      <div className="min-h-screen pt-16 bg-gradient-to-b from-[#0a0a0f] via-[#0d0d15] to-[#0a0a0f]">
+      <div className="min-h-screen pt-16 bg-gradient-to-b from-gray-50 via-white to-gray-50 dark:from-[#0a0a0f] dark:via-[#0d0d15] dark:to-[#0a0a0f]">
         {/* Animated Background Effects */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-1/4 -left-32 w-96 h-96 bg-neon-cyan/5 rounded-full blur-[120px] animate-pulse"></div>
+          <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary-500/5 dark:bg-neon-cyan/5 rounded-full blur-[120px] animate-pulse"></div>
           <div
-            className="absolute bottom-1/3 -right-32 w-96 h-96 bg-neon-purple/5 rounded-full blur-[120px] animate-pulse"
+            className="absolute bottom-1/3 -right-32 w-96 h-96 bg-purple-500/5 dark:bg-neon-purple/5 rounded-full blur-[120px] animate-pulse"
             style={{ animationDelay: "1s" }}></div>
           <div
-            className="absolute top-2/3 left-1/3 w-64 h-64 bg-neon-blue/5 rounded-full blur-[100px] animate-pulse"
+            className="absolute top-2/3 left-1/3 w-64 h-64 bg-blue-500/5 dark:bg-neon-blue/5 rounded-full blur-[100px] animate-pulse"
             style={{ animationDelay: "2s" }}></div>
         </div>
 
         {/* Header */}
         <section className="section-padding relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-neon-cyan/5 via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-primary-500/5 dark:from-neon-cyan/5 via-transparent to-transparent"></div>
           <div className="container-custom relative">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="text-center max-w-3xl mx-auto">
-              <div className="inline-flex items-center space-x-2 bg-neon-cyan/10 text-neon-cyan px-4 py-2 rounded-full text-sm font-medium mb-6 border border-neon-cyan/30 backdrop-blur-sm shadow-[0_0_20px_rgba(0,245,255,0.15)]">
+              <div className="inline-flex items-center space-x-2 bg-primary-100 dark:bg-neon-cyan/10 text-primary-700 dark:text-neon-cyan px-4 py-2 rounded-full text-sm font-medium mb-6 border border-primary-200 dark:border-neon-cyan/30 backdrop-blur-sm shadow-sm dark:shadow-[0_0_20px_rgba(0,245,255,0.15)]">
                 <ChartBarIcon className="w-4 h-4" />
                 <span>Live Statistics</span>
               </div>
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
                 Git-ripper{" "}
-                <span className="bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-blue bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-primary-600 via-purple-600 to-blue-600 dark:from-neon-cyan dark:via-neon-purple dark:to-neon-blue bg-clip-text text-transparent">
                   Statistics
                 </span>
               </h1>
 
-              <p className="text-xl text-gray-400 leading-relaxed">
+              <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
                 Real-time insights into Git-ripper's usage, growth, and
                 community engagement. See how developers worldwide are
                 transforming their GitHub workflow.
               </p>
 
-              <div className="flex flex-wrap items-center justify-center gap-4 mt-8 text-sm text-gray-500">
+              <div className="flex flex-wrap items-center justify-center gap-4 mt-8 text-sm text-gray-500 dark:text-gray-500">
                 <span className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
                   Fetched: {lastUpdated.toLocaleTimeString()}
                 </span>
                 {latestDataDate && (
-                  <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs bg-neon-blue/10 text-neon-blue border border-neon-blue/20">
+                  <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs bg-blue-100 dark:bg-neon-blue/10 text-blue-700 dark:text-neon-blue border border-blue-200 dark:border-neon-blue/20">
                     NPM data through{" "}
                     {new Date(latestDataDate).toLocaleDateString("en-US", {
                       month: "short",
@@ -683,7 +728,7 @@ const Stats = () => {
                 <button
                   onClick={() => fetchStats(true)}
                   disabled={refreshing}
-                  className="inline-flex items-center space-x-2 text-neon-cyan hover:text-white font-medium disabled:opacity-50 transition-colors duration-300 group">
+                  className="inline-flex items-center space-x-2 text-primary-600 dark:text-neon-cyan hover:text-primary-800 dark:hover:text-white font-medium disabled:opacity-50 transition-colors duration-300 group">
                   <ArrowPathIcon
                     className={`w-4 h-4 ${
                       refreshing
@@ -718,26 +763,26 @@ const Stats = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.05 }}
-                    className="group relative bg-[#12121a]/80 backdrop-blur-sm rounded-2xl p-5 border border-gray-800/50 hover:border-neon-cyan/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(0,245,255,0.1)]">
+                    className="group relative bg-white dark:bg-[#12121a]/80 backdrop-blur-sm rounded-2xl p-5 border border-gray-200 dark:border-gray-800/50 hover:border-primary-300 dark:hover:border-neon-cyan/30 transition-all duration-500 hover:-translate-y-2 shadow-sm hover:shadow-lg dark:hover:shadow-[0_0_30px_rgba(0,245,255,0.1)]">
                     {/* Glow effect on hover */}
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-neon-cyan/5 to-neon-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-500/5 dark:from-neon-cyan/5 to-purple-500/5 dark:to-neon-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                     <div className="relative z-10">
                       <div
-                        className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center mb-4 shadow-lg group-hover:shadow-[0_0_20px_rgba(0,245,255,0.3)] transition-shadow duration-300`}>
+                        className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center mb-4 shadow-lg group-hover:shadow-xl dark:group-hover:shadow-[0_0_20px_rgba(0,245,255,0.3)] transition-shadow duration-300`}>
                         <Icon className="w-6 h-6 text-white" />
                       </div>
 
                       <div className="flex items-baseline gap-2 mb-1">
-                        <h3 className="text-2xl md:text-3xl font-bold text-white group-hover:text-neon-cyan transition-colors duration-300">
+                        <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-neon-cyan transition-colors duration-300">
                           {stat.value}
                         </h3>
                         {hasTrend && (
                           <span
                             className={`text-xs font-semibold px-1.5 py-0.5 rounded ${
                               isPositive
-                                ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                                : "bg-red-500/20 text-red-400 border border-red-500/30"
+                                ? "bg-green-100 dark:bg-green-500/20 text-green-600 dark:text-green-400 border border-green-200 dark:border-green-500/30"
+                                : "bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-500/30"
                             }`}>
                             {isPositive ? "+" : ""}
                             {stat.trend}%
@@ -745,11 +790,11 @@ const Stats = () => {
                         )}
                       </div>
 
-                      <p className="text-sm font-medium text-gray-300 mb-1">
+                      <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         {stat.label}
                       </p>
 
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 dark:text-gray-500">
                         {stat.description}
                       </p>
                     </div>
@@ -766,13 +811,13 @@ const Stats = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
-                className="bg-[#12121a]/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-gray-800/50 hover:border-neon-cyan/20 transition-all duration-500">
+                className="bg-white dark:bg-[#12121a]/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-gray-200 dark:border-gray-800/50 hover:border-primary-200 dark:hover:border-neon-cyan/20 transition-all duration-500 shadow-sm">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div>
-                    <h3 className="text-xl md:text-2xl font-bold text-white">
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
                       Download Trend
                     </h3>
-                    <p className="text-gray-500 text-sm mt-1">
+                    <p className="text-gray-500 dark:text-gray-500 text-sm mt-1">
                       {parseInt(chartPeriod) > 60 ? "Weekly" : "Daily"} download
                       statistics from NPM
                       {latestDataDate && (
@@ -790,7 +835,7 @@ const Stats = () => {
 
                   <div className="flex items-center gap-3">
                     {/* Period selector */}
-                    <div className="inline-flex rounded-xl bg-[#1a1a25] p-1 border border-gray-800/50">
+                    <div className="inline-flex rounded-xl bg-gray-100 dark:bg-[#1a1a25] p-1 border border-gray-200 dark:border-gray-800/50">
                       {[
                         { value: "7", label: "7D" },
                         { value: "30", label: "30D" },
@@ -802,8 +847,8 @@ const Stats = () => {
                           onClick={() => setChartPeriod(period.value)}
                           className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-300 ${
                             chartPeriod === period.value
-                              ? "bg-gradient-to-r from-neon-cyan/20 to-neon-purple/20 text-neon-cyan border border-neon-cyan/30 shadow-[0_0_10px_rgba(0,245,255,0.2)]"
-                              : "text-gray-500 hover:text-white"
+                              ? "bg-white dark:bg-gradient-to-r dark:from-neon-cyan/20 dark:to-neon-purple/20 text-primary-600 dark:text-neon-cyan border border-primary-200 dark:border-neon-cyan/30 shadow-sm dark:shadow-[0_0_10px_rgba(0,245,255,0.2)]"
+                              : "text-gray-500 hover:text-gray-900 dark:hover:text-white"
                           }`}>
                           {period.label}
                         </button>
@@ -814,8 +859,8 @@ const Stats = () => {
                       <div
                         className={`hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium ${
                           parseFloat(growthMetrics.weeklyGrowth) >= 0
-                            ? "bg-green-500/10 text-green-400 border border-green-500/30"
-                            : "bg-red-500/10 text-red-400 border border-red-500/30"
+                            ? "bg-green-100 dark:bg-green-500/10 text-green-600 dark:text-green-400 border border-green-200 dark:border-green-500/30"
+                            : "bg-red-100 dark:bg-red-500/10 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-500/30"
                         }`}>
                         <ArrowTrendingUpIcon className="w-4 h-4" />
                         <span>
@@ -834,21 +879,21 @@ const Stats = () => {
                 </div>
 
                 {/* Quick stats below chart */}
-                <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-800/50">
+                <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-200 dark:border-gray-800/50">
                   <div className="text-center group">
-                    <p className="text-2xl font-bold text-white group-hover:text-neon-cyan transition-colors duration-300">
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-neon-cyan transition-colors duration-300">
                       {formatNumber(stats?.weeklyDownloads || 0)}
                     </p>
                     <p className="text-xs text-gray-500">This Week</p>
                   </div>
                   <div className="text-center group">
-                    <p className="text-2xl font-bold text-white group-hover:text-neon-purple transition-colors duration-300">
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-neon-purple transition-colors duration-300">
                       {formatNumber(stats?.monthlyDownloads || 0)}
                     </p>
                     <p className="text-xs text-gray-500">This Month</p>
                   </div>
                   <div className="text-center group">
-                    <p className="text-2xl font-bold text-white group-hover:text-neon-blue transition-colors duration-300">
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-neon-blue transition-colors duration-300">
                       {growthMetrics.avgDaily || "—"}
                     </p>
                     <p className="text-xs text-gray-500">Daily Avg</p>
@@ -864,11 +909,11 @@ const Stats = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8 }}
                   viewport={{ once: true }}
-                  className="bg-[#12121a]/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-800/50 hover:border-neon-purple/20 transition-all duration-500">
-                  <h3 className="text-lg font-bold text-white mb-1">
+                  className="bg-white dark:bg-[#12121a]/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 dark:border-gray-800/50 hover:border-purple-200 dark:hover:border-neon-purple/20 transition-all duration-500 shadow-sm">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
                     Download Distribution
                   </h3>
-                  <p className="text-gray-500 text-sm mb-6">
+                  <p className="text-gray-500 dark:text-gray-500 text-sm mb-6">
                     Downloads by time period
                   </p>
 
@@ -881,10 +926,10 @@ const Stats = () => {
                     )}
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-gray-800/50">
+                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800/50">
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-500">Total all-time</span>
-                      <span className="font-semibold text-neon-cyan">
+                      <span className="font-semibold text-primary-600 dark:text-neon-cyan">
                         {formatNumber(stats?.totalDownloads || 0)}
                       </span>
                     </div>
@@ -897,11 +942,11 @@ const Stats = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8 }}
                   viewport={{ once: true }}
-                  className="bg-[#12121a]/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-800/50 hover:border-neon-blue/20 transition-all duration-500">
-                  <h3 className="text-lg font-bold text-white mb-1">
+                  className="bg-white dark:bg-[#12121a]/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 dark:border-gray-800/50 hover:border-blue-200 dark:hover:border-neon-blue/20 transition-all duration-500 shadow-sm">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
                     Feature Usage
                   </h3>
-                  <p className="text-gray-500 text-sm mb-6">
+                  <p className="text-gray-500 dark:text-gray-500 text-sm mb-6">
                     Most popular Git-ripper features (estimated)
                   </p>
 
@@ -909,7 +954,7 @@ const Stats = () => {
                     <Bar data={featureUsageData} options={barChartOptions} />
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-gray-800/50 text-xs text-gray-600">
+                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800/50 text-xs text-gray-500">
                     * Based on typical usage patterns
                   </div>
                 </motion.div>
@@ -923,51 +968,51 @@ const Stats = () => {
                 viewport={{ once: true }}
                 className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Package Health */}
-                <div className="relative overflow-hidden bg-gradient-to-br from-neon-cyan/20 via-neon-blue/10 to-neon-purple/20 rounded-2xl p-6 text-white border border-neon-cyan/30 shadow-[0_0_30px_rgba(0,245,255,0.1)]">
-                  <div className="absolute inset-0 bg-[#0a0a0f]/60 backdrop-blur-sm"></div>
+                <div className="relative overflow-hidden bg-gradient-to-br from-primary-100 via-blue-50 to-purple-100 dark:from-neon-cyan/20 dark:via-neon-blue/10 dark:to-neon-purple/20 rounded-2xl p-6 border border-primary-200 dark:border-neon-cyan/30 shadow-sm dark:shadow-[0_0_30px_rgba(0,245,255,0.1)]">
+                  <div className="absolute inset-0 bg-white/60 dark:bg-[#0a0a0f]/60 backdrop-blur-sm"></div>
                   <div className="relative z-10">
-                    <h4 className="text-lg font-semibold mb-4 flex items-center gap-2 text-neon-cyan">
+                    <h4 className="text-lg font-semibold mb-4 flex items-center gap-2 text-primary-600 dark:text-neon-cyan">
                       <CubeIcon className="w-5 h-5" />
                       Package Health
                     </h4>
 
                     <div className="space-y-4">
                       <div className="flex items-center justify-between group">
-                        <span className="text-gray-400 group-hover:text-white transition-colors">
+                        <span className="text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
                           Latest Version
                         </span>
-                        <span className="font-mono font-semibold bg-neon-cyan/20 text-neon-cyan px-2.5 py-1 rounded-lg border border-neon-cyan/30">
+                        <span className="font-mono font-semibold bg-primary-100 dark:bg-neon-cyan/20 text-primary-700 dark:text-neon-cyan px-2.5 py-1 rounded-lg border border-primary-200 dark:border-neon-cyan/30">
                           v{stats?.version || "—"}
                         </span>
                       </div>
                       <div className="flex items-center justify-between group">
-                        <span className="text-gray-400 group-hover:text-white transition-colors">
+                        <span className="text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
                           GitHub Stars
                         </span>
-                        <span className="font-semibold flex items-center gap-1 text-yellow-400">
+                        <span className="font-semibold flex items-center gap-1 text-yellow-500 dark:text-yellow-400">
                           <StarIcon className="w-4 h-4" />
                           {stats?.githubStars || 0}
                         </span>
                       </div>
                       <div className="flex items-center justify-between group">
-                        <span className="text-gray-400 group-hover:text-white transition-colors">
+                        <span className="text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
                           Open Issues
                         </span>
-                        <span className="font-semibold text-white">
+                        <span className="font-semibold text-gray-900 dark:text-white">
                           {stats?.issuesResolved || 0}
                         </span>
                       </div>
                       <div className="flex items-center justify-between group">
-                        <span className="text-gray-400 group-hover:text-white transition-colors">
+                        <span className="text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
                           Forks
                         </span>
-                        <span className="font-semibold text-white">
+                        <span className="font-semibold text-gray-900 dark:text-white">
                           {stats?.githubForks || 0}
                         </span>
                       </div>
                     </div>
 
-                    <div className="mt-6 pt-4 border-t border-neon-cyan/20">
+                    <div className="mt-6 pt-4 border-t border-primary-200 dark:border-neon-cyan/20">
                       <p className="text-sm text-gray-500">
                         Data sourced from NPM Registry and GitHub API
                       </p>
@@ -976,18 +1021,18 @@ const Stats = () => {
                 </div>
 
                 {/* Milestones */}
-                <div className="bg-[#12121a]/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-800/50 hover:border-neon-purple/20 transition-all duration-500">
-                  <h4 className="text-lg font-semibold text-white mb-4">
+                <div className="bg-white dark:bg-[#12121a]/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 dark:border-gray-800/50 hover:border-purple-200 dark:hover:border-neon-purple/20 transition-all duration-500 shadow-sm">
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                     Milestones
                   </h4>
 
                   <div className="space-y-4">
                     <div className="flex items-start gap-3 group">
-                      <div className="w-8 h-8 rounded-full bg-neon-cyan/10 border border-neon-cyan/30 flex items-center justify-center flex-shrink-0 group-hover:bg-neon-cyan/20 group-hover:shadow-[0_0_15px_rgba(0,245,255,0.3)] transition-all duration-300">
-                        <ArrowDownIcon className="w-4 h-4 text-neon-cyan" />
+                      <div className="w-8 h-8 rounded-full bg-primary-100 dark:bg-neon-cyan/10 border border-primary-200 dark:border-neon-cyan/30 flex items-center justify-center flex-shrink-0 group-hover:bg-primary-200 dark:group-hover:bg-neon-cyan/20 group-hover:shadow-md dark:group-hover:shadow-[0_0_15px_rgba(0,245,255,0.3)] transition-all duration-300">
+                        <ArrowDownIcon className="w-4 h-4 text-primary-600 dark:text-neon-cyan" />
                       </div>
                       <div>
-                        <p className="font-medium text-white group-hover:text-neon-cyan transition-colors">
+                        <p className="font-medium text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-neon-cyan transition-colors">
                           {formatNumber(stats?.totalDownloads || 0)} Downloads
                         </p>
                         <p className="text-sm text-gray-500">
@@ -997,11 +1042,11 @@ const Stats = () => {
                     </div>
 
                     <div className="flex items-start gap-3 group">
-                      <div className="w-8 h-8 rounded-full bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center flex-shrink-0 group-hover:bg-yellow-500/20 group-hover:shadow-[0_0_15px_rgba(234,179,8,0.3)] transition-all duration-300">
-                        <StarIcon className="w-4 h-4 text-yellow-400" />
+                      <div className="w-8 h-8 rounded-full bg-yellow-100 dark:bg-yellow-500/10 border border-yellow-200 dark:border-yellow-500/30 flex items-center justify-center flex-shrink-0 group-hover:bg-yellow-200 dark:group-hover:bg-yellow-500/20 group-hover:shadow-md dark:group-hover:shadow-[0_0_15px_rgba(234,179,8,0.3)] transition-all duration-300">
+                        <StarIcon className="w-4 h-4 text-yellow-500 dark:text-yellow-400" />
                       </div>
                       <div>
-                        <p className="font-medium text-white group-hover:text-yellow-400 transition-colors">
+                        <p className="font-medium text-gray-900 dark:text-white group-hover:text-yellow-500 dark:group-hover:text-yellow-400 transition-colors">
                           {stats?.githubStars || 0} GitHub Stars
                         </p>
                         <p className="text-sm text-gray-500">
@@ -1011,11 +1056,11 @@ const Stats = () => {
                     </div>
 
                     <div className="flex items-start gap-3 group">
-                      <div className="w-8 h-8 rounded-full bg-neon-blue/10 border border-neon-blue/30 flex items-center justify-center flex-shrink-0 group-hover:bg-neon-blue/20 group-hover:shadow-[0_0_15px_rgba(0,102,255,0.3)] transition-all duration-300">
-                        <UsersIcon className="w-4 h-4 text-neon-blue" />
+                      <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-neon-blue/10 border border-blue-200 dark:border-neon-blue/30 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-200 dark:group-hover:bg-neon-blue/20 group-hover:shadow-md dark:group-hover:shadow-[0_0_15px_rgba(0,102,255,0.3)] transition-all duration-300">
+                        <UsersIcon className="w-4 h-4 text-blue-600 dark:text-neon-blue" />
                       </div>
                       <div>
-                        <p className="font-medium text-white group-hover:text-neon-blue transition-colors">
+                        <p className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-neon-blue transition-colors">
                           ~{formatNumber(stats?.weeklyUsers || 0)} Weekly Users
                         </p>
                         <p className="text-sm text-gray-500">
@@ -1025,11 +1070,11 @@ const Stats = () => {
                     </div>
 
                     <div className="flex items-start gap-3 group">
-                      <div className="w-8 h-8 rounded-full bg-neon-purple/10 border border-neon-purple/30 flex items-center justify-center flex-shrink-0 group-hover:bg-neon-purple/20 group-hover:shadow-[0_0_15px_rgba(191,0,255,0.3)] transition-all duration-300">
-                        <GlobeAltIcon className="w-4 h-4 text-neon-purple" />
+                      <div className="w-8 h-8 rounded-full bg-purple-100 dark:bg-neon-purple/10 border border-purple-200 dark:border-neon-purple/30 flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 dark:group-hover:bg-neon-purple/20 group-hover:shadow-md dark:group-hover:shadow-[0_0_15px_rgba(191,0,255,0.3)] transition-all duration-300">
+                        <GlobeAltIcon className="w-4 h-4 text-purple-600 dark:text-neon-purple" />
                       </div>
                       <div>
-                        <p className="font-medium text-white group-hover:text-neon-purple transition-colors">
+                        <p className="font-medium text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-neon-purple transition-colors">
                           Global Reach
                         </p>
                         <p className="text-sm text-gray-500">
@@ -1049,16 +1094,16 @@ const Stats = () => {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
               className="text-center mt-16">
-              <div className="relative overflow-hidden bg-gradient-to-r from-neon-purple/20 via-neon-blue/20 to-neon-cyan/20 rounded-2xl p-8 border border-neon-cyan/30 shadow-[0_0_40px_rgba(0,245,255,0.1)]">
-                <div className="absolute inset-0 bg-[#0a0a0f]/70 backdrop-blur-sm"></div>
-                <div className="absolute top-0 left-1/4 w-64 h-64 bg-neon-cyan/10 rounded-full blur-[100px]"></div>
-                <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-neon-purple/10 rounded-full blur-[100px]"></div>
+              <div className="relative overflow-hidden bg-gradient-to-r from-purple-100 via-blue-100 to-primary-100 dark:from-neon-purple/20 dark:via-neon-blue/20 dark:to-neon-cyan/20 rounded-2xl p-8 border border-primary-200 dark:border-neon-cyan/30 shadow-lg dark:shadow-[0_0_40px_rgba(0,245,255,0.1)]">
+                <div className="absolute inset-0 bg-white/70 dark:bg-[#0a0a0f]/70 backdrop-blur-sm"></div>
+                <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary-500/10 dark:bg-neon-cyan/10 rounded-full blur-[100px]"></div>
+                <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-500/10 dark:bg-neon-purple/10 rounded-full blur-[100px]"></div>
 
                 <div className="relative z-10">
-                  <h3 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-white via-neon-cyan to-white bg-clip-text text-transparent">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-gray-900 via-primary-600 to-gray-900 dark:from-white dark:via-neon-cyan dark:to-white bg-clip-text text-transparent">
                     Be Part of Our Growing Story
                   </h3>
-                  <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
+                  <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
                     Join the thousands of developers who are already using
                     Git-ripper to streamline their workflow. Your usage helps
                     make these statistics even better!
@@ -1067,7 +1112,7 @@ const Stats = () => {
                     href="https://www.npmjs.com/package/git-ripper"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 bg-gradient-to-r from-neon-cyan to-neon-blue text-[#0a0a0f] font-semibold py-3 px-8 rounded-xl transition-all duration-300 shadow-[0_0_30px_rgba(0,245,255,0.3)] hover:shadow-[0_0_50px_rgba(0,245,255,0.5)] hover:-translate-y-1">
+                    className="inline-flex items-center space-x-2 bg-gradient-to-r from-primary-600 to-blue-600 dark:from-neon-cyan dark:to-neon-blue text-white dark:text-[#0a0a0f] font-semibold py-3 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-[0_0_30px_rgba(0,245,255,0.3)] dark:hover:shadow-[0_0_50px_rgba(0,245,255,0.5)] hover:-translate-y-1">
                     <ArrowDownIcon className="w-5 h-5" />
                     <span>Install Git-ripper</span>
                   </a>
